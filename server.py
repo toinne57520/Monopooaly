@@ -1,7 +1,7 @@
 from threading import Thread
 import socket
-from calculatorthread import CalculatorThread
 
+#serveur utilise dans le corrige du TP3
 
 class Server(Thread):
 
