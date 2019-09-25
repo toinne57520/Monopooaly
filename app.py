@@ -6,3 +6,4 @@ def test():
 def visio():
     print("Ajout fonciton")
     print("on est trop fort")
+    print("lol")
