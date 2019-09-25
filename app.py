@@ -8,5 +8,5 @@ def visio():
     print("on est trop fort")
 
 def panique():
-    print("neverstopparis")
+    print("neversto2pparis")
 
