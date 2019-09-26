@@ -13,6 +13,11 @@
       "code" : "R3"
     },
     {
+      "name" : "Shotgun !",
+      "descrition" : "Vous réussissez votre shotgun comme un chef ! Avancez de 2 cases",
+      "code" : "A2"
+    },
+    {
       "name" : "Concours de cuisine au Musée",
       "descrition" : "Vos nouilles chinoises étaient les meilleures ! Vous gagnez 30€",
       "code" : "G30"

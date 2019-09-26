@@ -1,5 +1,5 @@
 import json
-
+import random
 class Square:
 
     def __init__(self,name,position):
@@ -48,5 +48,29 @@ class Luck(Square):
         Square.__init__(self,name,position)
         with open("impact_luck.json") as impact_luck :
             self.impact_list = json.load(impact_luck)["dependencies"]
+            self.nbre = len(self.impact_list)
+
         #définir méthode et voir comment gérer les impacts
         # voir méthode random qui pioche dans une liste d'impact
+
+    def __repr__(self):
+        return("Vous êtes tombés sur une carte chance !")
+
+    def get_impact(self,player):
+        luck_impact = random.randint(1,self.nbre)
+        name = self.impact_list[1]["name"]
+        description = self.impact_list[1]["description"]
+        code = self.impact_list[1]["code"]
+        print(name)
+        print(description)
+        if code[0] == "G":
+            player.money += int[code[1:]]
+        elif code[0] == "P":
+            player.money -= int[code[1:]]
+        elif code[0] == "A":
+            player.position += int[code[1:]]
+        elif code[0] == "R":
+            player.position -= int[code[1:]]
+
+
+
