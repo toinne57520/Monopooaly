@@ -64,13 +64,13 @@ class Luck(Square):
         print(name)
         print(description)
         if code[0] == "G":
-            player.money += int[code[1:]]
+            player.money += int(code[1:])
         elif code[0] == "P":
-            player.money -= int[code[1:]]
+            player.money -= int(code[1:])
         elif code[0] == "A":
-            player.position += int[code[1:]]
+            player.position += int(code[1:])
         elif code[0] == "R":
-            player.position -= int[code[1:]]
+            player.position -= int(code[1:])
 
 
 
