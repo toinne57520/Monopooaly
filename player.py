@@ -50,8 +50,8 @@ class Player :
                 #à changer car renvoie juste une liste de cases
                 try :
                     answer = input(f"Vous avez {self.money}€ et vous possédez {self.assets} maison(s), souhaitez-vous acheter ? (oui/non)")
-                    answer= answer.upper()
-                    assert answer == ("OUI" or "NON")
+                    answer = answer.upper()
+                    assert (answer == "OUI" or answer == "NON")
 
                     if answer == "OUI": #si on veut l'acheter
                         return self.buy_land(square)
