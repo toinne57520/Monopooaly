@@ -17,13 +17,17 @@ class Player :
 
     def throw_dice(self):
 
-        self.board.square_list[self.position].present_player.remove(self.name) #on retire le player de sa case
-
         dice1 = random.randint(1,6)
         dice2 = random.randint(1,6) #quand on rajoutera les tours, mettre l'option double = rejouer
-
         advance = dice1 + dice2
+
         print(f"Vous avancez de {advance} cases.")
+        self.change_position(advance)
+
+
+    def change_position(self, advance):
+
+        self.board.square_list[self.position].present_player.remove(self.name)  # on retire le player de sa case
 
         quotient =(self.position + advance) // len(self.board.square_list)
         self.position = (self.position + advance) % len(self.board.square_list)
