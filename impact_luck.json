@@ -1,0 +1,21 @@
+{
+  "name": "monopoly",
+  "version": "1.0.0",
+  "dependencies": [
+    {
+      "name" : "Accident de trottinette",
+      "descrition" : "Une trottinette n'a pas respecté le code de la route. Vous perdez 50€.",
+      "code" : "P50"
+    },
+    {
+      "name" : "Perte des clés",
+      "descrition" : "Reculez de trois cases pour les retrouver ! quelle tête de linotte",
+      "code" : "R3"
+    },
+    {
+      "name" : "Concours de cuisine au Musée",
+      "descrition" : "Vos nouilles chinoises étaient les meilleures ! Vous gagnez 30€",
+      "code" : "G30"
+    }
+  ]
+}
