@@ -32,7 +32,10 @@ class Land(Square):
 
     def __repr__(self):
         if self.status :
-            return (f"Coup dur ! Cette case est {self.name}, détenue par le joueur {self.owner}. Il y a {self.nb_houses}, "
+            if self.owner == self.present_player[-1]:
+               return("Vous tombez à la maison")
+            else:
+                return (f"Coup dur ! Cette case est {self.name}, détenue par le joueur {self.owner}. Il y a {self.nb_houses}, "
                     f"vous devez donc payer {self.rent[self.nb_houses]} €")
         else :
             return (f"Quelle aubaine ! Cette case est libre ! C'est {self.name} de la couleur {self.color}. "

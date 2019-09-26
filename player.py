@@ -12,8 +12,10 @@ class Player :
         self.position = 0
         self.assets = []
         self.board = board #le plateau sur lequel le joueur joue
+        self.board.square_list[self.position].present_player.append(self.name)
 
     def throw_dice(self):
+        self.board.square_list[self.position].present_player.remove(self.name)
         dice1 = random.randint(1,6)
         dice2 = random.randint(1,6)
         advance = dice1 + dice2
@@ -23,12 +25,13 @@ class Player :
         if quotient>0 :
             self.money += quotient * 200
             print (f"Vous êtes passés par la case départ. Félicitations ! vous avez gagné {quotient*200} €")
+        self.board.square_list[self.position].present_player.append(self.name)
         print(self.board.square_list[self.position])
         #on appelle la méthode qui ensuite nous redirige vers la bonne action
         self.action_choice()
 
     def action_choice(self):
-        square = square = self.board.square_list[self.position]
+        square = self.board.square_list[self.position]
         #cas où on tombe sur une case terrain
         if isinstance(square,Land):
             #si le terrain est habité
@@ -39,7 +42,7 @@ class Player :
             else :
                 #à changer car renvoie juste une liste de cases
                 try :
-                    answer = input(f"Vous avez {self.money}€ et vous possédez {self.assets}, souhaitez-vous acheter ? (oui/non)")
+                    answer = input(f"Vous avez {self.money}€ et vous possédez {self.assets} maison(s), souhaitez-vous acheter ? (oui/non)")
                     answer= answer.upper()
                     assert answer == ("OUI" or "NON")
                     #si on veut l'acheter
