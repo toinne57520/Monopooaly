@@ -4,22 +4,22 @@
   "dependencies": [
     {
       "name" : "Accident de trottinette",
-      "descrition" : "Une trottinette n'a pas respecté le code de la route. Vous perdez 50€.",
+      "description" : "Une trottinette n'a pas respecté le code de la route. Vous perdez 50€.",
       "code" : "P50"
     },
     {
       "name" : "Perte des clés",
-      "descrition" : "Reculez de trois cases pour les retrouver ! quelle tête de linotte",
+      "description" : "Reculez de trois cases pour les retrouver ! quelle tête de linotte",
       "code" : "R3"
     },
     {
       "name" : "Shotgun !",
-      "descrition" : "Vous réussissez votre shotgun comme un chef ! Avancez de 2 cases",
+      "description" : "Vous réussissez votre shotgun comme un chef ! Avancez de 2 cases",
       "code" : "A2"
     },
     {
       "name" : "Concours de cuisine au Musée",
-      "descrition" : "Vos nouilles chinoises étaient les meilleures ! Vous gagnez 30€",
+      "description" : "Vos nouilles chinoises étaient les meilleures ! Vous gagnez 30€",
       "code" : "G30"
     }
   ]
