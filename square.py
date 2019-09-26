@@ -73,11 +73,11 @@ class Luck(Square):
             player.money -= int(code[1:])
             print(f"Vous avez à présent {player.money}€")
         elif code[0] == "A":
-            player.position += int(code[1:])
-            print(self)
+            player.change_position(int(code[1:]))
+            print(player.board.square_list[player.position])
         elif code[0] == "R":
-            player.position -= int(code[1:])
-            print(self)
+            player.change_position(-int(code[1:]))
+            print(player.board.square_list[player.position])
 
 
 

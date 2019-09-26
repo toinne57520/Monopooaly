@@ -9,8 +9,8 @@
     },
     {
       "name" : "Perte des clés",
-      "description" : "Reculez de trois cases pour les retrouver ! quelle tête de linotte",
-      "code" : "R3"
+      "description" : "Reculez de une case pour les retrouver ! quelle tête de linotte",
+      "code" : "R1"
     },
     {
       "name" : "Shotgun !",
