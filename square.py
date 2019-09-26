@@ -7,6 +7,9 @@ class Square:
         self.position = position
         self.present_player = []
 
+    def __repr__(self):
+        return("Vous êtes tombés sur la case départ")
+
 
 class Land(Square):
 
@@ -65,12 +68,17 @@ class Luck(Square):
         print(description)
         if code[0] == "G":
             player.money += int(code[1:])
+            print(f"Vous avez à présent {player.money}€")
         elif code[0] == "P":
             player.money -= int(code[1:])
+            print(f"Vous avez à présent {player.money}€")
         elif code[0] == "A":
             player.position += int(code[1:])
+            print(self)
         elif code[0] == "R":
             player.position -= int(code[1:])
+            print(self)
+
 
 
 
