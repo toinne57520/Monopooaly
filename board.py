@@ -20,6 +20,9 @@ class Board :
             elif element["type"] == "Luck":
                 square_list.append(square.Luck(element["name"], element["position"]))
 
+            elif element["type"] == "Square":
+                square_list.append(square.Square(element["name"], element["position"]))
+
             else :
                 print("Pas une catégorie connue")
         return square_list
