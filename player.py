@@ -45,9 +45,6 @@ class Player :
 
             if square.status : #si le terrain est habité
                 self.pay_rent(square)
-                #payer
-                #si le terrain est vide
-                print("ok")
 
             else :
                 #à changer car renvoie juste une liste de cases
@@ -55,22 +52,24 @@ class Player :
                     answer = input(f"Vous avez {self.money}€ et vous possédez {self.assets} maison(s), souhaitez-vous acheter ? (oui/non)")
                     answer= answer.upper()
                     assert answer == ("OUI" or "NON")
-                    #si on veut l'acheter
-                    if answer == "OUI":
+
+                    if answer == "OUI": #si on veut l'acheter
                         return self.buy_land(square)
+
                     #apres avoir refusé d'acheter, que fait on ?
-                except :
+                except Exception as e:
+                    print(e)
                     print ("Vous devez répondre par oui ou non ! ")
 
         # cas où on tombe sur une case chance
-       # if isinstance(square, Luck):
-            #methode de Luck
+        if isinstance(square, Luck):
+            square.get_impact(self)
 
 
 
 
 
-    def buy_land(self):
+    def buy_land(self, square):
         self.money -= square.value
         square.owner = self.name
         square.status = True
