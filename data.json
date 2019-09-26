@@ -3,6 +3,11 @@
   "version": "1.0.0",
   "dependencies": [
     {
+      "name": "Case Départ",
+      "position" : 0,
+      "type" : "Square"
+    },
+    {
       "name": "Paris",
       "position" : 3,
       "type" : "Land",
@@ -20,7 +25,7 @@
     },
     {
       "name": "Rouhling",
-      "position" : 0,
+      "position" : 4,
       "type" : "Land",
       "value" : 60,
       "color" : "bleu clair",
