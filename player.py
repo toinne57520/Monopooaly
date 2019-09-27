@@ -52,21 +52,17 @@ class Player :
 
             else :
                 #à changer car renvoie juste une liste de cases
-                try :
+                answer = 0
+                while answer!="OUI" and answer!="NON":
+                    print ("Vous devez répondre par oui ou non ! ")
                     answer = input(f"Vous avez {self.money}€ et vous possédez {self.assets} maison(s), souhaitez-vous acheter ? (oui/non)")
                     answer = answer.upper()
-                    assert (answer == "OUI" or answer == "NON")
 
-                    if answer == "OUI": #si on veut l'acheter
+                if answer == "OUI": #si on veut l'acheter
                         return self.buy_land(square)
 
-                    #apres avoir refusé d'acheter, que fait on ?
-                except Exception as e:
-                    print(e)
-                    print ("Vous devez répondre par oui ou non ! ")
-
         # cas où on tombe sur une case chance
-        if isinstance(square, Luck):
+        elif isinstance(square, Luck):
             square.get_impact(self)
 
 
