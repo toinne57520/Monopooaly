@@ -84,6 +84,7 @@ class Player :
     def pay_rent(self, square):
         rent = square.rent[square.nb_houses]
         if self.money >= rent:
+            self.money -= rent
             print("Vous venez de payer " + str(rent) + "€ à " + str(square.owner) +
                   f"... Il vous reste {self.money}€.")
         else:
