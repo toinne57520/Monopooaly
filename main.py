@@ -1,6 +1,7 @@
 from board import Board
-import square
+#import square
 import json
+import square
 from player import Player
 import os
 import glob
@@ -21,9 +22,10 @@ def launch_game():
         assert (choice == 1 or choice == 2)
 
         if choice == 1:
-            new_game()
+            board = new_game()
         elif choice == 2:
-            load_game()
+            #load_game()
+            print("to do") #reflechir à la manière d'enregistrer (dans la méthode de gestion d'un tour
 
     except Exception as e:
         #print(e)
@@ -33,7 +35,8 @@ def launch_game():
 
 def new_game():
     board = Board(board_choice())
-    print(board)
+    players = [Player(name, board) for name in player_choice()]
+    return board
 
 
 
@@ -50,11 +53,24 @@ def board_choice():
         choice = input("Quel plateau souhaitez-vous utiliser? " 
               "(Taper un nombre entre 1 et " + str(len(list_boards)) + ")")
         assert (1 <= int(choice) <= len(list_boards))
+        print("Vous jouez sur le plateau " + str(os.path.basename(list_boards[int(choice) - 1])) + "!")
         return list_boards[int(choice) - 1]
 
     except Exception as e:
         print(e)
         print("Choisissez un plateau existant!")
         new_game()
+
+
+def player_choice():
+    try:
+        nb_players = input("Combien de joueurs participent à la partie?")
+        assert (1 <= int(nb_players) <= 4)
+        players_list = [input("Quel est le nom du joueur " + str(i + 1) + "?") for i in range(int(nb_players))]
+        return players_list
+
+    except:
+        print("Le nombre de joueurs doit être un entier entre 1 et 4")
+        player_choice()
 
 new_game()
