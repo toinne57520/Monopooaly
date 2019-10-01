@@ -35,6 +35,7 @@ class Land(Square):
         self.owner = ""
         self.status = False
         self.nb_houses = 0
+        self.mortage = False    #Vrai si le terrain est hypothéqué, faux sinon
 
     def __repr__(self):
         if self.status :
