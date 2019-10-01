@@ -1,0 +1,24 @@
+{
+  "name": "Trainstations",
+  "version": "1.0.0",
+  "dependencies": [
+
+    {"name": "Gare Montparnasse",
+      "position" : 0,
+      "type" : "Land",
+      "value" : 10,
+      "rent" : [5,10,30,40],
+      "color" : "trainstation",
+      "mortgage" : 5
+    },
+    {
+      "name": "Gare de Lyon",
+      "position" : 1,
+      "type" : "Land",
+      "value" : 10,
+      "rent" : [5,10,30,40],
+      "color" : "trainstation",
+      "mortgage" : 5
+    }
+  ]
+}
