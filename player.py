@@ -1,14 +1,12 @@
+from square import Land, Luck
 import random
-from square import Square, Land, Luck
-
-
 
 class Player :
 
 
     def __init__(self,name,board):
         self.name = name
-        self. money = 200
+        self.money = 200
         self.position = 0
         self.assets = []
         self.board = board #le plateau sur lequel le joueur joue
@@ -53,16 +51,20 @@ class Player :
             else :
                 #à changer car renvoie juste une liste de cases
                 answer = 0
-                while answer!="OUI" and answer!="NON":
-                    print ("Vous devez répondre par oui ou non ! ")
+                try:
                     answer = input(f"Vous avez {self.money}€ et vous possédez {self.assets} maison(s), souhaitez-vous acheter ? (oui/non)")
                     answer = answer.upper()
+                    assert answer=="OUI" or answer=="NON"
+                except AssertionError:
+                    print ("Vous devez répondre par oui ou non ! ")
+                    self.action_choice()
+
 
                 if answer == "OUI": #si on veut l'acheter
                         return self.buy_land(square)
 
         # cas où on tombe sur une case chance
-        elif isinstance(square, Luck):
+        elif isinstance(square,Luck):
             square.get_impact(self)
 
 
@@ -71,7 +73,7 @@ class Player :
 
     def buy_land(self, square):
         self.money -= square.value
-        square.owner = self.name
+        square.owner = self
         square.status = True
         self.assets.append(square)
         print(f"Vous êtes maintenant propriétaire de {square.name}")
@@ -81,8 +83,10 @@ class Player :
         rent = square.rent[square.nb_houses]
         if self.money >= rent:
             self.money -= rent
-            print("Vous venez de payer " + str(rent) + "€ à " + str(square.owner) +
+            square.owner.money+=rent
+            print("Vous venez de payer " + str(rent) + "€ à " + str(square.owner.name) +
                   f"... Il vous reste {self.money}€.")
+            print(f"Le joueur {square.owner.name} a désormais {square.owner.money}.")
         else:
             print("Aïe! Vous n'avez pas assez d'argent pour régler vos dettes! "
                   "Que voulez vous faire?")
