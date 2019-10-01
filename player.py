@@ -13,7 +13,7 @@ class Player :
         self.assets = []
         self.board = board #le plateau sur lequel le joueur joue
         self.board.square_list[self.position].present_player.append(self.name) #on place le joueur sur la case départ
-        #board.add_player(self)
+        board.add_player(self)
 
     def get_nb_assets_of_a_color(self, color):
         i=0
