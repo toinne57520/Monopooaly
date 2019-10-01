@@ -1,4 +1,4 @@
-from square import Land, Luck
+from square import Land, Luck, Tax
 
 
 import random
@@ -33,7 +33,7 @@ class Player :
 
     def change_position(self, advance):
 
-        self.board.square_list[self.position].present_player.remove(self.name)  # on retire le player de sa case
+        self.board.square_list[self.position].present_player.remove(self.name)  # on retire le player de sa case.
 
         quotient =(self.position + advance) // len(self.board.square_list)
         self.position = (self.position + advance) % len(self.board.square_list)
@@ -73,6 +73,9 @@ class Player :
         elif isinstance(square,Luck):
             square.get_impact(self)
 
+        elif isinstance(square, Tax):
+            self.pay_taxes(square)
+
 
     def buy_land(self, square):
         self.money -= square.value
@@ -106,6 +109,11 @@ class Player :
             #Proposer un échange
             #Fin de partie?
             #puis nouvel appel à fonction pay_rent
+
+    def pay_taxes(self,square):
+        if self.money >= square.amount:
+            self.money -= square.amount
+            print(f"Vous venez de payer {square.amount} € à la banque ... Il vous reste {self.money}€")
 
 
 

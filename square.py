@@ -87,11 +87,11 @@ class Luck(Square):
 
 class Tax(Square):
 
-    def __init__(self, rent, position, name):
+    def __init__(self, name, position, amount):
         Square.__init__(self, name, position)
-        self.rent = rent
+        self.amount = amount
 
     def __repr__(self):
-            return (f"C'est une case de taxe ... Montant à payer : {self.rent}")
+            return (f"C'est une case de taxe ... Montant à payer : {self.amount}")
 
 
