@@ -52,7 +52,7 @@
       "name": "Taxes",
       "position" : 5,
       "type" : "tax",
-      "rent" : 10
+      "amount" : 10
     }
   ]
 

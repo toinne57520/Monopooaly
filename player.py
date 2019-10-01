@@ -1,4 +1,4 @@
-from square import Land, Luck
+from square import Land, Luck, Tax
 
 
 import random
@@ -73,6 +73,9 @@ class Player :
         elif isinstance(square,Luck):
             square.get_impact(self)
 
+        elif isinstance(square, Tax):
+            self.pay_taxes(square)
+
 
     def buy_land(self, square):
         self.money -= square.value
@@ -106,6 +109,12 @@ class Player :
             #Proposer un échange
             #Fin de partie?
             #puis nouvel appel à fonction pay_rent
+
+    def pay_taxes(self,square):
+        if self.money >= square.amount:
+            self.money -= square.amount
+            print("Vous venez de payer " + str(square.amount) + "€ à la banque"
+                  f"... Il vous reste {self.money}€.")
 
 
 

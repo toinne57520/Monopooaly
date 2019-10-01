@@ -23,10 +23,14 @@ class Board :
             elif element["type"] == "Square":
                 square_list.append(square.Square(element["name"], element["position"]))
 
+            elif element["type"] == "Tax":
+                square_list.append(square.Tax(element["name"], element["position"], element["amount"]))
+
             else :
                 print("Pas une catégorie connue")
         return square_list
 
     def add_player(self, player):
         self.players.append(player)
+
 
