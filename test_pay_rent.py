@@ -1,7 +1,7 @@
 from player import Player
 from board import Board
 
-#Ce test teste la méthode pay_rent de Player avec un plateau constitué uniquement de gares.
+#Ce test teste la méthode pay_rent de Player avec un plateau constitué uniquement de gares...
 
 game = Board('Boards/taxes.json')
 joueur = Player('Antoine',game)
