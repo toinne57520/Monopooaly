@@ -1,5 +1,8 @@
 import json
 import random
+import player
+#import main
+
 class Square:
 
     def __init__(self,name,position):
@@ -37,10 +40,10 @@ class Land(Square):
     def __repr__(self):
         if self.status :
             if self.owner == self.present_player[-1]:
-               return("Vous tombez à la maison")
+                return("Vous tombez à la maison")
             else:
-                return (f"Coup dur ! Cette case est {self.name}, détenue par le joueur {self.owner}. Il y a {self.nb_houses}, "
-                    f"vous devez donc payer {self.rent[self.nb_houses]} €")
+                return (f"Coup dur ! Cette case est {self.name}, détenue par le joueur {self.owner.name}. Il y a {self.nb_houses} maisons contruites. "
+                        f"Vous devez donc payer {self.rent[self.nb_houses]} €")
         else :
             return (f"Quelle aubaine ! Cette case est libre ! C'est {self.name} de la couleur {self.color}. "
                     f"Elle coûte {self.value} €.")#voir plus tard pour le cout des maisons
