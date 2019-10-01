@@ -26,3 +26,7 @@ class Board :
             else :
                 print("Pas une catégorie connue")
         return square_list
+
+    def add_player(self, player):
+        self.players.append(player)
+
