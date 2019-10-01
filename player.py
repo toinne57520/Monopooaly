@@ -22,14 +22,12 @@ class Player :
                    i+=1
         return i
 
-
     def throw_dice(self):
         dice1 = random.randint(1,6)
         dice2 = random.randint(1,6) #quand on rajoutera les tours, mettre l'option double = rejouer
         advance = dice1 + dice2
         print(f"Vous avancez de {advance} cases.")
         self.change_position(advance)
-
 
     def change_position(self, advance):
 
@@ -47,13 +45,12 @@ class Player :
         #on appelle la méthode qui ensuite nous redirige vers la bonne action
         self.action_choice()
 
-
     def action_choice(self):
         square = self.board.square_list[self.position]
 
         if isinstance(square,Land): #cas où on tombe sur une case terrain
 
-            if square.status : #si le terrain est habité
+            if square.status and not square.mortage : #si le terrain est habité
                 self.pay_rent(square)
 
             else :
@@ -76,14 +73,12 @@ class Player :
         elif isinstance(square, Tax):
             self.pay_taxes(square)
 
-
     def buy_land(self, square):
         self.money -= square.value
         square.owner = self
         square.status = True
         self.assets.append(square)
         print(f"Vous êtes maintenant propriétaire de {square.name}")
-
 
     def pay_rent(self, square):
         # si c'est une gare, on calcule le loyer en fonction du nombre de gare possédé par l'adversaire.
@@ -114,6 +109,40 @@ class Player :
         if self.money >= square.amount:
             self.money -= square.amount
             print(f"Vous venez de payer {square.amount} € à la banque ... Il vous reste {self.money}€")
+
+    def to_mortgage(self):
+        #on vérifie que le joueur possède des terrains
+        active_assets=[]
+        try :
+            for element in self.assets:
+                if not element.mortgage:
+                    active_assets.append(element)
+            assert len(self.assets)>0 and len(active_assets)>0
+        except AssertionError :
+            print("Cela s'annonce compliqué, vous n'avez pas de terrains à hypothéquer")
+
+        #on liste les possessions actives du joueur et la valeur de l'hypothèque
+        assets_mortgage = [[element.name,element.value/2] for element in active_assets]
+        print(f"Vous possédez en ce moment {assets_mortgage}")
+        try :
+            answer = input("Quel terrain souhaitez-vous hypothéquer ?")
+            answer=answer.upper()
+            assert answer in [element.name.upper() for element in active_assets]
+        except AssertionError:
+            print("Rentrez un terrain valide")
+            self.to_mortgage()
+
+        #on parcourt les assets pour retrouver le terrain à hypothéquer
+        for element in active_assets :
+            if element.name.upper() == answer :
+                element.mortgage = True
+                self.money += element.value/2
+
+
+
+
+
+
 
 
 
