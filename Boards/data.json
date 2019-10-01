@@ -13,7 +13,8 @@
       "type" : "Land",
       "value" : 400,
       "color" : "bleu fonce",
-      "rent" : [20,50,100,145,530,1000]
+      "rent" : [20,50,100,145,530,1000],
+      "mortgage" : 200
     },
     {
       "name": "Nice",
@@ -21,7 +22,8 @@
       "type" : "Land",
       "value" : 200,
       "color" : "yellow",
-      "rent" : [15,40,90,120,300,800]
+      "rent" : [15,40,90,120,300,800],
+      "mortgage" : 100
     },
     {
       "name": "Rouhling",
@@ -29,12 +31,28 @@
       "type" : "Land",
       "value" : 60,
       "color" : "bleu clair",
-      "rent" : [5,30,80,100,150,500]
+      "rent" : [5,30,80,100,150,500],
+      "mortgage" : 30
     },
     {
       "name": "Luck1",
       "position" : 2,
       "type" : "Luck"
+    },
+    {
+      "name": "Gare Montparnasse",
+      "position" : 5,
+      "type" : "Land",
+      "value" : 10,
+      "rent" : [5,10,30,40],
+      "color" : "trainstation",
+      "mortgage" : 5
+    },
+    {
+      "name": "Taxes",
+      "position" : 5,
+      "type" : "tax",
+      "rent" : 10
     }
   ]
 
