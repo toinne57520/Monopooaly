@@ -32,6 +32,8 @@ def launch_game():
         print("Vous devez choisir 1 ou 2")
         launch_game()
 
+    return board
+
 
 def new_game():
     board = Board(board_choice())
@@ -73,4 +75,19 @@ def player_choice():
         print("Le nombre de joueurs doit être un entier entre 1 et 4")
         player_choice()
 
-new_game()
+def standard_turn(player):
+    #ajout des fonctions possibles pour un joueur
+    player.throw_dice()
+
+
+board = new_game()
+print("On lance la partie!")
+players_turn = 0
+
+while len(board.players) > 1: #on enleve les joueurs qui perdent au fur et à mesure et on s'arrete quand il n'en reste qu'un?
+    player = board.players[int(players_turn%len(board.players))]
+    print("C'est le tour de " + str(player.name))
+    standard_turn(player)
+    players_turn += 1
+
+#gestion de fin de tour à faire, comment quitter la partie, comment l'enregistrer??
