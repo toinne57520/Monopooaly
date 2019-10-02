@@ -124,6 +124,7 @@ class Player :
         #on liste les possessions actives du joueur et la valeur de l'hypothèque
         assets_mortgage = [[element.name,element.value/2] for element in active_assets]
         print(f"Vous possédez en ce moment {assets_mortgage}")
+        #on propose au joueur de choisir son terrain à hypothéquer
         try :
             answer = input("Quel terrain souhaitez-vous hypothéquer ?")
             answer=answer.upper()
@@ -137,6 +138,7 @@ class Player :
             if element.name.upper() == answer :
                 element.mortgage = True
                 self.money += element.value/2
+                print (f"Vous avez hypothéqué {element.name} et vous avez gagné {element.value/2}.")
 
 
 
