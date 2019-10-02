@@ -179,7 +179,7 @@ class Player :
         try:
             for element in self.assets:
                 #on compare le nombre de terrains de la couleur détenus par le joueur et le nombre de ces terrains sur le plateau
-                if self.get_nb_assets_of_a_color(element.color) == self.board.get_nb_lands_of_a_color(element.color):
+                if self.get_nb_assets_of_a_color(element.color) == self.board.get_nb_lands_of_a_color(element.color) and element.color!="trainstation":
                     building_lands.append(element)
             assert len(building_lands) > 0
             building_lands_color_price = [[element.name, element.color, element.construction_price] for element in building_lands]
@@ -205,6 +205,7 @@ class Player :
                     color = input("Sur quelle couleur souhaitez-vous construire? rentrez une couleur ou rentrez Annuler")
                     color = color.upper()
                     assert (color in [element.color.upper() for element in building_lands[1]] or color =="ANNULER")
+
                     if color=="ANNULER":
                         break
                     else :
@@ -239,20 +240,32 @@ class Player :
                     break
                 else :
                     land_to_build = [element for element in building_lands_of_color if element.name.upper()==land][0]
-                    #self.to_build_land(land_to_build)
-                    print("en travaux")
+                    self.to_build_one_land(land_to_build)
 
             except AssertionError:
                 print("Rentrez un terrain constructible")
                 self.to_build_neighbourhood(building_lands, color)
             try :
-                answer = input ("Souhaitez-vous construire sur un autre terrain ? (oui/non)")
+                answer = input ("Souhaitez-vous construire sur un autre terrain de cette couleur? (oui/non)")
                 assert (answer.upper() == "OUI" or answer.upper()=="NON")
                 if answer.upper()=="NON":
                     break
             except AssertionError:
                 print("Merci de répondre par oui ou par non !")
                 self.to_build_neighbourhood(building_lands, color)
+
+
+    def to_build_one_land(self, land_to_build):
+        try:
+            nb_to_build = float(input(f"Combien de maisons voulez-vous construire sur {land_to_build.name}?"))
+            assert nb_to_build == int(nb_to_build)
+            land_to_build.nb_houses += int(nb_to_build)
+            land_to_build.owner.money -= int(land_to_build.construction_price*nb_to_build)
+            print(land_to_build.nb_houses)
+        except:
+            print("Renseignez un nombre entier de maisons")
+            self.to_build_one_land(land_to_build)
+
 
 
 
