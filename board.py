@@ -15,7 +15,7 @@ class Board :
         for element in squares :
             #rajouter gestion de l'erreur pour voir si la case n'appartient pas aux bonnes catégories.
             if element["type"] == "Land":
-                square_list.append(square.Land(element["name"], element["position"],element["value"],element["color"], element["rent"]))
+                square_list.append(square.Land(element["name"], element["position"],element["value"],element["color"], element["rent"], element["construction_price"]))
 
             elif element["type"] == "Luck":
                 square_list.append(square.Luck(element["name"], element["position"]))
@@ -32,5 +32,12 @@ class Board :
 
     def add_player(self, player):
         self.players.append(player)
+
+    def get_nb_lands_of_a_color(self, color):
+        i=0
+        for land in self.square_list :
+                if land.color==color:
+                   i+=1
+        return i
 
 
