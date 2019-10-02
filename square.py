@@ -27,7 +27,7 @@ class Land(Square):
     son statut - true si habité, false sinon
     """
 
-    def __init__(self, name, position, value, color, rent):
+    def __init__(self, name, position, value, color, rent, construction_price):
         Square.__init__(self,name,position)
         self.value = value
         self.color = color
@@ -36,15 +36,12 @@ class Land(Square):
         self.status = False
         self.nb_houses = 0
         self.mortgage = False    #Vrai si le terrain est hypothéqué, faux sinon
+        self.construction_price = construction_price
 
     def __repr__(self):
         if self.status :
-            if self.owner == self.present_player[-1]:
-                return(f" La case est {self.name}, c'est chez vous.")
-            else:
-                return (f"Cette case est {self.name}, détenue par le joueur {self.owner.name}. Il y a {self.nb_houses} maisons contruites." 
-                        f"Le loyer actuel est de {self.rent[self.nb_houses]} €")
-
+            return (f"Cette case est {self.name}, détenue par le joueur {self.owner.name}. Il y a {self.nb_houses} maisons contruites."
+                       f"Le loyer actuel est de {self.rent[self.nb_houses]} €")
         else :
             return (f"Cette case est libre ! C'est {self.name} de la couleur {self.color}. "
                     f"Elle coûte {self.value} €.")#voir plus tard pour le cout des maisons
