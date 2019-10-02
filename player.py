@@ -155,7 +155,7 @@ class Player :
         # on liste les possessions hypothéquées du joueur et la valeur de l'hypothèque
         assets_mortgage = [[element.name, element.value / 2] for element in passive_assets]
         print(f"Vos terrains hypothéqués et leur valeur d'hypothèque sont {assets_mortgage}. ")
-        # on propose au joueur de choisir son terrain à hypothéquer
+        # on propose au joueur de choisir son terrain à hypothéquer.
         try:
             answer = input("Quel terrain souhaitez-vous deshypothéquer ?")
             answer = answer.upper()

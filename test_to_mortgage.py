@@ -1,7 +1,7 @@
 from player import Player
 from board import Board
 
-#Ce test teste la méthode to_morgage de Player
+#Ce test teste la méthode to_morgage de Player.
 
 game = Board('Boards/lands.json')
 joueur = Player('Antoine',game)
