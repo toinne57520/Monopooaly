@@ -50,7 +50,7 @@ class Player :
 
         if isinstance(square,Land): #cas où on tombe sur une case terrain
 
-            if square.status and not square.mortage : #si le terrain est habité
+            if square.status and not square.mortgage : #si le terrain est habité
                 self.pay_rent(square)
 
             else :
@@ -169,6 +169,95 @@ class Player :
                 self.money -= element.value/2
                 print (f"Vous avez deshypothéqué {element.name} et vous avez payé {element.value/2}€.")
                 print(element.mortgage)
+
+    def get_building_lands(self):
+        """
+        Cette méthode renvoie tous les terrains constructibles (c'est à dire avec la couleur complète) du joueur s'il en a.
+
+        """
+        building_lands = []
+        try:
+            for element in self.assets:
+                #on compare le nombre de terrains de la couleur détenus par le joueur et le nombre de ces terrains sur le plateau
+                if self.get_nb_assets_of_a_color(element.color) == self.board.get_nb_lands_of_a_color(element.color):
+                    building_lands.append(element)
+            assert len(building_lands) > 0
+            building_lands_color_price = [[element.name, element.color, element.construction_price] for element in building_lands]
+            # on affiche les terrains constructibles, leur couleur et leur prix de construction
+            # affichage à améliorer
+            print(f"Vous pouvez construire sur (et chaque maison coûte) {building_lands_color_price}")
+            return True, building_lands
+        except AssertionError:
+            print("Cela s'annonce compliqué, vous n'avez pas de terrains constructibles. Vous n'avez aucun quartier complet, repartez à l'aventure.")
+            return False
+
+    def to_build(self):
+        """
+        Cette méthode permet de faire choisir au joueur la couleur sur laquelle il veut construire
+        :return:
+        """
+        building_lands = self.get_building_lands()
+
+        if building_lands[0]:
+            want_to_build = True
+            while want_to_build :
+                try:
+                    color = input("Sur quelle couleur souhaitez-vous construire? rentrez une couleur ou rentrez Annuler")
+                    color = color.upper()
+                    assert (color in [element.color.upper() for element in building_lands[1]] or color =="ANNULER")
+                    if color=="ANNULER":
+                        break
+                    else :
+                        #une fois la couleur choisie, on appelle la méthode qui permet de construire avec une couleur donnée
+                        self.to_build_neighbourhood(building_lands[1], color)
+
+                except AssertionError:
+                    print("Rentrez une couleur constructible")
+                    self.to_build()
+                try :
+                    answer = input ("Souhaitez-vous construire une autre couleur ? (oui/non)")
+                    assert (answer.upper() == "OUI" or answer.upper()=="NON")
+                    if answer.upper()=="NON":
+                        break
+                except AssertionError:
+                    print("Merci de répondre par oui ou par non !")
+                    self.to_build()
+
+
+    def to_build_neighbourhood(self,building_lands, color):
+
+        #on va afficher tous les terrains constructibles de la couleur choisie
+        building_lands_of_color = [element for element in building_lands if element.color.upper() == color]
+        print(building_lands_of_color)
+        want_to_build = True
+        while want_to_build :
+            try:
+                land = input("Sur quel terrain souhaitez-vous construire? rentrez un nom ou rentrez Annuler")
+                land = land.upper()
+                assert (land in [element.name.upper() for element in building_lands_of_color] or land =="ANNULER")
+                if land=="ANNULER":
+                    break
+                else :
+                    land_to_build = [element for element in building_lands_of_color if element.name.upper()==land][0]
+                    #self.to_build_land(land_to_build)
+                    print("en travaux")
+
+            except AssertionError:
+                print("Rentrez un terrain constructible")
+                self.to_build_neighbourhood(building_lands, color)
+            try :
+                answer = input ("Souhaitez-vous construire sur un autre terrain ? (oui/non)")
+                assert (answer.upper() == "OUI" or answer.upper()=="NON")
+                if answer.upper()=="NON":
+                    break
+            except AssertionError:
+                print("Merci de répondre par oui ou par non !")
+                self.to_build_neighbourhood(building_lands, color)
+
+
+
+
+
 
 
 
