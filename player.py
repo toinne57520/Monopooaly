@@ -256,15 +256,32 @@ class Player :
 
 
     def to_build_one_land(self, land_to_build):
+        """
+        Cette méthode permet de construire un nombre de maisons choisi par l'utilisateur sur un terrain donné
+        :param land_to_build:
+        :return:
+        """
         try:
-            nb_to_build = float(input(f"Combien de maisons voulez-vous construire sur {land_to_build.name}?"))
+            #on vérifie que le nombre de maisons rentré est bien un entier, compatible avec le nombre maximal de maisons par terrain
+            nb_max = 5 - land_to_build.nb_houses
+            nb_to_build = float(input(f"Combien de maisons voulez-vous construire sur {land_to_build.name}? (Maximum {nb_max} maisons)"))
             assert nb_to_build == int(nb_to_build)
-            land_to_build.nb_houses += int(nb_to_build)
-            land_to_build.owner.money -= int(land_to_build.construction_price*nb_to_build)
-            print(land_to_build.nb_houses)
-        except:
+            if nb_to_build > nb_max:
+                raise ValueError("")
+
+            land_to_build.nb_houses += int(nb_to_build) #construction de la maison
+            land_to_build.owner.money -= int(land_to_build.construction_price * nb_to_build) #on fait payer le joueur nouvellement propriétaire
+            print(f"Bravo, vous avez désormais {land_to_build.nb_houses} maisons sur {land_to_build.name}.")
+
+        except AssertionError:
             print("Renseignez un nombre entier de maisons")
             self.to_build_one_land(land_to_build)
+
+        except ValueError:
+            print("Vous ne pavez pas construire plus qu'un hotel (soit 5 maisons)")
+            self.to_build_one_land(land_to_build)
+
+
 
 
 
