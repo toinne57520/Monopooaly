@@ -13,9 +13,9 @@ for i in game.square_list:
     i.owner=joueur
     i.status=True
     joueur.assets.append(i)
+    i.mortgage = True
 
-
-joueur.to_mortgage()
+joueur.to_clear_mortgage()
 
 print(joueur.position)
 print(joueur.money)

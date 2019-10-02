@@ -117,7 +117,7 @@ class Player :
             for element in self.assets:
                 if not element.mortgage:
                     active_assets.append(element)
-            assert len(self.assets)>0 and len(active_assets)>0
+            assert len(active_assets)>0
         except AssertionError :
             print("Cela s'annonce compliqué, vous n'avez pas de terrains à hypothéquer")
 
@@ -134,14 +134,41 @@ class Player :
             self.to_mortgage()
 
         #on parcourt les assets pour retrouver le terrain à hypothéquer
+        #essayer d'enlever cette boucle
         for element in active_assets :
             if element.name.upper() == answer :
                 element.mortgage = True
                 self.money += element.value/2
-                print (f"Vous avez hypothéqué {element.name} et vous avez gagné {element.value/2}.")
+                print (f"Vous avez hypothéqué {element.name} et vous avez gagné {element.value/2}€.")
+                print(element.mortgage)
 
+    def to_clear_mortgage(self):
+        passive_assets = []
+        try:
+            for element in self.assets:
+                if element.mortgage:
+                    passive_assets.append(element)
+            assert len(passive_assets) > 0
+        except AssertionError:
+            print("Cela s'annonce compliqué, vous n'avez pas de terrains à deshypothéquer")
 
-
+        # on liste les possessions hypothéquées du joueur et la valeur de l'hypothèque
+        assets_mortgage = [[element.name, element.value / 2] for element in passive_assets]
+        print(f"Vos terrains hypothéqués et leur valeur d'hypothèque sont {assets_mortgage}. ")
+        # on propose au joueur de choisir son terrain à hypothéquer
+        try:
+            answer = input("Quel terrain souhaitez-vous deshypothéquer ?")
+            answer = answer.upper()
+            assert answer in [element.name.upper() for element in passive_assets]
+        except AssertionError:
+            print("Rentrez un terrain valide")
+            self.to_clear_mortgage()
+        for element in passive_assets :
+            if element.name.upper() == answer :
+                element.mortgage = False
+                self.money -= element.value/2
+                print (f"Vous avez deshypothéqué {element.name} et vous avez payé {element.value/2}€.")
+                print(element.mortgage)
 
 
 
