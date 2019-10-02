@@ -282,6 +282,81 @@ class Player :
             self.to_build_one_land(land_to_build)
 
 
+    def get_built_lands(self):
+        """
+        Cette méthode renvoie tous les terrains sur lesquelles des maisons sont construites.
+        """
+        built_lands = []
+        try:
+            for element in self.assets:
+                if element.nb_houses > 0:
+                    built_lands.append(element)
+            assert len(built_lands) > 0
+            built_lands_nb_houses_price = [[element.name, element.nb_houses, element.construction_price/2] for element in built_lands]
+            # on affiche les terrains construits, leur nombre de maison et leur prix de revente
+            # affichage à améliorer
+            print(f"Vous pouvez revendre sur (et chaque maison rapporte) {built_lands_nb_houses_price}")
+            return True, built_lands
+        except AssertionError:
+            print("Cela s'annonce compliqué, vous n'avez pas de terrains construits. Vous n'avez aucune maison à revendre, ne vendez pas la peau de l'ours avant de l'avoir tué!")
+            return False
+
+    def choose_land_to_sell(self):
+        """Cette méthode permet de choisir le terrain sur lequel on veut vendre une ou plusieurs maisons"""
+        built_lands = self.get_built_lands()
+        if built_lands[0]:
+            while True:
+                try:
+                    land = input("Sur quel terrain souhaitez-vous vendre? rentrez un nom ou rentrez Annuler")
+                    land = land.upper()
+                    assert (land in [element.name.upper() for element in built_lands[1]] or land == "ANNULER")
+                    if land == "ANNULER":
+                        break
+                    else:
+                        land_to_sell = [element for element in built_lands[1] if element.name.upper() == land][0]
+                        self.to_sell_one_land(land_to_sell)
+                except AssertionError:
+                    print("Rentrez un terrain construit")
+
+                try:
+                    answer = input("Souhaitez-vous vendre sur un autre terrain? (oui/non)")
+                    assert (answer.upper() == "OUI" or answer.upper() == "NON")
+                    if answer.upper() == "NON":
+                        break
+
+                except AssertionError:
+                    print("Merci de répondre par oui ou par non !")
+                    self.choose_land_to_sell()
+
+
+    def to_sell_one_land(self, land_to_sell):
+        """
+        Cette méthode permet de faire choisir au joueur les maisons qu'il souhaite revendre
+        :return:
+        """
+
+        try:
+            # on vérifie que le nombre de maisons à vendre rentré est bien un entier, compatible avec le nombre  de maisons par terrain
+            nb_max = land_to_sell.nb_houses
+            nb_to_sell = float(input(
+                f"Combien de maisons voulez-vous vendre sur {land_to_sell.name}? (Maximum {nb_max} maisons)"))
+            assert nb_to_sell == int(nb_to_sell)
+            if nb_to_sell > nb_max:
+                raise ValueError("")
+
+            land_to_sell.nb_houses -= int(nb_to_sell)  # construction de la maison
+            land_to_sell.owner.money += int(
+                land_to_sell.construction_price/2 * nb_to_sell)  # on fait payer le joueur nouvellement propriétaire
+            print(f"Vous avez désormais {land_to_sell.nb_houses} maisons sur {land_to_sell.name}.")
+
+        except AssertionError:
+            print("Renseignez un nombre entier de maisons")
+            self.to_sell_one_land(land_to_sell)
+
+        except ValueError:
+            print("Petit malin! Vous ne pouvez pas vendre plus de maisons que vous n'en possédez!")
+            self.to_sell_one_land(land_to_sell)
+
 
 
 
