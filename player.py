@@ -63,6 +63,8 @@ class Player :
                 except AssertionError:
                     print ("Vous devez répondre par oui ou non ! ")
                     self.action_choice()
+                    return
+
                 if answer == "OUI": #si on veut l'acheter
                         return self.buy_land(square)
 
@@ -109,6 +111,13 @@ class Player :
         if self.money >= square.amount:
             self.money -= square.amount
             print(f"Vous venez de payer {square.amount} € à la banque ... Il vous reste {self.money}€")
+        else:
+            print("Aïe! Vous n'avez pas assez d'argent pour régler vos dettes! "
+                  "Que voulez vous faire?")
+            # Hypothéquer?
+            # Proposer un échange
+            # Fin de partie?
+            # puis nouvel appel à fonction pay_taxes
 
     def to_mortgage(self):
         #on vérifie que le joueur possède des terrains
@@ -132,6 +141,7 @@ class Player :
         except AssertionError:
             print("Rentrez un terrain valide")
             self.to_mortgage()
+            return
 
         #on parcourt les assets pour retrouver le terrain à hypothéquer
         #essayer d'enlever cette boucle
@@ -163,6 +173,8 @@ class Player :
         except AssertionError:
             print("Rentrez un terrain valide")
             self.to_clear_mortgage()
+            return
+
         for element in passive_assets :
             if element.name.upper() == answer :
                 element.mortgage = False
@@ -215,6 +227,8 @@ class Player :
                 except AssertionError:
                     print("Rentrez une couleur constructible")
                     self.to_build()
+                    return
+
                 try :
                     answer = input ("Souhaitez-vous construire une autre couleur ? (oui/non)")
                     assert (answer.upper() == "OUI" or answer.upper()=="NON")
@@ -223,6 +237,7 @@ class Player :
                 except AssertionError:
                     print("Merci de répondre par oui ou par non !")
                     self.to_build()
+                    return
 
 
     def to_build_neighbourhood(self,building_lands, color):
@@ -245,6 +260,8 @@ class Player :
             except AssertionError:
                 print("Rentrez un terrain constructible")
                 self.to_build_neighbourhood(building_lands, color)
+                return
+
             try :
                 answer = input ("Souhaitez-vous construire sur un autre terrain de cette couleur? (oui/non)")
                 assert (answer.upper() == "OUI" or answer.upper()=="NON")
@@ -253,6 +270,7 @@ class Player :
             except AssertionError:
                 print("Merci de répondre par oui ou par non !")
                 self.to_build_neighbourhood(building_lands, color)
+                return
 
 
     def to_build_one_land(self, land_to_build):
@@ -276,10 +294,12 @@ class Player :
         except AssertionError:
             print("Renseignez un nombre entier de maisons")
             self.to_build_one_land(land_to_build)
+            return
 
         except ValueError:
             print("Vous ne pavez pas construire plus qu'un hotel (soit 5 maisons)")
             self.to_build_one_land(land_to_build)
+            return
 
 
     def get_built_lands(self):
@@ -327,6 +347,7 @@ class Player :
                 except AssertionError:
                     print("Merci de répondre par oui ou par non !")
                     self.choose_land_to_sell()
+                    return
 
 
     def to_sell_one_land(self, land_to_sell):
@@ -352,10 +373,12 @@ class Player :
         except AssertionError:
             print("Renseignez un nombre entier de maisons")
             self.to_sell_one_land(land_to_sell)
+            return
 
         except ValueError:
             print("Petit malin! Vous ne pouvez pas vendre plus de maisons que vous n'en possédez!")
             self.to_sell_one_land(land_to_sell)
+            return
 
 
 
