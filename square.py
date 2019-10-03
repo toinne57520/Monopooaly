@@ -37,6 +37,11 @@ class Land(Square):
         self.nb_houses = 0
         self.mortgage = False    #Vrai si le terrain est hypothéqué, faux sinon
         self.construction_price = construction_price
+        self._actions = { 'ok': 'super ' }
+
+    @property
+    def actions(self):
+        return self.actions.keys()
 
     def __repr__(self):
         if self.status :
@@ -45,6 +50,64 @@ class Land(Square):
         else :
             return (f"Cette case est libre ! C'est {self.name} de la couleur {self.color}. "
                     f"Elle coûte {self.value} €.")#voir plus tard pour le cout des maisons
+
+    def buy_land(self, player):
+        player.money -= self.value
+        self.owner = player
+        self.status = True
+        player.assets.append(self)
+        return(f"Le joueur {player.name} êtes maintenant propriétaire de {self.name}")
+
+    def pay_rent(self, player):
+        # si c'est une gare, on calcule le loyer en fonction du nombre de gare possédé par l'adversaire.
+        if self.color == "trainstation":
+            nb_trainstation = self.owner.get_nb_assets_of_a_color("trainstation", self.owner)
+            rent = self.rent[nb_trainstation-1]
+            return(f"Le joueur {self.owner.name} possède {nb_trainstation} gares.")
+        #si c'est un terrain, on calcule le loyer en fonction du nombre de maisons construites
+        else:
+            rent = self.rent[self.nb_houses]
+
+        #si le joueur actif est capable de payer, il paye et l'autre reçoit l'argent
+        if player.money >= rent:
+            player.money -= rent
+            self.owner.money+=rent
+            return(f"Le joueur {player.name} vient de payer {rent} € à {self.owner.name}")
+        else:
+            return(f"Aïe! Le joueur {player.name} n'a pas assez d'argent pour régler ses dettes! ")
+
+    def to_mortgage(self):
+        self.mortgage = True
+        self.owner.money += self.value/2
+        return(f"Le joueur {self.owner.name} a hypothéqué {self.name} et a gagné {self.value/2}€.")
+
+    def to_clear_mortgage(self):
+        self.mortgage = False
+        self.owner.money -= self.value / 2
+        print(f"Le joueur {self.owner.name} a deshypothéqué {self.name} et a payé {self.value/2}€.")
+
+    def to_build(self, nb_houses_to_build):
+        try:
+            #on vérifie que le nombre de maisons rentré est bien un entier, compatible avec le nombre maximal de maisons par terrain
+            nb_max = 5 - self.nb_houses
+            assert (nb_houses_to_build < nb_max)
+            self.nb_houses += nb_houses_to_build #on construit
+            self.owner.money -= self.construction_price* nb_houses_to_build #on fait payer la construction
+            return(f"Bravo, le joueur {self.owner.name} a désormais {self.nb_houses} maisons sur {self.name}.")
+
+        except AssertionError:
+            return("Impossible de construire autant de maisons : max 5 maisons")
+
+    def to_sell(self, nb_houses_to_sell):
+        try:
+            nb_max = self.nb_houses
+            assert( nb_houses_to_sell < nb_max) #on ne peut pas vendre plus de maisons qu'on en a déjà sur le terrain
+            self.nb_houses -= nb_houses_to_sell  # destruction de la maison
+            self.owner.money += self.construction_price/2 * nb_houses_to_sell  # on vend pour la moitié du prix de construction
+            return(f"Terrible, le joueur {self.owner.name} n'a désormais plus que {self.nb_houses} maisons sur {self.name}.")
+
+        except AssertionError:
+            return("Impossible de vendre plus de maisons que celles déjà construites")
 
 
 class Luck(Square):
@@ -91,4 +154,9 @@ class Tax(Square):
     def __repr__(self):
             return (f"C'est une case de taxe ... Montant à payer : {self.amount}")
 
-
+    def pay_taxes(self,player):
+        if player.money >= self.amount:
+            player.money -= self.amount
+            return(f"Le joueur {player.name} vient de payer {self.amount} € à la banque ... Il lui reste {player.money}€")
+        else:
+            return(f"Aïe! Le joueur {player.name} n'a pas assez d'argent pour régler ses dettes! ")
