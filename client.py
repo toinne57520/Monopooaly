@@ -49,7 +49,6 @@ if __name__ == '__main__':
 
             #receive the board from the server and start turn
             data = sock.recv(4096)
-            data.seek(0)
             try :
                 board = pickle.loads(data)
             except :

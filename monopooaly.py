@@ -35,7 +35,6 @@ class MonopooalyThread(Thread):
 
         #receive the updated board
         data = self.__socket.recv(4096)
-        data.seek(0)
         new_board = pickle.loads(data)
         MonopooalyThread.board = new_board
 
