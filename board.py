@@ -41,3 +41,26 @@ class Board :
         return i
 
 
+    def throw_dice(self, player):
+        dice1 = random.randint(1,6)
+        dice2 = random.randint(1,6) #quand on rajoutera les tours, mettre l'option double = rejouer
+        advance = dice1 + dice2
+        print(f"Vous avancez de {advance} cases.")
+        self.change_position(player, advance)
+
+
+    def change_position(self, advance, player):
+
+        self.square_list[player.position].present_player.remove(player)  # on retire le player de sa case.
+
+        quotient = (player.position + advance) // len(self.square_list)
+        player.position = (player.position + advance) % len(self.square_list)
+
+        if quotient>0 :
+            player.money += quotient * 200
+            return (f"Vous êtes passés par la case départ. Félicitations ! vous avez gagné {quotient*200} €")
+
+        self.square_list[player.position].present_player.append(player) #on l'enregistre sur sa nouvelle case
+        return self.square_list[player.position]
+
+
