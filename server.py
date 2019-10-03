@@ -1,11 +1,12 @@
 from threading import Thread
 import socket
+from monopooaly import MonopooalyThread
 
 #serveur utilise dans le corrige du TP3
 
 class Server(Thread):
 
-    def __init__(self, port):
+    def __init__(self, port, board):
         Thread.__init__(self)
         if not isinstance(port, int):
             raise TypeError("Le port doit etre un entier")
@@ -13,14 +14,20 @@ class Server(Thread):
         self.__sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.__sock.bind(('localhost', port))
         self.__continuer = True
+        self.board = board
+        self.client_list = []
 
     def run(self):
+        i = 0
         self.__sock.listen(1)  # on autorise une seule connexion en attente à la fois
         print("En attente d'une connexion sur le serveur")
         while self.__continuer:
             try:
                 connexion, client = self.__sock.accept()
-                CalculatorThread(connexion).start()
+                client = MonopooalyThread(connexion, self.board, self)
+                self.client_list.append(client)
+                client.start()
+
             except OSError:
                 # se produit quand on coupe la socket
                 pass
