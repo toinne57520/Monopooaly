@@ -8,6 +8,7 @@ import socket
 from server import Server
 from time import sleep
 import struct
+#
 
 #game = Board('data.json')
 #joueur = Player('Antoine',game) #rajouter exception pour que les deux joueurs n'aient pas la meme position

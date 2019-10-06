@@ -2,6 +2,7 @@ import json
 import random
 #import player
 #import main
+#
 
 class Square:
 

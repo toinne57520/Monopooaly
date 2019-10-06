@@ -1,7 +1,7 @@
 import json
 import square
 import random
-
+#
 class Board :
 
     def __init__(self,json_file):

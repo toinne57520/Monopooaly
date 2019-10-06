@@ -2,6 +2,7 @@ from square import Land, Luck, Tax
 import json
 import random
 from time import sleep
+#
 
 class Player :
 
