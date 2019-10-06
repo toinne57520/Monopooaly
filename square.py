@@ -1,6 +1,6 @@
 import json
 import random
-import player
+#import player
 #import main
 
 class Square:
@@ -10,8 +10,16 @@ class Square:
         self.position = position
         self.present_player = []
 
-    def __repr__(self):
-        return("Vous êtes tombés sur la case départ")
+    def __repr__(self,player):
+        player.send_message("Vous êtes tombés sur la case départ")
+
+    def str(self,player):
+        player.send_message("Vous êtes tombés sur la case départ")
+        return
+
+    def get_actions(self,player):
+        dict = { 1: "Terminer mon tour"}
+        return dict
 
 
 class Land(Square):
@@ -37,19 +45,29 @@ class Land(Square):
         self.nb_houses = 0
         self.mortgage = False    #Vrai si le terrain est hypothéqué, faux sinon
         self.construction_price = construction_price
-        self._actions = { 'ok': 'super ' }
+
 
     @property
     def actions(self):
         return self.actions.keys()
 
-    def __repr__(self):
+
+    def __repr__(self,player):
         if self.status :
-            return (f"Cette case est {self.name}, détenue par le joueur {self.owner.name}. Il y a {self.nb_houses} maisons contruites."
+            player.send_message (f"Cette case est {self.name}, détenue par le joueur {self.owner.name}. Il y a {self.nb_houses} maisons contruites."
                        f"Le loyer actuel est de {self.rent[self.nb_houses]} €")
         else :
-            return (f"Cette case est libre ! C'est {self.name} de la couleur {self.color}. "
+            player.send_message (f"Cette case est libre ! C'est {self.name} de la couleur {self.color}. "
                     f"Elle coûte {self.value} €.")#voir plus tard pour le cout des maisons
+
+    def str(self,player):
+        if self.status :
+            player.send_message (f"Cette case est {self.name}, détenue par le joueur {self.owner.name}. Il y a {self.nb_houses} maisons contruites."
+                       f"Le loyer actuel est de {self.rent[self.nb_houses]} €")
+        else :
+            player.send_message (f"Cette case est libre ! C'est {self.name} de la couleur {self.color}. "
+                    f"Elle coûte {self.value} €.")#voir plus tard pour le cout des maisons
+        return
 
     def buy_land(self, player):
         player.money -= self.value
@@ -124,6 +142,14 @@ class Luck(Square):
     def __repr__(self):
         return("Vous êtes tombés sur une carte chance !")
 
+    def get_actions(self,player):
+        dict = { 1: "Tirer une carte chance"}
+        return dict
+
+    def str(self,player):
+        player.send_message("Vous êtes tombés sur une carte chance !")
+        return
+
     def get_impact(self,player):
         luck_impact = random.randint(1,self.nbre)
         name = self.impact_list[1]["name"]
@@ -153,6 +179,10 @@ class Tax(Square):
 
     def __repr__(self):
             return (f"C'est une case de taxe ... Montant à payer : {self.amount}")
+
+    def str(self,player):
+            player.send_message(f"C'est une case de taxe ... Montant à payer : {self.amount}")
+            return
 
     def pay_taxes(self,player):
         if player.money >= self.amount:

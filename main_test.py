@@ -81,6 +81,8 @@ def standard_turn(player):
     #ajout des fonctions possibles pour un joueur
     player.throw_dice()
 
+early_action = { 1 : 'Lancer les dés' , 2 : 'Terminer mon tour', 3 : 'Construire une maison', 4 : 'Hypothéquer'}
+
 if __name__ == '__main__':
     board = new_game()
     print("On lance la partie!")
@@ -91,9 +93,56 @@ if __name__ == '__main__':
     server.start()
 
     # on attend un peu
-    sleep(1)
+    while len(server.client_list) != 2:
+        sleep(1)
+
+    for client in server.client_list :
+        client.send("Bienvenue dans le Monopooaly!".encode())
+        player_name = client.recv(1024).decode()
+        player = Player(player_name,board,client)
+
+    starting_player = 0
+
+    while True:
+        player_active = board.players[(starting_player + 1) % 2]
+        player_inactive = board.players[(starting_player % 2)]
+        player_inactive.sock.send(struct.pack("?", False))
+        player_active.sock.send(struct.pack("?", True))
+
+        action = True
+        while action!= False :
+            action = player_active.choose_actions(early_action)
+
+            if action == "Lancer les dés":
+                advance = board.throw_dice(player_active)
+                board.change_position(advance,player_active)
+                board.square_list[player_active.position].str(player_active)
+                action = player_active.choose_actions(board.square_list[player_active.position].get_actions(player_active))
+                print(action)
+
+            if action == "Hypothéquer":
+                print(action)
+
+            if action == "Tirer une carte chance":
+                print(action)
+                board.square_list[player_active.position].get_impact(player_active)
+                action = "Terminer mon tour"
+
+            if action == "Construire une maison":
+                print(action)
+
+            if action == "Acheter le terrain":
+                print(action)
+
+            if action == "Terminer mon tour":
+                print(action)
+                player_active.sock.send("stop".encode())
+                action = False
+
+            #gérer le cas de terminer son tour après avoir lancé les dés
+
+        starting_player += 1
 
 
 
 
-#gestion de fin de tour à faire, comment quitter la partie, comment l'enregistrer??

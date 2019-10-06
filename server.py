@@ -24,10 +24,7 @@ class Server(Thread):
         while self.__continuer:
             try:
                 connexion, client = self.__sock.accept()
-                client = MonopooalyThread(connexion, self.board, self)
-                self.client_list.append(client)
-                client.start()
-
+                self.client_list.append(connexion)
             except OSError:
                 # se produit quand on coupe la socket
                 pass
