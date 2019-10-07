@@ -116,7 +116,7 @@ if __name__ == '__main__':
 
             if action == "Lancer les dés":
                 advance = board.throw_dice(player_active)
-                board.change_position(advance,player_active)
+                board.change_position(player_active,advance)
                 board.square_list[player_active.position].str(player_active)
                 action = player_active.choose_actions(board.square_list[player_active.position].get_actions(player_active))
                 print(action)
@@ -132,11 +132,15 @@ if __name__ == '__main__':
             if action == "Construire une maison":
                 print(action)
 
+            if action == "Payer le loyer":
+                print(action)
+
             if action == "Acheter le terrain":
                 print(action)
 
             if action == "Terminer mon tour":
                 print(action)
+                sleep(1)
                 player_active.sock.send("stop".encode())
                 action = False
 

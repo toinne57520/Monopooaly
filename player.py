@@ -36,12 +36,7 @@ class Player :
         print(dict[data_loaded])
         return(dict[data_loaded])
 
-    def choose_mortgage(self,dict):
-        self.sock.send("Que voulez vous faire?".encode())
-        data_string = json.dumps(dict).encode()
-        self.sock.send(data_string)
-        data_loaded = self.sock.recv(1024)
-        return (data_loaded)
+
 
     def send_message(self,message):
         sleep(1)
@@ -54,6 +49,9 @@ class Player :
         pass
 
     def choose_land_to_build(self,dict,sock):
+        pass
+
+    def choose_mortgage(self,dict):
         pass
 
     def choose_land_to_sell(self,dict,sock):

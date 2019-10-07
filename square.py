@@ -52,6 +52,14 @@ class Land(Square):
     def actions(self):
         return self.actions.keys()
 
+    def get_actions(self,player):
+        if self.status and player != self.owner:
+            dict = { 1: "Payer le loyer"}
+        else :
+            dict = { 1: "Acheter le terrain", 2:"Terminer mon tour"}
+
+        return dict
+
 
     def __repr__(self,player):
         if self.status :
