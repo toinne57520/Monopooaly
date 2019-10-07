@@ -82,7 +82,9 @@ def standard_turn(player):
     #ajout des fonctions possibles pour un joueur
     player.throw_dice()
 
-early_action = { 1 : 'Lancer les dés' , 2 : 'Terminer mon tour', 3 : 'Construire une maison', 4 : 'Hypothéquer'}
+early_action = { 1 : 'Lancer les dés' , 2 : 'Construire une maison', 3 : 'Hypothéquer'}
+end_action = {1 : 'Terminer mon tour'}
+
 
 if __name__ == '__main__':
     board = new_game()
@@ -126,17 +128,26 @@ if __name__ == '__main__':
 
             if action == "Tirer une carte chance":
                 print(action)
-                board.square_list[player_active.position].get_impact(player_active)
-                action = "Terminer mon tour"
+                sleep(1)
+                action = board.square_list[player_active.position].get_impact(player_active,board)
+                if action =="new_pos":
+                    action = player_active.choose_actions(board.square_list[player_active.position].get_actions(player_active))
 
             if action == "Construire une maison":
                 print(action)
 
             if action == "Payer le loyer":
                 print(action)
+                sleep(1)
+                board.square_list[player_active.position].pay_rent(player_active)
+                action = player_active.choose_actions(end_action)
 
             if action == "Acheter le terrain":
                 print(action)
+                sleep(1)
+                board.square_list[player_active.position].buy_land(player_active)
+                action = player_active.choose_actions(end_action)
+
 
             if action == "Terminer mon tour":
                 print(action)

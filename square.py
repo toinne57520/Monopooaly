@@ -83,14 +83,14 @@ class Land(Square):
         self.owner = player
         self.status = True
         player.assets.append(self)
-        return(f"Le joueur {player.name} êtes maintenant propriétaire de {self.name}")
+        player.send_message(f"Le joueur {player.name} est maintenant propriétaire de {self.name}")
 
     def pay_rent(self, player):
         # si c'est une gare, on calcule le loyer en fonction du nombre de gare possédé par l'adversaire.
         if self.color == "trainstation":
             nb_trainstation = self.owner.get_nb_assets_of_a_color("trainstation", self.owner)
             rent = self.rent[nb_trainstation-1]
-            return(f"Le joueur {self.owner.name} possède {nb_trainstation} gares.")
+            player.send_message(f"Le joueur {self.owner.name} possède {nb_trainstation} gares.")
         #si c'est un terrain, on calcule le loyer en fonction du nombre de maisons construites
         else:
             rent = self.rent[self.nb_houses]
@@ -99,9 +99,9 @@ class Land(Square):
         if player.money >= rent:
             player.money -= rent
             self.owner.money+=rent
-            return(f"Le joueur {player.name} vient de payer {rent} € à {self.owner.name}")
+            player.send_message(f"Le joueur {player.name} vient de payer {rent} € à {self.owner.name}")
         else:
-            return(f"Aïe! Le joueur {player.name} n'a pas assez d'argent pour régler ses dettes! ")
+            player.send_message(f"Aïe! Le joueur {player.name} n'a pas assez d'argent pour régler ses dettes! ")
 
     def to_mortgage(self):
         self.mortgage = True
@@ -159,25 +159,29 @@ class Luck(Square):
         player.send_message("Vous êtes tombés sur une carte chance !")
         return
 
-    def get_impact(self,player):
+    def get_impact(self,player,board):
         luck_impact = random.randint(1,self.nbre)
         name = self.impact_list[1]["name"]
         description = self.impact_list[1]["description"]
         code = self.impact_list[1]["code"]
-        print(name)
-        print(description)
+        player.send_message(name)
+        player.send_message(description)
         if code[0] == "G":
             player.money += int(code[1:])
-            print(f"Vous avez à présent {player.money}€")
+            player.send_message(f"Vous avez à présent {player.money}€")
+            return
         elif code[0] == "P":
             player.money -= int(code[1:])
-            print(f"Vous avez à présent {player.money}€")
+            player.send_message(f"Vous avez à présent {player.money}€")
+            return
         elif code[0] == "A":
-            player.change_position(int(code[1:]))
-            print(player.board.square_list[player.position])
+            board.change_position(player,int(code[1:]))
+            board.square_list[player.position].str(player)
+            return "new_pos"
         elif code[0] == "R":
-            player.change_position(-int(code[1:]))
-            print(player.board.square_list[player.position])
+            board.change_position(player,-int(code[1:]))
+            board.square_list[player.position].str(player)
+            return "new_pos"
 
 
 class Tax(Square):
