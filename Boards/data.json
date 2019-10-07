@@ -8,55 +8,300 @@
       "type" : "Square"
     },
     {
-      "name": "Paris",
-      "position" : 3,
-      "type" : "Land",
-      "value" : 400,
-      "color" : "bleu fonce",
-      "rent" : [20,50,100,145,530,1000],
-      "mortgage" : 200,
-      "construction_price": 5
-    },
-    {
-      "name": "Nice",
+      "name": "Rue de Belleville",
       "position" : 1,
       "type" : "Land",
-      "value" : 200,
-      "color" : "yellow",
-      "rent" : [15,40,90,120,300,800],
-      "mortgage" : 100,
-      "construction_price": 5
-    },
-    {
-      "name": "Rouhling",
-      "position" : 4,
-      "type" : "Land",
       "value" : 60,
-      "color" : "bleu clair",
-      "rent" : [5,30,80,100,150,500],
-      "mortgage" : 30,
-      "construction_price": 5
+      "color" : "marron",
+      "rent" : [2,10,30,90,160,250],
+      "construction_price": 50
     },
     {
-      "name": "Luck1",
+      "name": "Caisse de communauté",
       "position" : 2,
       "type" : "Luck"
     },
     {
-      "name": "Gare Montparnasse",
+      "name": "Rue Lecourbe",
+      "position" : 3,
+      "type" : "Land",
+      "value" : 60,
+      "color" : "marron",
+      "rent" : [4,20,60,180,320,450],
+      "construction_price": 50
+    },
+    {
+      "name": "Impôts sur le revenu",
+      "position" : 4,
+      "type" : "tax",
+      "amount" : 200
+    },
+    {
+      "name": " Gare Montparnasse",
       "position" : 5,
       "type" : "Land",
-      "value" : 10,
-      "rent" : [5,10,30,40],
+      "value" : 200,
+      "rent" : [25,50,100,200],
       "color" : "trainstation",
-      "mortgage" : 5,
       "construction_price": 0
     },
     {
+      "name": "Rue Vaugirard",
+      "position" : 6,
+      "type" : "Land",
+      "value" : 100,
+      "color" : "bleu ciel",
+      "rent" : [6,30,90,270,400,550],
+      "construction_price": 50
+    },
+    {
+      "name": "Chance",
+      "position" : 7,
+      "type" : "Luck"
+    },
+    {
+      "name": "Rue de Courcelles",
+      "position" : 8,
+      "type" : "Land",
+      "value" : 100,
+      "color" : "bleu ciel",
+      "rent" : [6,30,90,270,400,550],
+      "construction_price": 50
+    },
+    {
+      "name": "Avenue de la République",
+      "position" : 9,
+      "type" : "Land",
+      "value" : 120,
+      "color" : "bleu ciel",
+      "rent" : [8,40,100,300,450,600],
+      "construction_price": 50
+    },
+    {
+      "name": "La Villette",
+      "position" : 11,
+      "type" : "Land",
+      "value" : 140,
+      "color" : "violet",
+      "rent" : [10,50,150,450,625,750],
+      "construction_price": 100
+    },
+    {
+      "name": "Chance",
+      "position" : 12,
+      "type" : "Luck"
+    },
+    {
+      "name": "Avenue de Neuilly",
+      "position" : 13,
+      "type" : "Land",
+      "value" : 140,
+      "color" : "violet",
+      "rent" : [10,50,150,450,625,750],
+      "construction_price": 100
+    },
+    {
+      "name": "Rue de Paradis",
+      "position" : 14,
+      "type" : "Land",
+      "value" : 160,
+      "color" : "violet",
+      "rent" : [12,60,180,500,700,900],
+      "construction_price": 100
+    },
+    {
+      "name": " Gare de Lyon",
+      "position" : 15,
+      "type" : "Land",
+      "value" : 200,
+      "rent" : [25,50,100,200],
+      "color" : "trainstation",
+      "construction_price": 0
+    },
+    {
+      "name": "Avenue Mozart",
+      "position" : 16,
+      "type" : "Land",
+      "value" : 180,
+      "color" : "orange",
+      "rent" : [14,70,200,550,700,900],
+      "construction_price": 100
+    },
+    {
+      "name": "Caisse de communauté",
+      "position" : 17,
+      "type" : "Luck"
+    },
+    {
+      "name": "Boulevard Saint-Michel",
+      "position" : 18,
+      "type" : "Land",
+      "value" : 180,
+      "color" : "orange",
+      "rent" : [14,70,200,550,700,900],
+      "construction_price": 100
+    },
+    {
+      "name": "Place Pigalle",
+      "position" : 19,
+      "type" : "Land",
+      "value" : 200,
+      "color" : "orange",
+      "rent" : [16,80,220,600,800,1000],
+      "construction_price": 100
+    },
+    {
+      "name": "Parc Gratuit",
+      "position" : 20,
+      "type" : "Luck"
+    },
+    {
+      "name": "Avenue Matignon",
+      "position" : 21,
+      "type" : "Land",
+      "value" : 220,
+      "color" : "rouge",
+      "rent" : [18,90,250,700,875,1050],
+      "construction_price": 150
+    },
+    {
+      "name": "Chance",
+      "position" : 22,
+      "type" : "Luck"
+    },
+    {
+      "name": "Avenue Matignon",
+      "position" : 23,
+      "type" : "Land",
+      "value" : 220,
+      "color" : "rouge",
+      "rent" : [18,90,250,700,875,1050],
+      "construction_price": 150
+    },
+    {
+      "name": "Avenue Henri-Martin",
+      "position" : 24,
+      "type" : "Land",
+      "value" : 240,
+      "color" : "rouge",
+      "rent" : [20,100,300,750,925,1100],
+      "construction_price": 150
+    },
+    {
+      "name": " Gare du Nord",
+      "position" : 25,
+      "type" : "Land",
+      "value" : 200,
+      "rent" : [25,50,100,200],
+      "color" : "trainstation",
+      "construction_price": 0
+    },
+    {
+      "name": "Faubourg Saint-Honoré",
+      "position" : 26,
+      "type" : "Land",
+      "value" : 260,
+      "color" : "jaune",
+      "rent" : [22,110,330,800,975,1150],
+      "construction_price": 150
+    },
+    {
+      "name": "Place de la Bourse",
+      "position" : 27,
+      "type" : "Land",
+      "value" : 260,
+      "color" : "jaune",
+      "rent" : [22,110,330,800,975,1150],
+      "construction_price": 150
+    },
+    {
+      "name": "Chance",
+      "position" : 28,
+      "type" : "Luck"
+    },
+    {
+      "name": "Rue Lafayette",
+      "position" : 29,
+      "type" : "Land",
+      "value" : 280,
+      "color" : "jaune",
+      "rent" : [24,120,360,850,1025,1200],
+      "construction_price": 150
+    },
+    {
+      "name": "Prison",
+      "position" : 30,
+      "type" : "Luck"
+    },
+    {
+      "name": "Avenue de Breteuil",
+      "position" : 31,
+      "type" : "Land",
+      "value" : 300,
+      "color" : "vert",
+      "rent" : [26,130,390,900,1100,1275],
+      "construction_price": 200
+    },
+    {
+      "name": "Avenue Foch",
+      "position" : 32,
+      "type" : "Land",
+      "value" : 300,
+      "color" : "vert",
+      "rent" : [26,130,390,900,1100,1275],
+      "construction_price": 200
+    },
+    {
+      "name": "Caisse de communauté",
+      "position" : 33,
+      "type" : "Luck"
+    },
+    {
+      "name": "Bd des Capucines",
+      "position" : 34,
+      "type" : "Land",
+      "value" : 320,
+      "color" : "vert",
+      "rent" : [28,150,450,1000,1200,1400],
+      "construction_price": 200
+    },
+    {
+      "name": " Gare Saint-Lazare",
+      "position" : 35,
+      "type" : "Land",
+      "value" : 200,
+      "rent" : [25,50,100,200],
+      "color" : "trainstation",
+      "construction_price": 0
+    },
+    {
+      "name": "Chance",
+      "position" : 36,
+      "type" : "Luck"
+    },
+    {
+      "name": "Avenue des Champs Elyses",
+      "position" : 37,
+      "type" : "Land",
+      "value" : 350,
+      "color" : "bleu fonce",
+      "rent" : [35,175,500,1100,1300,1500],
+      "construction_price": 200
+    },
+    {
       "name": "Taxes",
-      "position" : 5,
+      "position" : 38,
       "type" : "tax",
-      "amount" : 6
+      "amount" : 100
+    },
+    {
+      "name": "Rue de la Paix",
+      "position" : 39,
+      "type" : "Land",
+      "value" : 400,
+      "color" : "bleu fonce",
+      "rent" : [500,200,600,1400,1700,2000],
+      "construction_price": 200
     }
   ]
 
