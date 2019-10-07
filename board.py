@@ -49,7 +49,7 @@ class Board :
         return(advance)
 
 
-    def change_position(self, advance, player):
+    def change_position(self, player, advance):
 
         #self.square_list[player.position].present_player.remove(player)  # on retire le player de sa case.
 
@@ -63,4 +63,75 @@ class Board :
         #self.square_list[player.position].present_player.append(player) #on l'enregistre sur sa nouvelle case
         return self.square_list[player.position]
 
+
+    def get_nb_assets_of_a_color(self, player, color): #les passer en statique, hors classe? Bizarre parce que méthode de board sans faire appel à board
+        i = 0
+        for asset in player.assets:
+            if asset.color == color:
+                i += 1
+        return i
+
+
+    def get_active_assets(self, player):
+        active_assets = {}
+        i = 0
+        affichage = []
+        for index, element in enumerate(player.assets):
+            if not element.mortgage:
+                active_assets[str(i)] = element.name
+                affichage.append(str(element.name) + " pour une valeur de " + str(element.value/2) + "€")
+        player.send_message(f"Les terrains que vous pouvez hypothéquer sont {affichage}")
+        return active_assets
+
+    def get_building_lands(self, player):
+        """
+               Cette méthode renvoie tous les terrains constructibles (c'est à dire avec la couleur complète) du joueur s'il en a.
+
+               """
+        building_lands = {}
+        building_lands_color_price = []
+        try:
+            for index, element in enumerate(player.assets):
+                # on compare le nombre de terrains de la couleur détenus par le joueur et le nombre de ces terrains sur le plateau
+                if self.get_nb_assets_of_a_color(player, element.color) == self.board.get_nb_lands_of_a_color(
+                        element.color) and element.color != "trainstation":
+                    building_land[str(i)] = element.name
+                    building_lands_color_price.append([element.name, element.color, element.construction_price])
+            assert len(building_lands) > 0
+            # on affiche les terrains constructibles, leur couleur et leur prix de construction
+            # affichage à améliorer
+            player.send_message(f"Vous pouvez construire sur (et chaque maison coûte) {building_lands_color_price}")
+            return True, building_lands
+        except AssertionError:
+            player.send_message(
+                "Cela s'annonce compliqué, vous n'avez pas de terrains constructibles. Vous n'avez aucun quartier complet, repartez à l'aventure.")
+            return False
+
+    def get_built_lands(self, player):
+        """
+                Cette méthode renvoie tous les terrains sur lesquelles des maisons sont construites.
+                """
+        built_lands = {}
+        built_lands_nb_houses_price = []
+        try:
+            for index, element in enumerate(player.assets):
+                if element.nb_houses > 0:
+                    built_lands[str(index)] = element.name
+                    built_lands_nb_houses_price.append([element.name, element.nb_houses, element.construction_price / 2])
+            assert len(built_lands) > 0
+            # on affiche les terrains construits, leur nombre de maison et leur prix de revente
+            # affichage à améliorer
+            player.send_message(f"Vous pouvez revendre sur (et chaque maison rapporte) {built_lands_nb_houses_price}")
+            return True, built_lands
+        except AssertionError:
+            player.send_message(
+                "Cela s'annonce compliqué, vous n'avez pas de terrains construits. Vous n'avez aucune maison à revendre, ne vendez pas la peau de l'ours avant de l'avoir tué!")
+            return False
+
+
+    def get_square_from_name(self, name):
+        for i in range(len(board.square_list)):
+            if board.square_list[i].name == name:
+                return board.square_list[i]
+        return "Désolé, le nom saisi n'est pas dans la liste" #quand on appelle la fonction, voir comment gérer cette erreur
 
