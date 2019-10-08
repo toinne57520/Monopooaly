@@ -33,28 +33,29 @@ def deal_with_instruction():
         validation_message = sock.recv(1024).decode()
     return
 
+def blit_text(surface, L, pos):
+    word_height = 15
+    x, y = pos
+    font = pygame.font.Font(None, 14)
+    for line in L[-4:]:
+        to_blit = font.render(line, 11, (10,10,10))
+        surface.blit(to_blit, (x, y))
+        x = pos[0]  # Reset the x.
+        y += word_height  # Start on new row.
+        print(line)
+    pygame.display.flip()
+    pygame.display.update()
 
 def deal_with_message():
     message = sock.recv(1024).decode()
     message_hist.append(message)
     print(message)
-    print(message_hist)
+    pygame.display.flip()
     window = pygame.display.set_mode((window_dimension, window_dimension))
     background = pygame.image.load(background_homepage).convert()
     window.blit(background, (0, 0))
-    font = pygame.font.Font(None, 13)
-    name = font.render(message, 11, (10, 10, 10))
-    name_x = (7) * square_dimension
-    name_y = 7 * square_dimension
-    window.blit(name, (name_x, name_y))
-    print ("boucle de la fenetre")
-    pygame.display.flip()
-    if message_hist[-1]!= message_hist[-2]:
-        pygame.display.flip()
-
-
-
-
+    blit_text(window, message_hist, (200,500))
+    #pygame.display.update()
 
 
 if __name__ == '__main__':
@@ -72,6 +73,10 @@ if __name__ == '__main__':
         name_player = input("> ")
         sock.send(name_player.encode())
         print("Vous etes sur la case départ et vous possedez 200€")
+        window = pygame.display.set_mode((window_dimension, window_dimension))
+        background = pygame.image.load(background_homepage).convert()
+        window.blit(background, (0, 0))
+        pygame.display.flip()
 
         while True:
             buf = bytes()
@@ -95,8 +100,10 @@ if __name__ == '__main__':
 
                     if message_received =="message":
                         deal_with_message()
-                        print(datetime.time)
 
+                    if message_received =="etat":
+                        pass
+                        #deal_with_etat()
 
                 print("C'est la fin de votre tour")
 
