@@ -2,17 +2,10 @@ import socket
 from clientthread import Clientthread
 import pygame
 from interface_constantes import *
+import pygame_simple
 pygame.init()
 
-def blit_text(surface, L, pos):
-    word_height = 15
-    x, y = pos
-    font = pygame.font.Font(None, 14)
-    for line in L[-4:]:
-        to_blit = font.render(line, 11, (10,10,10))
-        surface.blit(to_blit, (x, y))
-        x = pos[0]  # Reset the x.
-        y += word_height  # Start on new row.
+
 
 if __name__ == '__main__':
     # connexion au server
@@ -38,6 +31,15 @@ if __name__ == '__main__':
         window = pygame.display.set_mode((window_dimension, window_dimension))
         background = pygame.image.load(background_homepage).convert()
         window.blit(background, (0, 0))
+
+        #on gère les messages reçus
         message_hist = clientthread.message_hist
-        blit_text(window, message_hist, (200, 500))
+        pygame_simple.blit_text(window, message_hist, (200, 500))
+
+        #on affiche le choix des actions
+        actions= pygame_simple.transform_actions(clientthread.action)
+        pygame_simple.blit_text(window, actions, (300, 320))
+        choice = pygame_simple.choose_actions_pygame()
+        clientthread.choice = choice
+        #on met à jour la fenêtre
         pygame.display.update()
