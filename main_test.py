@@ -69,7 +69,7 @@ def board_choice():
 
 def player_choice():
     try:
-        nb_players = input("Combien de joueurs participent à la partie?")
+        nb_players = input("Combien de joueurs participent à la partie??")
         assert (1 <= int(nb_players) <= 4)
         players_list = [input("Quel est le nom du joueur " + str(i + 1) + "?") for i in range(int(nb_players))]
         return players_list
