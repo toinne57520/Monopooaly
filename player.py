@@ -45,6 +45,15 @@ class Player :
         self.sock.send(message.encode())
         return ()
 
+
+    def send_etat(self,etat):
+        sleep(1)
+        self.sock.send("etat".encode())
+        sleep(1)
+        self.sock.send(etat.encode())
+        return ()
+
+
     def choose_clear_mortgage(self,dict,sock):
         pass
 
