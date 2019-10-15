@@ -128,7 +128,6 @@ if __name__ == '__main__':
 
             if action == "Tirer une carte chance":
                 print(action)
-                sleep(1)
                 action = board.square_list[player_active.position].get_impact(player_active,board)
                 if action =="new_pos":
                     action = player_active.choose_actions(board.square_list[player_active.position].get_actions(player_active))
@@ -136,15 +135,18 @@ if __name__ == '__main__':
             if action == "Construire une maison":
                 print(action)
 
+            if action == "Payer la taxe":
+                print(action)
+                board.square_list[player_active.position].pay_taxes(player_active)
+                action = player_active.choose_actions(end_action)
+
             if action == "Payer le loyer":
                 print(action)
-                sleep(1)
                 board.square_list[player_active.position].pay_rent(player_active)
                 action = player_active.choose_actions(end_action)
 
             if action == "Acheter le terrain":
                 print(action)
-                sleep(1)
                 board.square_list[player_active.position].buy_land(player_active)
                 action = player_active.choose_actions(end_action)
 
@@ -153,6 +155,7 @@ if __name__ == '__main__':
                 print(action)
                 sleep(1)
                 player_active.sock.send("stop".encode())
+                sleep(1)
                 action = False
 
             #gérer le cas de terminer son tour après avoir lancé les dés

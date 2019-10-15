@@ -197,6 +197,10 @@ class Tax(Square):
             player.send_message(f"C'est une case de taxe ... Montant à payer : {self.amount}")
             return
 
+    def get_actions(self,player):
+        dict = { 1: "Payer la taxe"}
+        return dict
+
     def pay_taxes(self,player):
         if player.money >= self.amount:
             player.money -= self.amount
