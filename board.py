@@ -141,9 +141,8 @@ class Board :
         dictionnaire = {}
         dictionnaire["__class__"] = "Board"
         for element in self.square_list:
-            dictionnaire[element.position] = self.serialize_square(element)
-            return dictionnaire
-        raise TypeError(repr(obj) + " n'est pas sérialisable !")
+            dictionnaire[str(element.position)] = self.serialize_square(element)
+        return dictionnaire
 
     def serialize_square(self, square):
         if isinstance(square, Land):
