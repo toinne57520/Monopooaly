@@ -14,7 +14,7 @@ class Clientthread(Thread):
         Thread.__init__(self)
         self.sock = sock
         self.action = {}
-        self.message_hist = []
+        self.message_hist = ["Bienvenue","Vous etes sur la case départ et vous possedez 200€"]
         self.etat = {}
 
 
@@ -43,7 +43,6 @@ class Clientthread(Thread):
     def deal_with_message(self):
         message = self.sock.recv(1024).decode()
         self.message_hist.append(message)
-        print(message)
         return
 
 
@@ -55,10 +54,9 @@ class Clientthread(Thread):
             turn_status = struct.unpack('?', buf[:1])[0]
 
             if not turn_status:
-                print("Ce n'est pas à vous de jouer")
+                self.message_hist.append("Ce n'est pas à vous de jouer")
 
             if turn_status:
-                print("C'est à vous de jouer")
                 self.message_hist.append("C'est à vous de jouer")
                 message_received = 0
                 while message_received != "stop":
@@ -75,7 +73,6 @@ class Clientthread(Thread):
                         pass
                         # deal_with_etat()
 
-                print("C'est la fin de votre tour")
                 self.message_hist.append("C'est la fin de votre tour")
 
             turn_status = 0
