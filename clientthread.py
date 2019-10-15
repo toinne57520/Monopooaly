@@ -62,8 +62,10 @@ class Clientthread(Thread):
             if not turn_status:
                 self.message_hist.append("Ce n'est pas à vous de jouer")
                 message_received = 0
-                if message_received == "board":
-                    self.deal_with_board()
+                while message_received != "stop":
+                    message_received = self.sock.recv(1024).decode()
+                    if message_received == "board":
+                        self.deal_with_board()
 
             if turn_status:
                 self.message_hist.append("C'est à vous de jouer")
@@ -81,6 +83,6 @@ class Clientthread(Thread):
                     if message_received == "board":
                         self.deal_with_board()
 
-                self.message_hist.append("C'est la fin de votre tour")
 
-            turn_status = 0
+                self.message_hist.append("C'est la fin de votre tour")
+            #sleep(1)
