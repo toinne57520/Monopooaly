@@ -1,6 +1,7 @@
 import json
 import square
 import random
+from square import Land
 #
 class Board :
 
@@ -134,4 +135,21 @@ class Board :
             if board.square_list[i].name == name:
                 return board.square_list[i]
         return "Désolé, le nom saisi n'est pas dans la liste" #quand on appelle la fonction, voir comment gérer cette erreur
+
+    def serialize_board(self):
+
+        dictionnaire = {}
+        dictionnaire["__class__"] = "Board"
+        for element in self.square_list:
+            dictionnaire[element.position] = self.serialize_square(element)
+            return dictionnaire
+        raise TypeError(repr(obj) + " n'est pas sérialisable !")
+
+    def serialize_square(self, square):
+        if isinstance(square, Land):
+            return {"players": square.present_player,
+                    "nb_houses": square.nb_houses}
+        else:
+            return {"players": square.present_player,
+                    "nb_houses": 0}
 
