@@ -22,9 +22,9 @@ class Player :
         pass
 
     def choose_actions(self,dict):
-        sleep(1)
+        sleep(0.5)
         self.sock.send("action".encode())
-        sleep(1)
+        sleep(0.5)
         data_string = json.dumps(dict).encode()
         self.sock.send(data_string)
         data_loaded = int(self.sock.recv(1024).decode())
@@ -37,10 +37,12 @@ class Player :
         return(dict[data_loaded])
 
     def send_board(self):
-        sleep(1)
+        sleep(0.5)
         self.sock.send("board".encode())
-        sleep(1)
-        data_string = json.dumps(self.board.serialize_board()).encode()
+        sleep(0.5)
+        board_dict = self.board.serialize_board()
+        print(board_dict)
+        data_string = json.dumps(board_dict).encode()
         self.sock.send(data_string)
         return ()
 
@@ -53,11 +55,11 @@ class Player :
         return ()
 
 
-    def send_etat(self,etat):
+    def send_etat_plateau(self,plateau):
         sleep(1)
         self.sock.send("etat".encode())
         sleep(1)
-        self.sock.send(etat.encode())
+        self.sock.send(plateau.encode())
         return ()
 
 
