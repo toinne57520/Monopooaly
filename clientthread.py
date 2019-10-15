@@ -6,6 +6,7 @@ from pygame.locals import *
 import socket
 import struct
 import json
+
 #
 class Clientthread(Thread):
 
@@ -16,6 +17,7 @@ class Clientthread(Thread):
         self.action = {}
         self.message_hist = ["Bienvenue","Vous etes sur la case départ et vous possedez 200€"]
         self.board_state = {}
+        self.choice= 0
 
 
     def deal_with_instruction(self):
@@ -23,22 +25,24 @@ class Clientthread(Thread):
         actions_loaded = json.loads(self.sock.recv(4048).decode())
         print(actions_loaded)
         self.action = actions_loaded
-        validation_message = "again"
-        while validation_message == "again":
-            action = input("Que voulez vous faire ? (Choisissez un nombre dans la liste au dessus)")
-            while True:
-                try:
-                    int(action)
-                except ValueError:
-                    # Not a valid number
+        # validation_message = "again"
+        # while validation_message == "again":
+        #     action = input("Que voulez vous faire ? (Choisissez un nombre dans la liste au dessus)")
+        #     while True:
+        #         try:
+        #             int(action)
+        #         except ValueError:
+        #             # Not a valid number
+        #
+        #             print("Vous devez entrer un nombre entier")
+        #             action = input("Que voulez vous faire ? (Choisissez dans la liste au dessus)")
+        #         else:
+        #             # No error; stop the loop
+        #             break
 
-                    print("Vous devez entrer un nombre entier")
-                    action = input("Que voulez vous faire ? (Choisissez dans la liste au dessus)")
-                else:
-                    # No error; stop the loop
-                    break
-            self.sock.send(action.encode())
-            validation_message = self.sock.recv(1024).decode()
+    def return_action(self):
+        self.sock.send(self.choice.encode())
+        validation_message = self.sock.recv(1024).decode()
         return
 
     def deal_with_board(self):
