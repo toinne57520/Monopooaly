@@ -6,7 +6,7 @@ from pygame.locals import *
 import socket
 import struct
 import json
-
+#
 class Clientthread(Thread):
 
 
