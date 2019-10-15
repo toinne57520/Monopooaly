@@ -16,7 +16,7 @@ for i in game.square_list:
 
 joueur.throw_dice()
 joueur.to_build()
-
+joueur.choose_land_to_sell()
 
 
 print(joueur.position)

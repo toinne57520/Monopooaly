@@ -11,12 +11,13 @@ class Square:
         self.position = position
         self.present_player = []
 
-    def __repr__(self,player):
-        player.send_message("Vous êtes tombés sur la case départ")
 
-    def str(self,player):
-        player.send_message("Vous êtes tombés sur la case départ")
-        return
+    #def __repr__(self,player):
+        #player.send_message("Vous êtes tombés sur la case départ")
+
+    #def str(self,player):
+        #player.send_message("Vous êtes tombés sur la case départ")
+        #return
 
     def get_actions(self,player):
         dict = { 1: "Terminer mon tour"}
@@ -61,13 +62,13 @@ class Land(Square):
         return dict
 
 
-    def __repr__(self,player):
-        if self.status :
-            player.send_message (f"Cette case est {self.name}, détenue par le joueur {self.owner.name}. Il y a {self.nb_houses} maisons contruites."
-                       f"Le loyer actuel est de {self.rent[self.nb_houses]} €")
-        else :
-            player.send_message (f"Cette case est libre ! C'est {self.name} de la couleur {self.color}. "
-                    f"Elle coûte {self.value} €.")#voir plus tard pour le cout des maisons
+    # #def __repr__(self,player):
+    #     if self.status :
+    #         print(f"Cette case est {self.name}, détenue par le joueur {self.owner.name}. Il y a {self.nb_houses} maisons contruites."
+    #                    f"Le loyer actuel est de {self.rent[self.nb_houses]} €")
+    #     else :
+    #         print(f"Cette case est libre ! C'est {self.name} de la couleur {self.color}. "
+    #                 f"Elle coûte {self.value} €.")#voir plus tard pour le cout des maisons
 
     def str(self,player):
         if self.status :
@@ -148,8 +149,8 @@ class Luck(Square):
         #définir méthode et voir comment gérer les impacts
         # voir méthode random qui pioche dans une liste d'impact
 
-    def __repr__(self):
-        return("Vous êtes tombés sur une carte chance !")
+    #def __repr__(self):
+        #return("Vous êtes tombés sur une carte chance !")
 
     def get_actions(self,player):
         dict = { 1: "Tirer une carte chance"}
@@ -190,8 +191,8 @@ class Tax(Square):
         Square.__init__(self, name, position)
         self.amount = amount
 
-    def __repr__(self):
-            return (f"C'est une case de taxe ... Montant à payer : {self.amount}")
+    #def __repr__(self):
+     #       return (f"C'est une case de taxe ... Montant à payer : {self.amount}")
 
     def str(self,player):
             player.send_message(f"C'est une case de taxe ... Montant à payer : {self.amount}")

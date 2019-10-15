@@ -7,7 +7,7 @@ import os
 import glob
 
 #game = Board('data.json')
-#joueur = Player('Antoine',game) #rajouter exception pour que les deux joueurs n'aient pas la meme position
+#joueur = Player('Antoine',game) #rajouter exception pour que les deux joueurs n'aient pas la meme position.
 #joueur.throw_dice()
 
 #print(joueur.position)
