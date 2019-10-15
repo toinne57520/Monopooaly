@@ -161,9 +161,8 @@ if __name__ == '__main__':
                 print(action)
                 sleep(1)
                 player_active.sock.send("stop".encode())
+                player_inactive.sock.send("stop".encode())
                 sleep(1)
-                player_active.send_board()
-                player_inactive.send_board()
                 action = False
 
 
