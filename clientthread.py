@@ -1,4 +1,4 @@
-import pygame
+#import pygame
 from threading import Thread
 from interface_constantes import *
 from time import sleep
@@ -15,13 +15,14 @@ class Clientthread(Thread):
         self.sock = sock
         self.action = {}
         self.message_hist = ["Bienvenue","Vous etes sur la case départ et vous possedez 200€"]
-        self.etat = {}
+        self.board_state = {}
 
 
     def deal_with_instruction(self):
         print("Que voulez vous faire?")
         actions_loaded = json.loads(self.sock.recv(4048).decode())
         print(actions_loaded)
+        self.action = actions_loaded
         validation_message = "again"
         while validation_message == "again":
             action = input("Que voulez vous faire ? (Choisissez un nombre dans la liste au dessus)")
@@ -40,6 +41,11 @@ class Clientthread(Thread):
             validation_message = self.sock.recv(1024).decode()
         return
 
+    def deal_with_board(self):
+        board_loaded = json.loads(self.sock.recv(4048).decode())
+        self.board_state = board_loaded
+        return
+
     def deal_with_message(self):
         message = self.sock.recv(1024).decode()
         self.message_hist.append(message)
@@ -55,6 +61,9 @@ class Clientthread(Thread):
 
             if not turn_status:
                 self.message_hist.append("Ce n'est pas à vous de jouer")
+                message_received = 0
+                if message_received == "board":
+                    self.deal_with_board()
 
             if turn_status:
                 self.message_hist.append("C'est à vous de jouer")
@@ -69,9 +78,8 @@ class Clientthread(Thread):
                     if message_received == "message":
                         self.deal_with_message()
 
-                    if message_received == "etat":
-                        pass
-                        # deal_with_etat()
+                    if message_received == "board":
+                        self.deal_with_board()
 
                 self.message_hist.append("C'est la fin de votre tour")
 
