@@ -2,11 +2,7 @@ import socket
 from clientthread import Clientthread
 import pygame
 from interface_constantes import *
-
 pygame.init()
-message_hist = ["Bienvenue"]
-def pygame_choice(dict):
-    pass
 
 def blit_text(surface, L, pos):
     word_height = 15
@@ -31,7 +27,6 @@ if __name__ == '__main__':
     print("Quel est votre nom de joueur ?")
     name_player = input("> ")
     sock.send(name_player.encode())
-    print("Vous etes sur la case départ et vous possedez 200€")
     clientthread = Clientthread(sock)
     clientthread.start()
     window = pygame.display.set_mode((window_dimension, window_dimension))
