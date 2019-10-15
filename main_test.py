@@ -69,7 +69,7 @@ def board_choice():
 
 def player_choice():
     try:
-        nb_players = input("Combien de joueurs participent à la partie?")
+        nb_players = input("Combien de joueurs participent à la partie??")
         assert (1 <= int(nb_players) <= 4)
         players_list = [input("Quel est le nom du joueur " + str(i + 1) + "?") for i in range(int(nb_players))]
         return players_list
@@ -111,6 +111,8 @@ if __name__ == '__main__':
         player_inactive = board.players[(starting_player % 2)]
         player_inactive.sock.send(struct.pack("?", False))
         player_active.sock.send(struct.pack("?", True))
+        player_active.send_board()
+        player_inactive.send_board()
 
         action = True
         while action!= False :
@@ -120,6 +122,8 @@ if __name__ == '__main__':
                 advance = board.throw_dice(player_active)
                 board.change_position(player_active,advance)
                 board.square_list[player_active.position].str(player_active)
+                player_active.send_board()
+                player_inactive.send_board()
                 action = player_active.choose_actions(board.square_list[player_active.position].get_actions(player_active))
                 print(action)
 
@@ -131,6 +135,8 @@ if __name__ == '__main__':
                 action = board.square_list[player_active.position].get_impact(player_active,board)
                 if action =="new_pos":
                     action = player_active.choose_actions(board.square_list[player_active.position].get_actions(player_active))
+                    player_active.send_board()
+                    player_inactive.send_board()
 
             if action == "Construire une maison":
                 print(action)
@@ -156,9 +162,10 @@ if __name__ == '__main__':
                 sleep(1)
                 player_active.sock.send("stop".encode())
                 sleep(1)
+                player_active.send_board()
+                player_inactive.send_board()
                 action = False
 
-            #gérer le cas de terminer son tour après avoir lancé les dés
 
         starting_player += 1
 

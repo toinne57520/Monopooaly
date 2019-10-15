@@ -36,6 +36,13 @@ class Player :
         print(dict[data_loaded])
         return(dict[data_loaded])
 
+    def send_board(self):
+        sleep(1)
+        self.sock.send("board".encode())
+        sleep(1)
+        data_string = json.dumps(self.board.serialize_board()).encode()
+        self.sock.send(data_string)
+        return ()
 
 
     def send_message(self,message):
@@ -45,17 +52,14 @@ class Player :
         self.sock.send(message.encode())
         return ()
 
-    #def choose_clear_mortgage(self,dict,sock):
-     #   pass
 
-    #def choose_land_to_build(self,dict,sock):
-    #    pass
+    def send_etat(self,etat):
+        sleep(1)
+        self.sock.send("etat".encode())
+        sleep(1)
+        self.sock.send(etat.encode())
+        return ()
 
-    #def choose_mortgage(self,dict):
-     #   pass
-
-    #def choose_land_to_sell(self,dict,sock):
-      #  pass
 
     def wait_for_your_turn(self,sock):
         sock.send("Ce n'est pas à vous de jouer".encode())
