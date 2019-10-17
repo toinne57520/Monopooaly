@@ -21,33 +21,32 @@ class Clientthread(Thread):
 
 
     def deal_with_instruction(self):
-        self.choice = False
+        self.choice = 0
         print("Que voulez vous faire?")
         actions_loaded = json.loads(self.sock.recv(4048).decode())
         print(actions_loaded)
         self.action = actions_loaded
-        while not self.choice:
-            sleep(1)
+        while self.choice == 0:
+            sleep(0.1)
         self.return_action()
 
 
     def return_action(self):
-        self.sock.send(self.choice.encode())
+        self.sock.send(str(self.choice).encode())
         validation_message = "again"
         while validation_message == "again":
-            action = input("Que voulez vous faire ? (Choisissez un nombre dans la liste au dessus)")
+            print(self.choice)
             while True:
                 try:
-                    int(action)
+                    int(self.choice)
+                    self.sock.send(str(self.choice).encode())
                 except ValueError:
-                     # Not a valid number
-
-                    print("Vous devez entrer un nombre entier")
-                    action = input("Que voulez vous faire ? (Choisissez dans la liste au dessus)")
+                    pass
+                    # Not a valid number
                 else:
-                     # No error; stop the loop
                     break
-        validation_message = self.sock.recv(1024).decode()
+                    # No error; stop the loop
+            validation_message = self.sock.recv(1024).decode()
         self.action = {}
         return
 
