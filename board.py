@@ -72,17 +72,30 @@ class Board :
                 i += 1
         return i
 
-
-    def get_active_assets(self, player):
-        active_assets = {}
+    def get_morgageable_assets(self, player):
+        mortgageable_assets = {}
         i = 0
         affichage = []
         for index, element in enumerate(player.assets):
-            if not element.mortgage:
-                active_assets[str(i)] = element.name
-                affichage.append(str(element.name) + " pour une valeur de " + str(element.value/2) + "€")
+            if not element.mortgage and element.nb_houses == 0:
+                mortgageable_assets[str(index)] = element.name
+                affichage.append(str(element.name) + " pour une valeur de " + str(element.value / 2) + "€")
+                i += 1
         player.send_message(f"Les terrains que vous pouvez hypothéquer sont {affichage}")
-        return active_assets
+        return inactive_assets
+
+
+    def get_inactive_assets(self, player):
+        inactive_assets = {}
+        i = 0
+        affichage = []
+        for index, element in enumerate(player.assets):
+            if element.mortgage:
+                inactive_assets[str(i)] = element.name
+                affichage.append(str(element.name) + " pour une valeur de " + str(element.value/2) + "€")
+                i += 1
+        player.send_message(f"Les terrains que vous pouvez déshypothéquer sont {affichage}")
+        return inactive_assets
 
     def get_building_lands(self, player):
         """
@@ -96,7 +109,7 @@ class Board :
                 # on compare le nombre de terrains de la couleur détenus par le joueur et le nombre de ces terrains sur le plateau
                 if self.get_nb_assets_of_a_color(player, element.color) == self.board.get_nb_lands_of_a_color(
                         element.color) and element.color != "trainstation":
-                    building_land[str(i)] = element.name
+                    building_lands[str(i)] = element.name
                     building_lands_color_price.append([element.name, element.color, element.construction_price])
             assert len(building_lands) > 0
             # on affiche les terrains constructibles, leur couleur et leur prix de construction
