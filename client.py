@@ -37,9 +37,10 @@ if __name__ == '__main__':
         pygame_simple.blit_text(window, message_hist, (200, 500))
 
         #on affiche le choix des actions
-        actions= pygame_simple.transform_actions(clientthread.action)
-        pygame_simple.blit_text(window, actions, (300, 320))
-        choice = pygame_simple.choose_actions_pygame()
-        clientthread.choice = choice
+        if clientthread.action != {}:
+            actions= pygame_simple.transform_actions(clientthread.action)
+            pygame_simple.blit_text(window, actions, (300, 320))
+            choice = pygame_simple.choose_actions_pygame()
+            clientthread.choice = choice
         #on met à jour la fenêtre
         pygame.display.update()

@@ -39,3 +39,4 @@ def choose_actions_pygame():
                 nom = pygame.key.name(event.key)
                 choice = liste.index(nom)+1
                 return choice
+    return 0
