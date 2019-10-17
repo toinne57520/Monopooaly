@@ -129,6 +129,10 @@ if __name__ == '__main__':
 
             if action == "Hypothéquer":
                 print(action)
+                name_land_to_mortgage = player_active.choose_actions(board.get_morgageable_assets(player_active))
+                print(name_land_to_mortgage)
+                player_active.send_message(board.get_square_from_name(name_land_to_mortgage).to_mortgage())
+
 
             if action == "Tirer une carte chance":
                 print(action)
