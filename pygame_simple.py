@@ -26,12 +26,16 @@ def blit_text(surface, L, pos):
 
 def transform_actions(dict):
     actions = []
+    liste = ['a','b','c','d','e','f']
     for i in dict.keys():
-        actions.append(i+ " - "+dict[i])
+        actions.append(liste[int(i)-1] + " - " +dict[i])
     return actions
 
 def choose_actions_pygame():
-    evenement = pygame.event.wait()
-    if evenement.type == pygame.KEYDOWN:
-        nom = pygame.key.name(evenement.key)
-    return nom
+    liste = ['a', 'b', 'c', 'd', 'e', 'f']
+    for event in pygame.event.get():
+        if event.type == pygame.KEYDOWN:
+            if event.key in [K_a,K_b,K_c,K_d,K_e,K_f]:
+                nom = pygame.key.name(event.key)
+                choice = liste.index(nom)+1
+                return choice
