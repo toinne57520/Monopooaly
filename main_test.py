@@ -1,6 +1,6 @@
 from board import Board
 import json
-import square
+from square import Land
 from player import Player
 import os
 import glob
@@ -106,6 +106,12 @@ if __name__ == '__main__':
 
     starting_player = 0
 
+    for square in board.square_list:
+        if type(square) == Land:
+            square.owner = board.players[starting_player]
+            board.players[starting_player].assets.append(square)
+            square.status = True
+
     while True:
         player_active = board.players[(starting_player + 1) % 2]
         player_inactive = board.players[(starting_player % 2)]
@@ -131,7 +137,8 @@ if __name__ == '__main__':
                 print(action)
                 name_land_to_mortgage = player_active.choose_actions(board.get_morgageable_assets(player_active))
                 print(name_land_to_mortgage)
-                player_active.send_message(board.get_square_from_name(name_land_to_mortgage).to_mortgage())
+                if name_land_to_mortgage :
+                    player_active.send_message(board.get_square_from_name(name_land_to_mortgage).to_mortgage())
 
 
             if action == "Tirer une carte chance":

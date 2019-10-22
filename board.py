@@ -120,7 +120,7 @@ class Board :
         except AssertionError:
             player.send_message(
                 "Cela s'annonce compliqué, vous n'avez pas de terrains constructibles. Vous n'avez aucun quartier complet, repartez à l'aventure.")
-            return False
+            return False, False
 
     def get_built_lands(self, player):
         """
