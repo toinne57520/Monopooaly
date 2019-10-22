@@ -135,7 +135,7 @@ if __name__ == '__main__':
 
 
             if action == "Tirer une carte chance":
-                print(action)
+                print("on rentre dans tirer une carte chance")
                 action = board.square_list[player_active.position].get_impact(player_active,board)
                 if action =="new_pos":
                     action = player_active.choose_actions(board.square_list[player_active.position].get_actions(player_active))
@@ -154,7 +154,7 @@ if __name__ == '__main__':
 
 
             if action == "Payer la taxe":
-                print(action)
+                print("on rentre dans action: payer la taxe")
                 board.square_list[player_active.position].pay_taxes(player_active)
                 action = player_active.choose_actions(end_action)
 
@@ -164,7 +164,7 @@ if __name__ == '__main__':
                 action = player_active.choose_actions(end_action)
 
             if action == "Acheter le terrain":
-                print(action)
+                print("on rentre dans action: acheter terrain")
                 board.square_list[player_active.position].buy_land(player_active)
                 action = player_active.choose_actions(end_action)
 

@@ -10,9 +10,9 @@ pygame.init()
 #
 # # Define the dimensions of screen object
 # font = pygame.font.Font(None, 15)
-screen = pygame.display.set_mode((window_dimension, window_dimension))
-background = pygame.image.load(background_homepage).convert()
-screen.blit(background, (0, 0))
+#screen = pygame.display.set_mode((window_dimension, window_dimension))
+#background = pygame.image.load(background_homepage).convert()
+#screen.blit(background, (0, 0))
 
 def blit_text(surface, L, pos):
     word_height = 15

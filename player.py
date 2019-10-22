@@ -13,19 +13,17 @@ class Player :
         self.position = 0
         self.assets = []
         self.board = board #le plateau sur lequel le joueur joue
-        self.board.square_list[self.position].present_player.append(self.name) #on place le joueur sur la case départ
+        self.board.square_list[self.position].present_player.append(self) #on place le joueur sur la case départ
         board.add_player(self)
         self.sock = sock
 
-
-    def __repr__(self):
-        pass
 
     def choose_actions(self,dict):
         sleep(0.5)
         self.sock.send("action".encode())
         sleep(0.5)
         data_string = json.dumps(dict).encode()
+        print(data_string)
         self.sock.send(data_string)
         data_loaded = int(self.sock.recv(1024).decode())
         while data_loaded not in [x for x in list(dict.keys())]:
@@ -33,13 +31,13 @@ class Player :
             data_loaded = int(self.sock.recv(1024).decode())
 
         self.sock.send("ok".encode())
-        print(dict[data_loaded])
+        print("on est dans choose actions ",dict[data_loaded])
         return(dict[data_loaded])
 
     def send_board(self):
-        sleep(0.5)
+        sleep(1)
         self.sock.send("board".encode())
-        sleep(0.5)
+        sleep(1)
         board_dict = self.board.serialize_board()
         print(board_dict)
         data_string = json.dumps(board_dict).encode()
@@ -52,14 +50,6 @@ class Player :
         self.sock.send("message".encode())
         sleep(1)
         self.sock.send(message.encode())
-        return ()
-
-
-    def send_etat_plateau(self,plateau):
-        sleep(1)
-        self.sock.send("etat".encode())
-        sleep(1)
-        self.sock.send(plateau.encode())
         return ()
 
 

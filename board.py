@@ -47,7 +47,7 @@ class Board :
         dice1 = random.randint(1,6)
         dice2 = random.randint(1,6) #quand on rajoutera les tours, mettre l'option double = rejouer
         advance = dice1 + dice2
-        #player.send_message(f"Vous avancez de {advance} cases.")
+        player.send_message(f"Vous avancez de {advance} cases.")
         return advance
 
 
@@ -60,7 +60,7 @@ class Board :
 
         if quotient>0 :
             player.money += quotient * 200
-            #player.send_message(f"Vous êtes passés par la case départ. Félicitations ! vous avez gagné {quotient*200} €")
+            player.send_message(f"Vous êtes passés par la case départ. Félicitations ! vous avez gagné {quotient*200} €")
 
         self.square_list[player.position].present_player.append(player) #on l'enregistre sur sa nouvelle case
         return self.square_list[player.position]
