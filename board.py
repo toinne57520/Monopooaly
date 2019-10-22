@@ -46,7 +46,7 @@ class Board :
         dice1 = random.randint(1,6)
         dice2 = random.randint(1,6) #quand on rajoutera les tours, mettre l'option double = rejouer
         advance = dice1 + dice2
-        player.send_message(f"Vous avancez de {advance} cases.")
+        #player.send_message(f"Vous avancez de {advance} cases.")
         return advance
 
 
@@ -59,7 +59,7 @@ class Board :
 
         if quotient>0 :
             player.money += quotient * 200
-            player.send_message(f"Vous êtes passés par la case départ. Félicitations ! vous avez gagné {quotient*200} €")
+            #player.send_message(f"Vous êtes passés par la case départ. Félicitations ! vous avez gagné {quotient*200} €")
 
         self.square_list[player.position].present_player.append(player) #on l'enregistre sur sa nouvelle case
         return self.square_list[player.position]
@@ -144,7 +144,7 @@ class Board :
 
 
     def get_square_from_name(self, name):
-        for i in range(len(board.square_list)):
+        for i in range(len(self.square_list)):
             if self.square_list[i].name == name:
                 return self.square_list[i]
         return "Désolé, le nom saisi n'est pas dans la liste" #quand on appelle la fonction, voir comment gérer cette erreur
