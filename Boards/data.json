@@ -78,6 +78,11 @@
       "construction_price": 50
     },
     {
+      "name": "Prison",
+      "position" : 10,
+      "type" : "Luck"
+    },
+    {
       "name": "La Villette",
       "position" : 11,
       "type" : "Land",
