@@ -144,13 +144,13 @@ class Board :
 
 
     def get_square_from_name(self, name):
-        for i in range(len(board.square_list)):
+        for i in range(len(self.square_list)):
             if self.square_list[i].name == name:
                 return self.square_list[i]
         return "Désolé, le nom saisi n'est pas dans la liste" #quand on appelle la fonction, voir comment gérer cette erreur
 
-    def serialize_board(self):
 
+    def serialize_board(self):
         dictionnaire = {}
         dictionnaire["__class__"] = "Board"
         for element in self.square_list:
@@ -159,9 +159,9 @@ class Board :
 
     def serialize_square(self, square):
         if isinstance(square, Land):
-            return {"players": square.present_player,
+            return {"players": [square.present_player[i].name for i in range(len(square.present_player))],
                     "nb_houses": square.nb_houses}
         else:
-            return {"players": square.present_player,
+            return {"players": [square.present_player[i].name for i in range(len(square.present_player))],
                     "nb_houses": 0}
 
