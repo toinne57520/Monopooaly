@@ -150,7 +150,7 @@ if __name__ == '__main__':
                     nbr_houses_to_build = player_active.choose_actions(square.get_dict_houses_to_build())
                     square.to_build(int(nbr_houses_to_build))
                 else :
-                    player.send_message("Vous n'avez pas de terrain constructible")
+                    player_active.send_message("Vous n'avez pas de terrain constructible")
 
 
             if action == "Payer la taxe":

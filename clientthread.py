@@ -26,12 +26,15 @@ class Clientthread(Thread):
         actions_loaded = json.loads(self.sock.recv(4048).decode())
         print(actions_loaded)
         self.action = actions_loaded
-        while self.choice == 0:
+        while self.choice == 0 or self.choice > len(actions_loaded):
             sleep(0.1)
-        self.return_action()
+        self.sock.send(str(self.choice).encode())
+        self.action = {}
+        return
 
 
-    def return_action(self):
+
+    """def return_action(self):
         self.sock.send(str(self.choice).encode())
         validation_message = "again"
         while validation_message == "again":
@@ -49,6 +52,7 @@ class Clientthread(Thread):
             validation_message = self.sock.recv(1024).decode()
         self.action = {}
         return
+        """
 
     def deal_with_board(self):
         board_loaded = json.loads(self.sock.recv(4048).decode())
