@@ -33,7 +33,7 @@
     {
       "name": "Impôts sur le revenu",
       "position" : 4,
-      "type" : "tax",
+      "type" : "Tax",
       "amount" : 200
     },
     {
@@ -291,7 +291,7 @@
     {
       "name": "Taxes",
       "position" : 38,
-      "type" : "tax",
+      "type" : "Tax",
       "amount" : 100
     },
     {
