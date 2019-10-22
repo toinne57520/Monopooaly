@@ -37,6 +37,7 @@ class Board :
     def get_nb_lands_of_a_color(self, color):
         i=0
         for land in self.square_list :
+            if type(land) == square.Land:
                 if land.color==color:
                    i+=1
         return i
@@ -46,7 +47,7 @@ class Board :
         dice1 = random.randint(1,6)
         dice2 = random.randint(1,6) #quand on rajoutera les tours, mettre l'option double = rejouer
         advance = dice1 + dice2
-        player.send_message(f"Vous avancez de {advance} cases.")
+        #player.send_message(f"Vous avancez de {advance} cases.")
         return advance
 
 
@@ -59,7 +60,7 @@ class Board :
 
         if quotient>0 :
             player.money += quotient * 200
-            player.send_message(f"Vous êtes passés par la case départ. Félicitations ! vous avez gagné {quotient*200} €")
+            #player.send_message(f"Vous êtes passés par la case départ. Félicitations ! vous avez gagné {quotient*200} €")
 
         self.square_list[player.position].present_player.append(player) #on l'enregistre sur sa nouvelle case
         return self.square_list[player.position]
@@ -107,7 +108,7 @@ class Board :
         try:
             for index, element in enumerate(player.assets):
                 # on compare le nombre de terrains de la couleur détenus par le joueur et le nombre de ces terrains sur le plateau
-                if self.get_nb_assets_of_a_color(player, element.color) == self.board.get_nb_lands_of_a_color(
+                if self.get_nb_assets_of_a_color(player, element.color) == self.get_nb_lands_of_a_color(
                         element.color) and element.color != "trainstation":
                     building_lands[str(index)] = element.name
                     building_lands_color_price.append([element.name, element.color, element.construction_price])

@@ -84,14 +84,14 @@ class Land(Square):
         self.owner = player
         self.status = True
         player.assets.append(self)
-        player.send_message(f"Le joueur {player.name} est maintenant propriétaire de {self.name}")
+        #player.send_message(f"Le joueur {player.name} est maintenant propriétaire de {self.name}")
 
     def pay_rent(self, player):
         # si c'est une gare, on calcule le loyer en fonction du nombre de gare possédé par l'adversaire.
         if self.color == "trainstation":
             nb_trainstation = self.owner.get_nb_assets_of_a_color("trainstation", self.owner)
             rent = self.rent[nb_trainstation-1]
-            player.send_message(f"Le joueur {self.owner.name} possède {nb_trainstation} gares.")
+            #player.send_message(f"Le joueur {self.owner.name} possède {nb_trainstation} gares.")
         #si c'est un terrain, on calcule le loyer en fonction du nombre de maisons construites
         else:
             rent = self.rent[self.nb_houses]
@@ -100,9 +100,10 @@ class Land(Square):
         if player.money >= rent:
             player.money -= rent
             self.owner.money+=rent
-            player.send_message(f"Le joueur {player.name} vient de payer {rent} € à {self.owner.name}")
+            #player.send_message(f"Le joueur {player.name} vient de payer {rent} € à {self.owner.name}")
         else:
-            player.send_message(f"Aïe! Le joueur {player.name} n'a pas assez d'argent pour régler ses dettes! ")
+            print("autre")
+            #player.send_message(f"Aïe! Le joueur {player.name} n'a pas assez d'argent pour régler ses dettes! ")
 
     def to_mortgage(self):
         self.mortgage = True
@@ -114,17 +115,24 @@ class Land(Square):
         self.owner.money -= self.value / 2
         print(f"Le joueur {self.owner.name} a deshypothéqué {self.name} et a payé {self.value/2}€.")
 
+    def get_dict_houses_to_build(self):
+        nb_max = 5 - self.nb_houses
+        dict_nb_choice = {}
+        for i in range(nb_max + 1):
+            dict_nb_choice[i] = str(i)
+        return dict_nb_choice
+
     def to_build(self, nb_houses_to_build):
+        nb_max = 5 - self.nb_houses
         try:
             #on vérifie que le nombre de maisons rentré est bien un entier, compatible avec le nombre maximal de maisons par terrain
-            nb_max = 5 - self.nb_houses
             assert (nb_houses_to_build < nb_max)
             self.nb_houses += nb_houses_to_build #on construit
             self.owner.money -= self.construction_price* nb_houses_to_build #on fait payer la construction
             return(f"Bravo, le joueur {self.owner.name} a désormais {self.nb_houses} maisons sur {self.name}.")
 
         except AssertionError:
-            return("Impossible de construire autant de maisons : max 5 maisons")
+            return(f"Impossible de construire autant de maisons : max {nb_max} maisons")
 
     def to_sell(self, nb_houses_to_sell):
         try:

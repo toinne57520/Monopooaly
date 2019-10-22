@@ -83,7 +83,7 @@ def standard_turn(player):
     player.throw_dice()
 
 early_action = { 1 : 'Lancer les dés' , 2 : 'Construire une maison', 3 : 'Hypothéquer'}
-end_action = {1 : 'Terminer mon tour'}
+end_action = {1: 'Terminer mon tour'}
 
 
 if __name__ == '__main__':
@@ -144,6 +144,14 @@ if __name__ == '__main__':
 
             if action == "Construire une maison":
                 print(action)
+                if board.get_building_lands(player_active)[0]:
+                    name_land_to_build = player_active.choose_actions(board.get_building_lands(player_active)[1])
+                    square = board.get_square_from_name(name_land_to_build)
+                    nbr_houses_to_build = player_active.choose_actions(square.get_dict_houses_to_build())
+                    square.to_build(int(nbr_houses_to_build))
+                else :
+                    player.send_message("Vous n'avez pas de terrain constructible")
+
 
             if action == "Payer la taxe":
                 print(action)
