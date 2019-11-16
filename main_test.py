@@ -82,8 +82,8 @@ def standard_turn(player):
     #ajout des fonctions possibles pour un joueur
     player.throw_dice()
 
-early_action = { 1 : 'Lancer les dés' , 2 : 'Construire une maison', 3 : 'Hypothéquer'}
-end_action = {1: 'Terminer mon tour'}
+early_action = { 0 : 'Lancer les dés' , 1 : 'Construire une maison', 2 : 'Hypothéquer'}
+end_action = {0 : 'Terminer mon tour'}
 
 
 if __name__ == '__main__':
@@ -106,7 +106,7 @@ if __name__ == '__main__':
 
     starting_player = 0
 
-    for square in board.square_list:
+    for square in board.square_list[1:2]:
         if type(square) == Land:
             square.owner = board.players[starting_player]
             board.players[starting_player].assets.append(square)

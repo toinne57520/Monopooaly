@@ -28,7 +28,7 @@ def transform_actions(dict):
     actions = []
     liste = ['a','b','c','d','e','f']
     for i in dict.keys():
-        actions.append(liste[int(i)-1] + " - " +dict[i])
+        actions.append(liste[int(i)] + " - " +dict[i])
     return actions
 
 def choose_actions_pygame():
@@ -37,6 +37,6 @@ def choose_actions_pygame():
         if event.type == pygame.KEYDOWN:
             if event.key in [K_a,K_b,K_c,K_d,K_e,K_f]:
                 nom = pygame.key.name(event.key)
-                choice = liste.index(nom)+1
+                choice = liste.index(nom)
                 return choice
-    return 0
+    return -1

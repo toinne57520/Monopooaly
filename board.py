@@ -79,7 +79,7 @@ class Board :
         affichage = []
         for index, element in enumerate(player.assets):
             if not element.mortgage and element.nb_houses == 0:
-                mortgageable_assets[str(index)] = element.name
+                mortgageable_assets[index] = element.name
                 affichage.append(str(element.name) + " pour une valeur de " + str(element.value / 2) + "€.")
                 i += 1
         player.send_message(f"Les terrains que vous pouvez hypothéquer sont {affichage}")
