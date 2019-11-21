@@ -20,7 +20,7 @@ class Square:
         #return
 
     def get_actions(self,player):
-        dict = { 1: "Terminer mon tour"}
+        dict = { 0: "Terminer mon tour"}
         return dict
 
 
@@ -55,9 +55,9 @@ class Land(Square):
 
     def get_actions(self,player):
         if self.status and player != self.owner:
-            dict = { 1: "Payer le loyer"}
+            dict = { 0: "Payer le loyer"}
         else :
-            dict = { 1: "Acheter le terrain", 2:"Terminer mon tour"}
+            dict = { 0: "Acheter le terrain", 1:"Terminer mon tour"}
 
         return dict
 
@@ -100,10 +100,10 @@ class Land(Square):
         if player.money >= rent:
             player.money -= rent
             self.owner.money+=rent
-            #player.send_message(f"Le joueur {player.name} vient de payer {rent} € à {self.owner.name}")
+            player.send_message(f"Le joueur {player.name} vient de payer {rent} € à {self.owner.name}")
         else:
             print("autre")
-            #player.send_message(f"Aïe! Le joueur {player.name} n'a pas assez d'argent pour régler ses dettes! ")
+            player.send_message(f"Aïe! Le joueur {player.name} n'a pas assez d'argent pour régler ses dettes! ")
 
     def to_mortgage(self):
         self.mortgage = True
@@ -161,7 +161,7 @@ class Luck(Square):
         #return("Vous êtes tombés sur une carte chance !")
 
     def get_actions(self,player):
-        dict = { 1: "Tirer une carte chance"}
+        dict = { 0: "Tirer une carte chance"}
         return dict
 
     def str(self,player):

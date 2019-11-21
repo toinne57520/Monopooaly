@@ -79,7 +79,7 @@ class Board :
         affichage = []
         for index, element in enumerate(player.assets):
             if not element.mortgage and element.nb_houses == 0:
-                mortgageable_assets[str(index)] = element.name
+                mortgageable_assets[index] = element.name
                 affichage.append(str(element.name) + " pour une valeur de " + str(element.value / 2) + "€.")
                 i += 1
         player.send_message(f"Les terrains que vous pouvez hypothéquer sont {affichage}")
@@ -120,7 +120,7 @@ class Board :
         except AssertionError:
             player.send_message(
                 "Cela s'annonce compliqué, vous n'avez pas de terrains constructibles. Vous n'avez aucun quartier complet, repartez à l'aventure.")
-            return False
+            return False, False
 
     def get_built_lands(self, player):
         """

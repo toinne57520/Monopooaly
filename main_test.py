@@ -1,6 +1,6 @@
 from board import Board
 import json
-import square
+from square import Land
 from player import Player
 import os
 import glob
@@ -82,8 +82,8 @@ def standard_turn(player):
     #ajout des fonctions possibles pour un joueur
     player.throw_dice()
 
-early_action = { 1 : 'Lancer les dés' , 2 : 'Construire une maison', 3 : 'Hypothéquer'}
-end_action = {1: 'Terminer mon tour'}
+early_action = { 0 : 'Lancer les dés' , 1 : 'Construire une maison', 2 : 'Hypothéquer'}
+end_action = {0 : 'Terminer mon tour'}
 
 
 if __name__ == '__main__':
@@ -105,6 +105,12 @@ if __name__ == '__main__':
         player = Player(player_name,board,client)
 
     starting_player = 0
+
+    for square in board.square_list[1:2]:
+        if type(square) == Land:
+            square.owner = board.players[starting_player]
+            board.players[starting_player].assets.append(square)
+            square.status = True
 
     while True:
         player_active = board.players[(starting_player + 1) % 2]
@@ -131,7 +137,8 @@ if __name__ == '__main__':
                 print(action)
                 name_land_to_mortgage = player_active.choose_actions(board.get_morgageable_assets(player_active))
                 print(name_land_to_mortgage)
-                player_active.send_message(board.get_square_from_name(name_land_to_mortgage).to_mortgage())
+                if name_land_to_mortgage :
+                    player_active.send_message(board.get_square_from_name(name_land_to_mortgage).to_mortgage())
 
 
             if action == "Tirer une carte chance":
@@ -150,7 +157,7 @@ if __name__ == '__main__':
                     nbr_houses_to_build = player_active.choose_actions(square.get_dict_houses_to_build())
                     square.to_build(int(nbr_houses_to_build))
                 else :
-                    player.send_message("Vous n'avez pas de terrain constructible")
+                    player_active.send_message("Vous n'avez pas de terrain constructible")
 
 
             if action == "Payer la taxe":

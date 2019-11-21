@@ -19,6 +19,8 @@ class Player :
 
 
     def choose_actions(self,dict):
+        if len(dict) == 0:
+            return
         sleep(0.5)
         self.sock.send("action".encode())
         sleep(0.5)
