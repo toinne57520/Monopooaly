@@ -1,9 +1,6 @@
 #import pygame
 from threading import Thread
-from interface_constantes import *
 from time import sleep
-from pygame.locals import *
-import socket
 import struct
 import json
 
@@ -16,7 +13,7 @@ class Clientthread(Thread):
         self.sock = sock
         self.action = {}
         self.message_hist = ["Bienvenue","Vous etes sur la case départ et vous possedez 200€"]
-        self.board_state = {}
+        self.board_state = []
         self.choice= -1
 
 
@@ -28,6 +25,7 @@ class Clientthread(Thread):
         self.action = actions_loaded
         while self.choice == -1 or self.choice >= len(actions_loaded):
             sleep(0.1)
+        print(self.choice)
         self.sock.send(str(self.choice).encode())
         self.action = {}
         return
@@ -56,11 +54,12 @@ class Clientthread(Thread):
 
     def deal_with_board(self):
         board_loaded = json.loads(self.sock.recv(4048).decode())
-        self.board_state = board_loaded
+        self.board_state.append(board_loaded)
         return
 
     def deal_with_message(self):
         message = self.sock.recv(1024).decode()
+        print(message)
         self.message_hist.append(message)
         return
 
@@ -99,3 +98,5 @@ class Clientthread(Thread):
 
                 self.message_hist.append("C'est la fin de votre tour")
             #sleep(1)
+
+
