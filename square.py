@@ -203,11 +203,11 @@ class Tax(Square):
      #       return (f"C'est une case de taxe ... Montant à payer : {self.amount}")
 
     def str(self,player):
-            player.send_message(f"C'est une case de taxe ... Montant à payer : {self.amount}")
-            return
+        player.send_message(f"C'est une case de taxe ... Montant à payer : {self.amount}")
+        return
 
     def get_actions(self,player):
-        dict = { 1: "Payer la taxe"}
+        dict = { 0: "Payer la taxe"}
         return dict
 
     def pay_taxes(self,player):
@@ -216,3 +216,15 @@ class Tax(Square):
             return(f"Le joueur {player.name} vient de payer {self.amount} € à la banque ... Il lui reste {player.money}€")
         else:
             return(f"Aïe! Le joueur {player.name} n'a pas assez d'argent pour régler ses dettes! ")
+
+class Jail(Square):
+
+    def __init__(self, name, position):
+        Square.__init__(self, name, position)
+
+    def str(self, player):
+        player.send_message(f"C'est une case de taxe ... Montant à payer : {self.amount}")
+        return
+
+
+
