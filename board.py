@@ -92,7 +92,7 @@ class Board :
         affichage = []
         for index, element in enumerate(player.assets):
             if element.mortgage:
-                inactive_assets[str(i)] = element.name
+                inactive_assets[index] = element.name
                 affichage.append(str(element.name) + " pour une valeur de " + str(element.value/2) + "€")
                 i += 1
         player.send_message(f"Les terrains que vous pouvez déshypothéquer sont {affichage}")

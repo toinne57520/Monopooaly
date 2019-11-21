@@ -1,13 +1,17 @@
 from board import Board
-#import square
 import json
-import square
+from square import Land
 from player import Player
 import os
 import glob
+import socket
+from server import Server
+from time import sleep
+import struct
+#
 
 #game = Board('data.json')
-#joueur = Player('Antoine',game) #rajouter exception pour que les deux joueurs n'aient pas la meme position.
+#joueur = Player('Antoine',game) #rajouter exception pour que les deux joueurs n'aient pas la meme position
 #joueur.throw_dice()
 
 #print(joueur.position)
@@ -37,7 +41,6 @@ def launch_game():
 
 def new_game():
     board = Board(board_choice())
-    players = [Player(name, board) for name in player_choice()]
     return board
 
 
@@ -66,7 +69,7 @@ def board_choice():
 
 def player_choice():
     try:
-        nb_players = input("Combien de joueurs participent à la partie?")
+        nb_players = input("Combien de joueurs participent à la partie??")
         assert (1 <= int(nb_players) <= 4)
         players_list = [input("Quel est le nom du joueur " + str(i + 1) + "?") for i in range(int(nb_players))]
         return players_list
@@ -79,15 +82,126 @@ def standard_turn(player):
     #ajout des fonctions possibles pour un joueur
     player.throw_dice()
 
+early_action = { 0 : 'Lancer les dés' , 1 : 'Construire une maison', 2 : 'Hypothéquer', 3 : 'Déshypothéquer'}
+end_action = {0 : 'Terminer mon tour'}
 
-board = new_game()
-print("On lance la partie!")
-players_turn = 0
 
-while len(board.players) > 1: #on enleve les joueurs qui perdent au fur et à mesure et on s'arrete quand il n'en reste qu'un?
-    player = board.players[int(players_turn%len(board.players))]
-    print("C'est le tour de " + str(player.name))
-    standard_turn(player)
-    players_turn += 1
+if __name__ == '__main__':
+    board = new_game()
+    print("On lance la partie!")
+    players_turn = 0
 
-#gestion de fin de tour à faire, comment quitter la partie, comment l'enregistrer??
+    # lancement du serveur
+    server = Server(11100,board)
+    server.start()
+
+    print("A combien allez vous jouer ?")
+    numberplayer = input("> ")
+    while numberplayer[0] not in ['2','3','4'] :
+        print("Vous devez indiquer un nombre de joueurs entre 2 et 4")
+        numberplayer = input("> ")
+
+    print("Vous pouvez à présent lancer " + numberplayer + " clients" )
+
+
+    while len(server.client_list) < int(numberplayer[0]):
+        sleep(0.5)
+
+    for client in server.client_list :
+        client.send("Bienvenue dans le Monopooaly!".encode())
+        player_name = client.recv(1024).decode()
+        player = Player(player_name,board,client)
+
+    starting_player = 0
+
+    for square in board.square_list[1:2]:
+        if type(square) == Land:
+            square.owner = board.players[starting_player]
+            board.players[starting_player].assets.append(square)
+            square.status = True
+
+    while True:
+        player_active = board.players[(starting_player + 1) % 2]
+        player_inactive = board.players[(starting_player % 2)]
+        player_inactive.sock.send(struct.pack("?", False))
+        player_active.sock.send(struct.pack("?", True))
+        player_active.send_board()
+        player_inactive.send_board()
+
+        action = True
+        while action!= False :
+            action = player_active.choose_actions(early_action)
+
+            if action == "Lancer les dés":
+                advance = board.throw_dice(player_active)
+                board.change_position(player_active,advance)
+                board.square_list[player_active.position].str(player_active)
+                player_active.send_board()
+                player_inactive.send_board()
+                action = player_active.choose_actions(board.square_list[player_active.position].get_actions(player_active))
+                print(action)
+
+            if action == "Hypothéquer":
+                print(action)
+                name_land_to_mortgage = player_active.choose_actions(board.get_morgageable_assets(player_active))
+                print(name_land_to_mortgage)
+                if name_land_to_mortgage :
+                    player_active.send_message(board.get_square_from_name(name_land_to_mortgage).to_mortgage())
+
+            if action == "Déshypothéquer":
+                print(action)
+                name_land_to_clear_mortgage = player_active.choose_actions(board.get_inactive_assets(player_active))
+                print(name_land_to_clear_mortgage)
+                if name_land_to_clear_mortgage :
+                    player_active.send_message(board.get_square_from_name(name_land_to_clear_mortgage).to_clear_mortgage())
+
+
+            if action == "Tirer une carte chance":
+                print("on rentre dans tirer une carte chance")
+                action = board.square_list[player_active.position].get_impact(player_active,board)
+                if action =="new_pos":
+                    action = player_active.choose_actions(board.square_list[player_active.position].get_actions(player_active))
+                    player_active.send_board()
+                    player_inactive.send_board()
+
+            if action == "Construire une maison":
+                print(action)
+                if board.get_building_lands(player_active)[0]:
+                    name_land_to_build = player_active.choose_actions(board.get_building_lands(player_active)[1])
+                    square = board.get_square_from_name(name_land_to_build)
+                    nbr_houses_to_build = player_active.choose_actions(square.get_dict_houses_to_build())
+                    square.to_build(int(nbr_houses_to_build))
+                else :
+                    player_active.send_message("Vous n'avez pas de terrain constructible")
+
+
+            if action == "Payer la taxe":
+                print("on rentre dans action: payer la taxe")
+                board.square_list[player_active.position].pay_taxes(player_active)
+                action = player_active.choose_actions(end_action)
+
+            if action == "Payer le loyer":
+                print(action)
+                board.square_list[player_active.position].pay_rent(player_active)
+                action = player_active.choose_actions(end_action)
+
+            if action == "Acheter le terrain":
+                print("on rentre dans action: acheter terrain")
+                board.square_list[player_active.position].buy_land(player_active)
+                action = player_active.choose_actions(end_action)
+
+
+            if action == "Terminer mon tour":
+                print(action)
+                sleep(1)
+                player_active.sock.send("stop".encode())
+                player_inactive.sock.send("stop".encode())
+                sleep(1)
+                action = False
+
+
+        starting_player += 1
+
+
+
+

@@ -20,7 +20,6 @@ class Server(Thread):
     def run(self):
         i = 0
         self.__sock.listen(1)  # on autorise une seule connexion en attente à la fois
-        print("En attente d'une connexion sur le serveur")
         while self.__continuer:
             try:
                 connexion, client = self.__sock.accept()
