@@ -223,8 +223,15 @@ class Jail(Square):
         Square.__init__(self, name, position)
 
     def str(self, player):
-        player.send_message(f"C'est une case de taxe ... Montant à payer : {self.amount}")
-        return
+        if player.in_jail > 0:
+            player.send_message(f"Vous êtes en prison pour encore {player.in_jail} tours ")
+            return
+        else:
+            player.send_message(f"Vous êtes en visite simple de la prison, j'espère que vous avez pensé aux oranges!")
+
+    def get_actions(selfself, player):
+        dict = {0 : "Terminer mon tour"}
+        return dict
 
 
 
