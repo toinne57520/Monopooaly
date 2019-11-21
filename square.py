@@ -178,11 +178,11 @@ class Luck(Square):
         if code[0] == "G":
             player.money += int(code[1:])
             player.send_message(f"Vous avez à présent {player.money}€")
-            return
+            return "same_pos"
         elif code[0] == "P":
             player.money -= int(code[1:])
             player.send_message(f"Vous avez à présent {player.money}€")
-            return
+            return "same_pos"
         elif code[0] == "A":
             board.change_position(player,int(code[1:]))
             board.square_list[player.position].str(player)

@@ -13,7 +13,7 @@ class Clientthread(Thread):
         self.sock = sock
         self.action = {}
         self.message_hist = ["Bienvenue","Vous etes sur la case départ et vous possedez 200€"]
-        self.board_state = []
+        self.board_state = {}
         self.choice= -1
 
 
@@ -54,7 +54,7 @@ class Clientthread(Thread):
 
     def deal_with_board(self):
         board_loaded = json.loads(self.sock.recv(4048).decode())
-        self.board_state.append(board_loaded)
+        self.board_state = board_loaded
         return
 
     def deal_with_message(self):

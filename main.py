@@ -172,6 +172,8 @@ if __name__ == '__main__':
                     action = player_active.choose_actions(board.square_list[player_active.position].get_actions(player_active))
                     player_active.send_board()
                     player_inactive.send_board()
+                if action == "same_pos":
+                    action = player_active.choose_actions(end_action)
 
             if action == "Construire une maison":
                 print(action)
