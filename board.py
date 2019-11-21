@@ -46,8 +46,22 @@ class Board :
     def throw_dice(self, player):
         dice1 = random.randint(1,6)
         dice2 = random.randint(1,6) #quand on rajoutera les tours, mettre l'option double = rejouer
-        advance = dice1 + dice2
-        player.send_message(f"Vous avancez de {advance} cases.")
+
+        if player.in_jail == 0:
+            advance = dice1 + dice2
+            player.send_message(f"Vous avancez de {advance} cases.")
+        elif player.in_jail == 1:
+            player.in_jail = 0
+            advance = dice1 + dice2
+            player.send_message(f"Vous sortez de prison et avancez de {advance} cases.")
+        else:
+            if dice1 == dice2:
+                advance = dice1 + dice2
+                player.send_message(f"Vous sortez de prison et avancez de {advance} cases.")
+            else:
+                player.in_jail -= 1
+                player.send_message(f"Pas de double pour ce tour..")
+                advance = 0
         return advance
 
 
