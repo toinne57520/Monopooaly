@@ -124,7 +124,7 @@ class Board :
                 # on compare le nombre de terrains de la couleur détenus par le joueur et le nombre de ces terrains sur le plateau
                 if self.get_nb_assets_of_a_color(player, element.color) == self.get_nb_lands_of_a_color(
                         element.color) and element.color != "trainstation":
-                    building_lands[str(index)] = element.name
+                    building_lands[index] = element.name
                     building_lands_color_price.append([element.name, element.color, element.construction_price])
             assert len(building_lands) > 0
             # on affiche les terrains constructibles, leur couleur et leur prix de construction
@@ -145,7 +145,7 @@ class Board :
         try:
             for index, element in enumerate(player.assets):
                 if element.nb_houses > 0:
-                    built_lands[str(index)] = element.name
+                    built_lands[index] = element.name
                     built_lands_nb_houses_price.append([element.name, element.nb_houses, element.construction_price / 2])
             assert len(built_lands) > 0
             # on affiche les terrains construits, leur nombre de maison et leur prix de revente
