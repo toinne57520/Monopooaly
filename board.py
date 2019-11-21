@@ -98,7 +98,7 @@ class Board :
         i = 0
         affichage = []
         for index, element in enumerate(player.assets):
-            if not element.mortgage and element.nb_houses == 0:
+            if not element.mortgage and element.nb_houses == 0 and element.color not in [self.get_built_lands(player)[2][i][3] for i in range(len(self.get_built_lands(player)[2]))]:
                 mortgageable_assets[int(i)] = element.name
                 affichage.append(str(element.name) + " pour une valeur de " + str(element.value / 2) + "€.")
                 i += 1
@@ -152,12 +152,12 @@ class Board :
             for index, element in enumerate(player.assets):
                 if element.nb_houses > 0:
                     built_lands[index] = element.name
-                    built_lands_nb_houses_price.append([element.name, element.nb_houses, element.construction_price / 2])
+                    built_lands_nb_houses_price.append([element.name, element.nb_houses, element.construction_price / 2,element.color])
             assert len(built_lands) > 0
             # on affiche les terrains construits, leur nombre de maison et leur prix de revente
             # affichage à améliorer
             player.send_message(f"Vous pouvez revendre sur (et chaque maison rapporte) {built_lands_nb_houses_price}")
-            return True, built_lands
+            return True, built_lands, built_lands_nb_houses_price
         except AssertionError:
             player.send_message(
                 "Cela s'annonce compliqué, vous n'avez pas de terrains construits. Vous n'avez aucune maison à revendre, ne vendez pas la peau de l'ours avant de l'avoir tué!")
