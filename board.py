@@ -27,6 +27,9 @@ class Board :
             elif element["type"] == "Tax":
                 square_list.append(square.Tax(element["name"], element["position"], element["amount"]))
 
+            elif element["type"] == "Jail":
+                square_list.append(square.Jail(element["name"], element["position"]))
+
             else :
                 print("Pas une catégorie connue")
         return square_list
