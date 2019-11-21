@@ -119,7 +119,7 @@ class Land(Square):
         nb_max = 5 - self.nb_houses
         dict_nb_choice = {}
         for i in range(nb_max + 1):
-            dict_nb_choice[i] = str(i)
+            dict_nb_choice[i] = i
         return dict_nb_choice
 
     def to_build(self, nb_houses_to_build):
