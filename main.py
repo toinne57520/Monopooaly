@@ -179,7 +179,7 @@ if __name__ == '__main__':
                     name_land_to_build = player_active.choose_actions(board.get_building_lands(player_active)[1])
                     square = board.get_square_from_name(name_land_to_build)
                     nbr_houses_to_build = player_active.choose_actions(square.get_dict_houses_to_build())
-                    square.to_build(int(nbr_houses_to_build))
+                    player_active.send_message(square.to_build(int(nbr_houses_to_build)))
                 else :
                     player_active.send_message("Vous n'avez pas de terrain constructible")
 

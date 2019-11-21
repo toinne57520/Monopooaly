@@ -48,9 +48,9 @@ class Player :
 
 
     def send_message(self,message):
-        sleep(1)
+        sleep(0.5)
         self.sock.send("message".encode())
-        sleep(1)
+        sleep(0.5)
         self.sock.send(message.encode())
         return ()
 
