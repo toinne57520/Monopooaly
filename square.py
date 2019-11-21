@@ -170,9 +170,9 @@ class Luck(Square):
 
     def get_impact(self,player,board):
         luck_impact = random.randint(1,self.nbre)
-        name = self.impact_list[1]["name"]
-        description = self.impact_list[1]["description"]
-        code = self.impact_list[1]["code"]
+        name = self.impact_list[luck_impact]["name"]
+        description = self.impact_list[luck_impact]["description"]
+        code = self.impact_list[luck_impact]["code"]
         player.send_message(name)
         player.send_message(description)
         if code[0] == "G":
