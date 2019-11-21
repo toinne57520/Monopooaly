@@ -83,7 +83,7 @@ def standard_turn(player):
     player.throw_dice()
 
 early_action = { 0 : 'Lancer les dés' , 1 : 'Construire une maison', 2 : 'Hypothéquer', 3 : 'Déshypothéquer'}
-end_action = {0 : 'Terminer mon tour'}
+end_action = {0 : 'Terminer mon tour', 1 : 'Sauvegarder la partie'}
 
 
 if __name__ == '__main__':
@@ -112,13 +112,22 @@ if __name__ == '__main__':
         player_name = client.recv(1024).decode()
         player = Player(player_name,board,client)
 
-    starting_player = 0
+    if True : #gérer le sauvegarde et le chargement des parties
+        pass
 
+    starting_player = 0
     for square in board.square_list[1:2]:
         if type(square) == Land:
             square.owner = board.players[starting_player]
             board.players[starting_player].assets.append(square)
             square.status = True
+
+    for square in board.square_list[3:4]:
+        if type(square) == Land:
+            square.owner = board.players[starting_player]
+            board.players[starting_player].assets.append(square)
+            square.status = True
+
 
     while True:
         player_active = board.players[(starting_player + 1) % 2]
@@ -184,6 +193,10 @@ if __name__ == '__main__':
                 print(action)
                 board.square_list[player_active.position].pay_rent(player_active)
                 action = player_active.choose_actions(end_action)
+
+            if action == "Sauvegarder la partie":
+                print(action)
+
 
             if action == "Acheter le terrain":
                 print("on rentre dans action: acheter terrain")
