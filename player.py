@@ -38,9 +38,9 @@ class Player :
         return(dict[data_loaded])
 
     def send_board(self):
-        sleep(1)
+        sleep(0.5)
         self.sock.send("board".encode())
-        sleep(1)
+        sleep(0.5)
         board_dict = self.board.serialize_board()
         data_string = json.dumps(board_dict).encode()
         self.sock.send(data_string)
