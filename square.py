@@ -169,7 +169,7 @@ class Luck(Square):
         return
 
     def get_impact(self,player,board):
-        luck_impact = random.randint(1,self.nbre)
+        luck_impact = random.randint(0,self.nbre-1)
         name = self.impact_list[luck_impact]["name"]
         description = self.impact_list[luck_impact]["description"]
         code = self.impact_list[luck_impact]["code"]
@@ -228,10 +228,33 @@ class Jail(Square):
             return
         else:
             player.send_message(f"Vous êtes en visite simple de la prison, j'espère que vous avez pensé aux oranges!")
+            return
 
-    def get_actions(selfself, player):
+    def get_actions(self, player):
         dict = {0 : "Terminer mon tour"}
         return dict
+
+
+class Go_Jail(Square):
+
+    def __init__(self, name, position):
+        Square.__init__(self, name, position)
+
+    def str(self, player):
+            player.send_message(f"Pris en flagrant délit, vous filez en prison")
+            return
+
+    def get_actions(self, player):
+        dict = {0: "Aller en prison"}
+        return dict
+
+    def go_to_jail(self, player):
+        if player.money >= self.amount:
+            player.money -= self.amount
+            return (
+                f"Le joueur {player.name} vient de payer {self.amount} € à la banque ... Il lui reste {player.money}€")
+        else:
+            return (f"Aïe! Le joueur {player.name} n'a pas assez d'argent pour régler ses dettes! ")
 
 
 
