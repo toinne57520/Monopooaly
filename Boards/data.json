@@ -80,7 +80,7 @@
     {
       "name": "Prison",
       "position" : 10,
-      "type" : "Luck"
+      "type" : "Jail"
     },
     {
       "name": "La Villette",
@@ -234,9 +234,9 @@
       "construction_price": 150
     },
     {
-      "name": "Prison",
+      "name": "Aller en prison",
       "position" : 30,
-      "type" : "Luck"
+      "type" : "GoJail"
     },
     {
       "name": "Avenue de Breteuil",

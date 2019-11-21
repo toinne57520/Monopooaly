@@ -113,7 +113,7 @@ class Land(Square):
     def to_clear_mortgage(self):
         self.mortgage = False
         self.owner.money -= self.value / 2
-        print(f"Le joueur {self.owner.name} a deshypothéqué {self.name} et a payé {self.value/2}€.")
+        return(f"Le joueur {self.owner.name} a deshypothéqué {self.name} et a payé {self.value/2}€.")
 
     def get_dict_houses_to_build(self):
         nb_max = 5 - self.nb_houses
@@ -249,12 +249,8 @@ class Go_Jail(Square):
         return dict
 
     def go_to_jail(self, player):
-        if player.money >= self.amount:
-            player.money -= self.amount
-            return (
-                f"Le joueur {player.name} vient de payer {self.amount} € à la banque ... Il lui reste {player.money}€")
-        else:
-            return (f"Aïe! Le joueur {player.name} n'a pas assez d'argent pour régler ses dettes! ")
+        player.in_jail = 3
+        player.position = 11
 
 
 
