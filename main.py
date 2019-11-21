@@ -203,6 +203,10 @@ if __name__ == '__main__':
                 board.square_list[player_active.position].buy_land(player_active)
                 action = player_active.choose_actions(end_action)
 
+            if action == "Aller en prison":
+                print(action)
+                board.square_list[player_active.position].go_to_jail(player_active)
+                action = player_active.choose_actions(end_action)
 
             if action == "Terminer mon tour":
                 print(action)
