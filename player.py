@@ -16,6 +16,7 @@ class Player :
         self.board.square_list[self.position].present_player.append(self) #on place le joueur sur la case départ
         board.add_player(self)
         self.sock = sock
+        self.in_jail = 0
 
 
     def choose_actions(self,dict):
@@ -41,7 +42,6 @@ class Player :
         self.sock.send("board".encode())
         sleep(1)
         board_dict = self.board.serialize_board()
-        print(board_dict)
         data_string = json.dumps(board_dict).encode()
         self.sock.send(data_string)
         return ()
@@ -49,9 +49,9 @@ class Player :
 
     def send_message(self,message):
         sleep(1)
-        self.sock.send("message".encode())
+        #self.sock.send("message".encode())
         sleep(1)
-        self.sock.send(message.encode())
+        #self.sock.send(message.encode())
         return ()
 
 
