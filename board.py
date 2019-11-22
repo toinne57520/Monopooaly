@@ -53,19 +53,23 @@ class Board :
         player.send_message(f"Vous n'avez plus les moyens de payer vos dettes.. Vous avez perdu! Retentez votre chance une prochaine fois..")
 
     def build_starting_dict(self,player):
-        i= 0
         early_action = {0: 'Lancer les dés'}
-        if self.get_building_lands(player)[0]:
-            i+=1
-            early_action[int(i)] = 'Construire une maison'
+        if player.in_dept :
+            player.in_dept = False
+            early_action = player.choose_actions(self.square_list[player.position].get_actions(player))
+        else :
+            i = 0
+            if self.get_building_lands(player)[0]:
+                i+=1
+                early_action[int(i)] = 'Construire une maison'
 
-        elif self.get_morgageable_assets(player)[0]:
-            i += 1
-            early_action[int(i)] = 'Hypothéquer'
+            elif self.get_morgageable_assets(player)[0]:
+                i += 1
+                early_action[int(i)] = 'Hypothéquer'
 
-        elif self.get_inactive_assets(player)[0]:
-            i += 1
-            early_action[int(i)] = 'Déshypothéquer'
+            elif self.get_inactive_assets(player)[0]:
+                i += 1
+                early_action[int(i)] = 'Déshypothéquer'
 
         return early_action
 
@@ -127,15 +131,16 @@ class Board :
         mortgageable_assets = {}
         i = 0
         affichage = []
-        for index, element in enumerate(player.assets):
+        for element in player.assets:
             if not element.mortgage and element.nb_houses == 0 and element.color not in [self.get_built_lands(player)[2][i][3] for i in range(len(self.get_built_lands(player)[2]))]:
-                mortgageable_assets[int(i)] = element.name
+                print(affichage)
+                mortgageable_assets[int(i)] = element.name + " - " + str(element.value/2) + "€"
                 affichage.append(str(element.name) + " pour une valeur de " + str(element.value / 2) + "€.")
                 i += 1
         if affichage ==[]:
             return False, False
         else:
-            player.send_message(f"Les terrains que vous pouvez hypothéquer sont {affichage}")
+            #player.send_message(f"Les terrains que vous pouvez hypothéquer sont {affichage}")
             return True, mortgageable_assets
 
     def get_dict_funds(self, player):
@@ -156,14 +161,14 @@ class Board :
         affichage = []
         for index, element in enumerate(player.assets):
             if element.mortgage:
-                inactive_assets[int(i)] = element.name
+                inactive_assets[int(i)] = element.name + " - " + str(element.value/2) + "€"
                 affichage.append(str(element.name) + " pour une valeur de " + str(element.value/2) + "€")
                 i += 1
         if affichage == []:
             return False, False
         else :
-            player.send_message(f"Les terrains que vous pouvez déshypothéquer sont {affichage}")
-            return True, inactive_assets
+            #player.send_message(f"Les terrains que vous pouvez déshypothéquer sont {affichage}")
+            return True, inactive_assets, affichage
 
     def get_building_lands(self, player):
         """
@@ -177,12 +182,12 @@ class Board :
                 # on compare le nombre de terrains de la couleur détenus par le joueur et le nombre de ces terrains sur le plateau
                 if self.get_nb_assets_of_a_color(player, element.color) == self.get_nb_lands_of_a_color(
                         element.color) and element.color != "trainstation":
-                    building_lands[index] = element.name
+                    building_lands[index] = element.name + " - " + str(element.construction_price) + "€"
                     building_lands_color_price.append([element.name, element.color, element.construction_price])
             assert len(building_lands) > 0
             # on affiche les terrains constructibles, leur couleur et leur prix de construction
             # affichage à améliorer
-            player.send_message(f"Vous pouvez construire sur (et chaque maison coûte) {building_lands_color_price}")
+            #player.send_message(f"Vous pouvez construire sur (et chaque maison coûte) {building_lands_color_price}")
             return True, building_lands
         except AssertionError:
             return False, False
@@ -193,20 +198,24 @@ class Board :
                 """
         built_lands = {}
         built_lands_nb_houses_price = []
-        try:
-            for index, element in enumerate(player.assets):
-                if element.nb_houses > 0:
-                    built_lands[index] = element.name
-                    built_lands_nb_houses_price.append([element.name, element.nb_houses, element.construction_price / 2,element.color])
-            assert len(built_lands) > 0
+        i = 0
+        for element in player.assets:
+            if element.nb_houses > 0:
+                i+=1
+                built_lands[int(i)] = element.name + " - " + str(element.construction_price/2) + "€"
+                built_lands_nb_houses_price.append([element.name, element.nb_houses, element.construction_price / 2,element.color])
             # on affiche les terrains construits, leur nombre de maison et leur prix de revente
             # affichage à améliorer
+        if len(built_lands) == 0 :
+            return False, False, [[0,0,0,0],[0,0,0,0]]
+
+        else :
             player.send_message(f"Vous pouvez revendre sur (et chaque maison rapporte) {built_lands_nb_houses_price}")
             return True, built_lands, built_lands_nb_houses_price
-        except AssertionError:
-            return False, False
+
 
     def get_square_from_name(self, name):
+        name = name.split('-')[0][:-1]
         for i in range(len(self.square_list)):
             if self.square_list[i].name == name:
                 return self.square_list[i]

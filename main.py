@@ -117,16 +117,16 @@ if __name__ == '__main__':
         pass
 
     starting_player = 0
-    for square in board.square_list[1:2]:
+    for square in board.square_list[1:4]:
         if type(square) == Land:
             square.owner = board.players[starting_player]
             board.players[starting_player].assets.append(square)
             square.status = True
 
-    for square in board.square_list[3:4]:
+    for square in board.square_list[4:11]:
         if type(square) == Land:
-            square.owner = board.players[starting_player]
-            board.players[starting_player].assets.append(square)
+            square.owner = board.players[starting_player + 1]
+            board.players[starting_player + 1].assets.append(square)
             square.status = True
 
     party = True
@@ -183,7 +183,7 @@ if __name__ == '__main__':
                     name_land_to_build = player_active.choose_actions(board.get_building_lands(player_active)[1])
                     square = board.get_square_from_name(name_land_to_build)
                     nbr_houses_to_build = player_active.choose_actions(square.get_dict_houses_to_build())
-                    player_active.send_message(square.to_build(int(nbr_houses_to_build)))
+                    player_active.send_message(square.to_build(int(nbr_houses_to_build[0])))
                     player_active.send_board()
                     player_inactive.send_board()
                 else :
@@ -248,7 +248,7 @@ if __name__ == '__main__':
                 board.players[0].send_message("Félicitations! Vous êtes le grand gagnant du Monopooaly!!")
                 party = False
 
-    starting_player += 1
+        starting_player += 1
 
 
 
