@@ -152,12 +152,6 @@ if __name__ == '__main__':
                 action = player_active.choose_actions(board.square_list[player_active.position].get_actions(player_active))
                 print(action)
 
-            if action == "Hypothéquer":
-                print(action)
-                name_land_to_mortgage = player_active.choose_actions(board.get_morgageable_assets(player_active)[1])
-                print(name_land_to_mortgage)
-                if name_land_to_mortgage :
-                    player_active.send_message(board.get_square_from_name(name_land_to_mortgage).to_mortgage())
 
             if action == "Déshypothéquer":
                 print(action)
@@ -218,6 +212,13 @@ if __name__ == '__main__':
                     player_active.in_dept = True
                 else:
                     action == "Gérer défaite joueur"
+
+            if action == "Hypothéquer":
+                print(action)
+                name_land_to_mortgage = player_active.choose_actions(board.get_morgageable_assets(player_active)[1])
+                print(name_land_to_mortgage)
+                if name_land_to_mortgage :
+                    player_active.send_message(board.get_square_from_name(name_land_to_mortgage).to_mortgage())
 
             if action == "Acheter le terrain":
                 print("on rentre dans action: acheter terrain")
