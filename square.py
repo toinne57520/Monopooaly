@@ -80,11 +80,14 @@ class Land(Square):
         return
 
     def buy_land(self, player):
-        player.money -= self.value
-        self.owner = player
-        self.status = True
-        player.assets.append(self)
-        player.send_message(f"Le joueur {player.name} est maintenant propriétaire de {self.name}")
+        if player.money >= self.value:
+            player.money -= self.value
+            self.owner = player
+            self.status = True
+            player.assets.append(self)
+            player.send_message(f"Le joueur {player.name} est maintenant propriétaire de {self.name}")
+        else:
+            player.send_message(f"Le joueur {player.name} n'a pas assez d'argent pour devenir propriétaire")
 
     def pay_rent(self, player):
         # si c'est une gare, on calcule le loyer en fonction du nombre de gare possédé par l'adversaire.
@@ -130,9 +133,12 @@ class Land(Square):
         try:
             #on vérifie que le nombre de maisons rentré est bien un entier, compatible avec le nombre maximal de maisons par terrain
             assert (nb_houses_to_build <= nb_max)
-            self.nb_houses += nb_houses_to_build #on construit
-            self.owner.money -= self.construction_price* nb_houses_to_build #on fait payer la construction
-            return(f"Bravo, le joueur {self.owner.name} a désormais {self.nb_houses} maisons sur {self.name}.")
+            if self.owner.money >= self.construction_price* nb_houses_to_build:
+                self.nb_houses += nb_houses_to_build #on construit
+                self.owner.money -= self.construction_price* nb_houses_to_build #on fait payer la construction
+                return(f"Bravo, le joueur {self.owner.name} a désormais {self.nb_houses} maisons sur {self.name}.")
+            else:
+                return (f"Désolé, le joueur {self.owner.name} n'a pas assez d'argent pour construire ces maisons.")
 
         except AssertionError:
             return(f"Impossible de construire autant de maisons : max {nb_max} maisons")
