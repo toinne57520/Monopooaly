@@ -131,8 +131,8 @@ if __name__ == '__main__':
 
 
     while True:
-        player_active = board.players[(starting_player + 1) % 2]
-        player_inactive = board.players[(starting_player % 2)]
+        player_active = board.players[(starting_player + 1) % len(board.players)]
+        player_inactive = board.players[(starting_player % len(board.players))]
         player_inactive.sock.send(struct.pack("?", False))
         player_active.sock.send(struct.pack("?", True))
         player_active.send_board()

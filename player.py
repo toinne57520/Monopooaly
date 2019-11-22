@@ -17,6 +17,7 @@ class Player :
         board.add_player(self)
         self.sock = sock
         self.in_jail = 0
+        self.in_dept = False
 
 
     def choose_actions(self,dict):

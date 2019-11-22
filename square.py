@@ -129,7 +129,7 @@ class Land(Square):
         nb_max = 5 - self.nb_houses
         try:
             #on vérifie que le nombre de maisons rentré est bien un entier, compatible avec le nombre maximal de maisons par terrain
-            assert (nb_houses_to_build < nb_max)
+            assert (nb_houses_to_build <= nb_max)
             self.nb_houses += nb_houses_to_build #on construit
             self.owner.money -= self.construction_price* nb_houses_to_build #on fait payer la construction
             return(f"Bravo, le joueur {self.owner.name} a désormais {self.nb_houses} maisons sur {self.name}.")
