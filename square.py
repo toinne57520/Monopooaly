@@ -94,7 +94,7 @@ class Land(Square):
     def pay_rent(self, player, board):
         # si c'est une gare, on calcule le loyer en fonction du nombre de gare possédé par l'adversaire.
         if self.color == "trainstation":
-            nb_trainstation = board.get_nb_assets_of_a_color("trainstation", self.owner)
+            nb_trainstation = board.get_nb_assets_of_a_color(self.owner, "trainstation")
             rent = self.rent[nb_trainstation-1]
             player.send_message(f"Le joueur {self.owner.name} possède {nb_trainstation} gares.")
         #si c'est un terrain, on calcule le loyer en fonction du nombre de maisons construites
