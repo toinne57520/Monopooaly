@@ -56,6 +56,8 @@ class Land(Square):
     def get_actions(self,player):
         if self.status and player != self.owner:
             dict = { 0: "Payer le loyer"}
+        elif player == self.owner:
+            dict = {0: "Terminer mon tour"}
         else :
             dict = { 0: "Acheter le terrain", 1:"Terminer mon tour"}
 
