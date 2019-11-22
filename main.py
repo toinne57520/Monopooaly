@@ -129,8 +129,9 @@ if __name__ == '__main__':
             board.players[starting_player].assets.append(square)
             square.status = True
 
+    party = True
 
-    while True:
+    while party:
         player_active = board.players[(starting_player + 1) % len(board.players)]
         player_inactive = board.players[(starting_player % len(board.players))]
         player_inactive.sock.send(struct.pack("?", False))
@@ -216,7 +217,7 @@ if __name__ == '__main__':
                     action = player_active.choose_actions(possible_actions)
                     player.in_dept = True
                 else:
-                    action == "Gérer fin de partie"
+                    action == "Gérer défaite joueur"
 
             if action == "Acheter le terrain":
                 print("on rentre dans action: acheter terrain")
@@ -236,11 +237,18 @@ if __name__ == '__main__':
                 sleep(0.5)
                 action = False
 
+            if action == "Gérer défaite joueur":
+                board.remove_loser(player_active)
+                if len(board.players) > 1:
+                    action = False
+                else:
+                    action == "Gérer fin de partie"
+
             if action == "Gérer fin de partie":
-                pass
+                board.players[0].send_message("Félicitations! Vous êtes le grand gagnant du Monopooaly!!")
+                party = False
 
-
-        starting_player += 1
+    starting_player += 1
 
 
 
