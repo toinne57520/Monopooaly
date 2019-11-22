@@ -189,8 +189,11 @@ if __name__ == '__main__':
 
             if action == "Payer la taxe":
                 print("on rentre dans action: payer la taxe")
-                board.square_list[player_active.position].pay_taxes(player_active)
-                action = player_active.choose_actions(end_action)
+                missing_funds = board.square_list[player_active.position].pay_taxes(player_active)
+                if missing_funds == 0:
+                    action = player_active.choose_actions(end_action)
+                else:
+                    action = "Trouver des fonds"
 
             if action == "Payer le loyer":
                 print(action)
@@ -203,12 +206,14 @@ if __name__ == '__main__':
             if action == "Sauvegarder la partie":
                 print(action)
 
+
             if action == "Trouver des fonds":
                 print(action, missing_funds)
-                board.get_dict_funds(player_active)
-
-
-                board.find_funds(player_active, missing_funds)
+                possible_actions = board.get_dict_funds(player_active)
+                if len(possible_actions) > 0:
+                    action = player_active.choose_actions(possible_actions)
+                else:
+                    action == "Gérer fin de partie"
 
             if action == "Acheter le terrain":
                 print("on rentre dans action: acheter terrain")
@@ -227,6 +232,9 @@ if __name__ == '__main__':
                 player_inactive.sock.send("stop".encode())
                 sleep(1)
                 action = False
+
+            if action == "Gérer fin de partie":
+
 
 
         starting_player += 1
