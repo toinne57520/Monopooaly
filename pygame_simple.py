@@ -35,10 +35,10 @@ def transform_actions(dict):
     return actions
 
 def choose_actions_pygame():
-    liste = ['a', 'b', 'c', 'd', 'e', 'f']
+    liste = ['a', 'b', 'c', 'd', 'e', 'f','g', 'h', 'i', 'j', 'k', 'l','m','n','o','p','q','r']
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
-            if event.key in [K_a,K_b,K_c,K_d,K_e,K_f]:
+            if event.key in [K_a,K_b,K_c,K_d,K_e,K_f,K_g,K_h,K_i,K_j,K_k,K_l,K_m,K_n,K_o,K_p,K_q,K_r]:
                 nom = pygame.key.name(event.key)
                 choice = liste.index(nom)
                 return choice
