@@ -39,7 +39,7 @@ if __name__ == '__main__':
         #on affiche le choix des actions
         if clientthread.action != {}:
             actions= pygame_simple.transform_actions(clientthread.action)
-            pygame_simple.blit_text(window, actions, (300, 320))
+            pygame_simple.blit_actions(window, actions, (300, 320))
             choice = pygame_simple.choose_actions_pygame()
             clientthread.choice = choice
 

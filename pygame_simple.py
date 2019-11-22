@@ -27,6 +27,17 @@ def blit_text(surface, L, pos):
         x = pos[0]  # Reset the x.
         y += word_height  # Start on new row.
 
+def blit_actions(surface, L, pos):
+    word_height = 15
+    x, y = pos
+    font = pygame.font.Font(None, 14)
+    for line in L:
+        to_blit = font.render(line, 11, (10,10,10))
+        surface.blit(to_blit, (x, y))
+        x = pos[0]  # Reset the x.
+        y += word_height  # Start on new row.
+
+
 def transform_actions(dict):
     actions = []
     liste = ['a', 'b', 'c', 'd', 'e', 'f','g', 'h', 'i', 'j', 'k', 'l','m','n','o','p','q','r']
