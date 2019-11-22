@@ -101,9 +101,12 @@ class Land(Square):
             player.money -= rent
             self.owner.money+=rent
             player.send_message(f"Le joueur {player.name} vient de payer {rent} € à {self.owner.name}")
+            return 0
         else:
-            print("autre")
-            player.send_message(f"Aïe! Le joueur {player.name} n'a pas assez d'argent pour régler ses dettes! ")
+            #print("autre")
+            missing_funds = rent - player.money
+            player.send_message("Aïe! Vous n'avez pas assez d'argent pour régler vos dettes! Il faut trouver " + str(missing_funds) + "€")
+            return missing_funds
 
     def to_mortgage(self):
         self.mortgage = True
