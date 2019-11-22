@@ -102,8 +102,11 @@ class Board :
                 mortgageable_assets[int(i)] = element.name
                 affichage.append(str(element.name) + " pour une valeur de " + str(element.value / 2) + "€.")
                 i += 1
-        player.send_message(f"Les terrains que vous pouvez hypothéquer sont {affichage}")
-        return mortgageable_assets
+        if affichage ==[]:
+            return False
+        else:
+            player.send_message(f"Les terrains que vous pouvez hypothéquer sont {affichage}")
+            return True, mortgageable_assets
 
 
     def get_inactive_assets(self, player):
