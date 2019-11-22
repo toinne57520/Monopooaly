@@ -40,6 +40,18 @@ class Board :
     def add_player(self, player):
         self.players.append(player)
 
+    def remove_player(self, player):
+        self.players.remove(player)
+
+    def remove_loser(self, player):
+        for asset in player.assets:
+            asset.owner = ""
+            asset.status = False
+            asset.nb_houses = 0
+            asset.mortgage = False
+        self.remove_player(player)
+        player.send_message(f"Vous n'avez plus les moyens de payer vos dettes.. Vous avez perdu! Retentez votre chance une prochaine fois..")
+
     def build_starting_dict(self,player):
         i= 0
         early_action = {0: 'Lancer les dés'}
