@@ -56,6 +56,8 @@ class Land(Square):
     def get_actions(self,player):
         if self.status and player != self.owner:
             dict = { 0: "Payer le loyer"}
+        elif player == self.owner:
+            dict = {0: "Terminer mon tour"}
         else :
             dict = { 0: "Acheter le terrain", 1:"Terminer mon tour"}
 
@@ -126,6 +128,12 @@ class Land(Square):
         dict_nb_choice = {}
         for i in range(nb_max + 1):
             dict_nb_choice[int(i)] = str(i) + " - " + str(i*self.construction_price) + "€"
+        return dict_nb_choice
+
+    def get_dict_houses_to_sell(self):
+        dict_nb_choice = {}
+        for i in range(self.nb_houses):
+            dict_nb_choice[int(i)] = str(i) + " - " + str(i*self.construction_price/2) + "€"
         return dict_nb_choice
 
     def to_build(self, nb_houses_to_build):

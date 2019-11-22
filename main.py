@@ -229,6 +229,16 @@ if __name__ == '__main__':
                 board.square_list[player_active.position].go_to_jail(player_active)
                 action = player_active.choose_actions(end_action)
 
+
+            if action == "Vendre une maison":
+                print(action)
+                name_land_to_build = player_active.choose_actions(board.get_built_lands(player_active)[1])
+                square = board.get_square_from_name(name_land_to_build)
+                nbr_houses_to_sell = player_active.choose_actions(square.get_dict_houses_to_build())
+                player_active.send_message(square.to_sell(int(nbr_houses_to_sell[0])))
+                player_active.send_board()
+                player_inactive.send_board()
+
             if action == "Terminer mon tour":
                 print(action)
                 sleep(0.5)
