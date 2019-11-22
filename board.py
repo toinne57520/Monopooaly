@@ -128,13 +128,13 @@ class Board :
 
     def get_dict_funds(self, player):
         possible_actions = {}
-        if board.get_built_lands(player_active)[0] and board.get_morgageable_assets(player_active)[0]:
+        if self.get_built_lands(player)[0] and self.get_morgageable_assets(player)[0]:
             possible_actions[0] = "Vendre une maison"
             possible_actions[1] = "Hypothéquer"
         else:
-            if board.get_built_lands(player_active)[0]:
+            if self.get_built_lands(player)[0]:
                 possible_actions[0] = "Vendre une maison"
-            elif board.get_morgageable_assets(player_active)[0]:
+            elif self.get_morgageable_assets(player)[0]:
                 possible_actions[0] = "Hypothéquer"
         return possible_actions
 
