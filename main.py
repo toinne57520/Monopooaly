@@ -194,7 +194,7 @@ if __name__ == '__main__':
 
             if action == "Payer le loyer":
                 print(action)
-                missing_funds = board.square_list[player_active.position].pay_rent(player_active):
+                missing_funds = board.square_list[player_active.position].pay_rent(player_active)
                 if missing_funds == 0:
                     action = player_active.choose_actions(end_action)
                 else:
