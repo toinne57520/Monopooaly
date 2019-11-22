@@ -198,7 +198,11 @@ if __name__ == '__main__':
 
             if action == "Sauvegarder la partie":
                 print(action)
-
+                sleep(1)
+                player_active.sock.send("stop".encode())
+                player_inactive.sock.send("stop".encode())
+                sleep(1)
+                action = False
 
             if action == "Acheter le terrain":
                 print("on rentre dans action: acheter terrain")
