@@ -201,9 +201,9 @@ class Board :
         i = 0
         for element in player.assets:
             if element.nb_houses > 0:
-                i+=1
                 built_lands[int(i)] = element.name + " - " + str(element.construction_price/2) + "€"
                 built_lands_nb_houses_price.append([element.name, element.nb_houses, element.construction_price / 2,element.color])
+                i += 1
             # on affiche les terrains construits, leur nombre de maison et leur prix de revente
             # affichage à améliorer
         if len(built_lands) == 0 :
