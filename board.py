@@ -53,11 +53,12 @@ class Board :
         player.send_message(f"Vous n'avez plus les moyens de payer vos dettes.. Vous avez perdu! Retentez votre chance une prochaine fois..")
 
     def build_starting_dict(self,player):
-        early_action = {0: 'Lancer les dés'}
+
         if player.in_dept :
             player.in_dept = False
             early_action = player.choose_actions(self.square_list[player.position].get_actions(player))
         else :
+            early_action = {0: 'Lancer les dés'}
             i = 0
             if self.get_building_lands(player)[0]:
                 i+=1
