@@ -91,10 +91,10 @@ class Land(Square):
         else:
             player.send_message(f"Le joueur {player.name} n'a pas assez d'argent pour devenir propriétaire")
 
-    def pay_rent(self, player):
+    def pay_rent(self, player, board):
         # si c'est une gare, on calcule le loyer en fonction du nombre de gare possédé par l'adversaire.
         if self.color == "trainstation":
-            nb_trainstation = self.owner.get_nb_assets_of_a_color("trainstation", self.owner)
+            nb_trainstation = board.get_nb_assets_of_a_color(self.owner, "trainstation")
             rent = self.rent[nb_trainstation-1]
             player.send_message(f"Le joueur {self.owner.name} possède {nb_trainstation} gares.")
         #si c'est un terrain, on calcule le loyer en fonction du nombre de maisons construites
@@ -132,7 +132,7 @@ class Land(Square):
 
     def get_dict_houses_to_sell(self):
         dict_nb_choice = {}
-        for i in range(self.nb_houses):
+        for i in range(self.nb_houses +1):
             dict_nb_choice[int(i)] = str(i) + " - " + str(i*self.construction_price/2) + "€"
         return dict_nb_choice
 

@@ -152,12 +152,6 @@ if __name__ == '__main__':
                 action = player_active.choose_actions(board.square_list[player_active.position].get_actions(player_active))
                 print(action)
 
-            if action == "Hypothéquer":
-                print(action)
-                name_land_to_mortgage = player_active.choose_actions(board.get_morgageable_assets(player_active)[1])
-                print(name_land_to_mortgage)
-                if name_land_to_mortgage :
-                    player_active.send_message(board.get_square_from_name(name_land_to_mortgage).to_mortgage())
 
             if action == "Déshypothéquer":
                 print(action)
@@ -200,7 +194,7 @@ if __name__ == '__main__':
 
             if action == "Payer le loyer":
                 print(action)
-                missing_funds = board.square_list[player_active.position].pay_rent(player_active)
+                missing_funds = board.square_list[player_active.position].pay_rent(player_active, board)
                 if missing_funds == 0:
                     action = player_active.choose_actions(end_action)
                 else:
@@ -215,9 +209,16 @@ if __name__ == '__main__':
                 possible_actions = board.get_dict_funds(player_active)
                 if len(possible_actions) > 0:
                     action = player_active.choose_actions(possible_actions)
-                    player.in_dept = True
+                    player_active.in_dept = True
                 else:
                     action == "Gérer défaite joueur"
+
+            if action == "Hypothéquer":
+                print(action)
+                name_land_to_mortgage = player_active.choose_actions(board.get_morgageable_assets(player_active)[1])
+                print(name_land_to_mortgage)
+                if name_land_to_mortgage :
+                    player_active.send_message(board.get_square_from_name(name_land_to_mortgage).to_mortgage())
 
             if action == "Acheter le terrain":
                 print("on rentre dans action: acheter terrain")
@@ -232,9 +233,10 @@ if __name__ == '__main__':
 
             if action == "Vendre une maison":
                 print(action)
-                name_land_to_build = player_active.choose_actions(board.get_built_lands(player_active)[1])
-                square = board.get_square_from_name(name_land_to_build)
-                nbr_houses_to_sell = player_active.choose_actions(square.get_dict_houses_to_build())
+                name_land_to_sell = player_active.choose_actions(board.get_built_lands(player_active)[1])
+                print(name_land_to_sell)
+                square = board.get_square_from_name(name_land_to_sell)
+                nbr_houses_to_sell = player_active.choose_actions(square.get_dict_houses_to_sell())
                 player_active.send_message(square.to_sell(int(nbr_houses_to_sell[0])))
                 player_active.send_board()
                 player_inactive.send_board()
