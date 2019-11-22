@@ -210,7 +210,7 @@ class Board :
             return False, False, [[0,0,0,0],[0,0,0,0]]
 
         else :
-            player.send_message(f"Vous pouvez revendre sur (et chaque maison rapporte) {built_lands_nb_houses_price}")
+            #player.send_message(f"Vous pouvez revendre sur (et chaque maison rapporte) {built_lands_nb_houses_price}")
             return True, built_lands, built_lands_nb_houses_price
 
 
