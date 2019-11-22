@@ -215,7 +215,7 @@ if __name__ == '__main__':
                 possible_actions = board.get_dict_funds(player_active)
                 if len(possible_actions) > 0:
                     action = player_active.choose_actions(possible_actions)
-                    player.in_dept = True
+                    player_active.in_dept = True
                 else:
                     action == "Gérer défaite joueur"
 
@@ -235,7 +235,7 @@ if __name__ == '__main__':
                 name_land_to_sell = player_active.choose_actions(board.get_built_lands(player_active)[1])
                 print(name_land_to_sell)
                 square = board.get_square_from_name(name_land_to_sell)
-                nbr_houses_to_sell = player_active.choose_actions(square.get_dict_houses_to_build())
+                nbr_houses_to_sell = player_active.choose_actions(square.get_dict_houses_to_sell())
                 player_active.send_message(square.to_sell(int(nbr_houses_to_sell[0])))
                 player_active.send_board()
                 player_inactive.send_board()
