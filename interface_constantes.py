@@ -14,16 +14,9 @@ title = 'MonoPOOAly'
 
 
 #liste des images pour le jeu
-background_homepage = 'images/fond.jpg'
-background_play = 'images/fond.jpg'
-houses_1= 'images/1_houses.png'
-houses_2= 'images/2_houses.png'
-houses_3= 'images/3_houses.png'
-houses_4= 'images/4_houses.png'
-houses_5= 'images/5_houses.png'
-piece_1= 'images/piece_1.png'
-piece_2= 'images/piece_2.png'
-piece_3= 'images/piece_3.png'
+background_homepage = 'images/fond_rempli.png'
+background_play = 'images/fond_rempli.png'
+
 
 # on veut une liste pour chaque case i avec
 # [x_maison, y_maison, x_pion1, y_pion1, x_pion2, y_pion2, x_pion3, y_pion3, x_pion4, y_pion4]
