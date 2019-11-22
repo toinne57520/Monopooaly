@@ -29,7 +29,7 @@ def blit_text(surface, L, pos):
 
 def transform_actions(dict):
     actions = []
-    liste = ['a','b','c','d','e','f']
+    liste = ['a', 'b', 'c', 'd', 'e', 'f','g', 'h', 'i', 'j', 'k', 'l','m','n','o','p','q','r']
     for i in dict.keys():
         actions.append(liste[int(i)] + " - " +dict[i])
     return actions
