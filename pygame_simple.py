@@ -85,4 +85,5 @@ def blit_images_on_board(surface,dict_board_state):
         if len(dict_board_state[position]["players"])>0:
             for i in range(len(dict_board_state[position]["players"])):
                 image_piece = 'piece_'+str(i+1)
+
                 blit_piece(surface, int(position), image_piece,2*(i+1),2*(i+1)+1)
