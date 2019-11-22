@@ -216,9 +216,13 @@ class Tax(Square):
     def pay_taxes(self,player):
         if player.money >= self.amount:
             player.money -= self.amount
-            return(f"Le joueur {player.name} vient de payer {self.amount} € à la banque ... Il lui reste {player.money}€")
+            player.send_message(f"Le joueur {player.name} vient de payer {self.amount} € à la banque ... Il lui reste {player.money}€")
+            return 0
         else:
-            return(f"Aïe! Le joueur {player.name} n'a pas assez d'argent pour régler ses dettes! ")
+            missing_funds = self.amount - player.money
+            player.send_message("Aïe! Vous n'avez pas assez d'argent pour régler vos dettes! Il faut trouver " + str(
+                missing_funds) + "€")
+            return missing_funds
 
 class Jail(Square):
 
