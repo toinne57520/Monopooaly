@@ -126,6 +126,17 @@ class Board :
             player.send_message(f"Les terrains que vous pouvez hypothéquer sont {affichage}")
             return True, mortgageable_assets
 
+    def get_dict_funds(self, player):
+        possible_actions = {}
+        if board.get_built_lands(player_active)[0] and board.get_morgageable_assets(player_active)[0]:
+            possible_actions[0] = "Vendre une maison"
+            possible_actions[1] = "Hypothéquer"
+        else:
+            if board.get_built_lands(player_active)[0]:
+                possible_actions[0] = "Vendre une maison"
+            elif board.get_morgageable_assets(player_active)[0]:
+                possible_actions[0] = "Hypothéquer"
+        return possible_actions
 
     def get_inactive_assets(self, player):
         inactive_assets = {}
@@ -182,7 +193,6 @@ class Board :
             return True, built_lands, built_lands_nb_houses_price
         except AssertionError:
             return False, False
-
 
     def get_square_from_name(self, name):
         for i in range(len(self.square_list)):
