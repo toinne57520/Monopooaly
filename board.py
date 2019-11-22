@@ -211,8 +211,10 @@ class Board :
     def serialize_square(self, square):
         if isinstance(square, Land):
             return {"players": [square.present_player[i].name for i in range(len(square.present_player))],
+                    "pieces": [square.present_player[i].piece for i in range(len(square.present_player))],
                     "nb_houses": square.nb_houses}
         else:
             return {"players": [square.present_player[i].name for i in range(len(square.present_player))],
+                    "pieces": [square.present_player[i].piece for i in range(len(square.present_player))],
                     "nb_houses": 0}
 

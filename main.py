@@ -111,6 +111,7 @@ if __name__ == '__main__':
         client.send("Bienvenue dans le Monopooaly!".encode())
         player_name = client.recv(1024).decode()
         player = Player(player_name,board,client)
+        player.piece = "piece_" + str(server.client_list.index(client) + 1)
 
     if True : #gérer le sauvegarde et le chargement des parties
         pass

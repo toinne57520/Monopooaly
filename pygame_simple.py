@@ -64,7 +64,7 @@ def blit_houses(surface,position, houses):
     :param position:
     :return:
     """
-    maison = pygame.image.load(houses).convert_alpha()
+    maison = pygame.image.load('images/'+houses+'.png').convert_alpha()
     surface.blit(maison, (coordonnees[position][0], coordonnees[position][1]))
 
 def blit_images_on_board(surface,dict_board_state):
@@ -84,6 +84,5 @@ def blit_images_on_board(surface,dict_board_state):
         #on colle les pions
         if len(dict_board_state[position]["players"])>0:
             for i in range(len(dict_board_state[position]["players"])):
-                image_piece = 'piece_'+str(i+1)
-
+                image_piece = dict_board_state[position]["pieces"][i]
                 blit_piece(surface, int(position), image_piece,2*(i+1),2*(i+1)+1)
