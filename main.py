@@ -139,7 +139,7 @@ if __name__ == '__main__':
 
         action = True
         while action!= False :
-            action = player_active.choose_actions(early_action)
+            action = player_active.choose_actions(board.build_starting_dict(player_active))
 
             if action == "Lancer les dés":
                 advance = board.throw_dice(player_active)
@@ -152,14 +152,14 @@ if __name__ == '__main__':
 
             if action == "Hypothéquer":
                 print(action)
-                name_land_to_mortgage = player_active.choose_actions(board.get_morgageable_assets(player_active))
+                name_land_to_mortgage = player_active.choose_actions(board.get_morgageable_assets(player_active)[1])
                 print(name_land_to_mortgage)
                 if name_land_to_mortgage :
                     player_active.send_message(board.get_square_from_name(name_land_to_mortgage).to_mortgage())
 
             if action == "Déshypothéquer":
                 print(action)
-                name_land_to_clear_mortgage = player_active.choose_actions(board.get_inactive_assets(player_active))
+                name_land_to_clear_mortgage = player_active.choose_actions(board.get_inactive_assets(player_active)[1])
                 print(name_land_to_clear_mortgage)
                 if name_land_to_clear_mortgage :
                     player_active.send_message(board.get_square_from_name(name_land_to_clear_mortgage).to_clear_mortgage())

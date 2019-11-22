@@ -40,6 +40,24 @@ class Board :
     def add_player(self, player):
         self.players.append(player)
 
+    def build_starting_dict(self,player):
+        i= 0
+        early_action = {0: 'Lancer les dés'}
+        if self.get_building_lands(player)[0]:
+            i+=1
+            early_action[int(i)] = 'Construire une maison'
+
+        elif self.get_morgageable_assets(player)[0]:
+            i += 1
+            early_action[int(i)] = 'Hypothéquer'
+
+        elif self.get_inactive_assets(player)[0]:
+            i += 1
+            early_action[int(i)] = 'Déshypothéquer'
+
+        return early_action
+
+
     def get_nb_lands_of_a_color(self, color):
         i=0
         for land in self.square_list :
@@ -103,7 +121,7 @@ class Board :
                 affichage.append(str(element.name) + " pour une valeur de " + str(element.value / 2) + "€.")
                 i += 1
         if affichage ==[]:
-            return False
+            return False, False
         else:
             player.send_message(f"Les terrains que vous pouvez hypothéquer sont {affichage}")
             return True, mortgageable_assets
@@ -118,8 +136,11 @@ class Board :
                 inactive_assets[int(i)] = element.name
                 affichage.append(str(element.name) + " pour une valeur de " + str(element.value/2) + "€")
                 i += 1
-        player.send_message(f"Les terrains que vous pouvez déshypothéquer sont {affichage}")
-        return inactive_assets
+        if affichage == []:
+            return False, False
+        else :
+            player.send_message(f"Les terrains que vous pouvez déshypothéquer sont {affichage}")
+            return True, inactive_assets
 
     def get_building_lands(self, player):
         """
@@ -141,8 +162,6 @@ class Board :
             player.send_message(f"Vous pouvez construire sur (et chaque maison coûte) {building_lands_color_price}")
             return True, building_lands
         except AssertionError:
-            player.send_message(
-                "Cela s'annonce compliqué, vous n'avez pas de terrains constructibles. Vous n'avez aucun quartier complet, repartez à l'aventure.")
             return False, False
 
     def get_built_lands(self, player):
@@ -162,9 +181,7 @@ class Board :
             player.send_message(f"Vous pouvez revendre sur (et chaque maison rapporte) {built_lands_nb_houses_price}")
             return True, built_lands, built_lands_nb_houses_price
         except AssertionError:
-            player.send_message(
-                "Cela s'annonce compliqué, vous n'avez pas de terrains construits. Vous n'avez aucune maison à revendre, ne vendez pas la peau de l'ours avant de l'avoir tué!")
-            return False
+            return False, False
 
 
     def get_square_from_name(self, name):
