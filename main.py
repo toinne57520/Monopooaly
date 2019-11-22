@@ -183,6 +183,8 @@ if __name__ == '__main__':
                     square = board.get_square_from_name(name_land_to_build)
                     nbr_houses_to_build = player_active.choose_actions(square.get_dict_houses_to_build())
                     player_active.send_message(square.to_build(int(nbr_houses_to_build)))
+                    player_active.send_board()
+                    player_inactive.send_board()
                 else :
                     player_active.send_message("Vous n'avez pas de terrain constructible")
 
@@ -212,6 +214,7 @@ if __name__ == '__main__':
                 possible_actions = board.get_dict_funds(player_active)
                 if len(possible_actions) > 0:
                     action = player_active.choose_actions(possible_actions)
+                    player.in_dept = True
                 else:
                     action == "Gérer fin de partie"
 
@@ -227,14 +230,14 @@ if __name__ == '__main__':
 
             if action == "Terminer mon tour":
                 print(action)
-                sleep(1)
+                sleep(0.5)
                 player_active.sock.send("stop".encode())
                 player_inactive.sock.send("stop".encode())
-                sleep(1)
+                sleep(0.5)
                 action = False
 
             if action == "Gérer fin de partie":
-
+                pass
 
 
         starting_player += 1
