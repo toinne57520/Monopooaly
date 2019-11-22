@@ -193,16 +193,21 @@ if __name__ == '__main__':
 
             if action == "Payer le loyer":
                 print(action)
-                board.square_list[player_active.position].pay_rent(player_active)
-                action = player_active.choose_actions(end_action)
+                missing_funds = board.square_list[player_active.position].pay_rent(player_active):
+                if missing_funds == 0:
+                    action = player_active.choose_actions(end_action)
+                else:
+                    action = "Trouver des fonds"
 
             if action == "Sauvegarder la partie":
                 print(action)
-                sleep(1)
-                player_active.sock.send("stop".encode())
-                player_inactive.sock.send("stop".encode())
-                sleep(1)
-                action = False
+
+            if action == "Trouver des fonds":
+                print(action, missing_funds)
+                board.get_dict_funds(player_active)
+
+
+                board.find_funds(player_active, missing_funds)
 
             if action == "Acheter le terrain":
                 print("on rentre dans action: acheter terrain")
