@@ -42,5 +42,15 @@ if __name__ == '__main__':
             pygame_simple.blit_text(window, actions, (300, 320))
             choice = pygame_simple.choose_actions_pygame()
             clientthread.choice = choice
-        #on met à jour la fenêtre
+
+        #print(clientthread.board_state)
+        #on affiche les maisons et les pions sur chaque case
+        # try :
+        #if clientthread.board_state[-1] != {}:
+        #     print(clientthread.board_state)
+        if clientthread.board_state != {}:
+            pygame_simple.blit_images_on_board(window,clientthread.board_state)
+        # except :
+        #     print("pas de dico là")
+        # #on met à jour la fenêtre
         pygame.display.update()
