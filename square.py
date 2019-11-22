@@ -128,6 +128,12 @@ class Land(Square):
             dict_nb_choice[int(i)] = str(i) + " - " + str(i*self.construction_price) + "€"
         return dict_nb_choice
 
+    def get_dict_houses_to_sell(self):
+        dict_nb_choice = {}
+        for i in range(self.nb_houses):
+            dict_nb_choice[int(i)] = str(i) + " - " + str(i*self.construction_price/2) + "€"
+        return dict_nb_choice
+
     def to_build(self, nb_houses_to_build):
         nb_max = 5 - self.nb_houses
         try:
