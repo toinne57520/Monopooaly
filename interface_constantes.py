@@ -7,6 +7,7 @@ number_square_side = 13
 square_dimension = 60
 window_dimension = number_square_side*square_dimension
 bandeau = 20
+colonne = 300
 
 #titre et icone de la fenêtre
 icon_image = 'images/maison.png'

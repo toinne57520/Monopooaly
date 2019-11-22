@@ -1,8 +1,9 @@
 import socket
-from clientthread import Clientthread
 import pygame
-from interface_constantes import *
 import pygame_simple
+from clientthread import Clientthread
+from interface_constantes import *
+
 pygame.init()
 
 
@@ -22,19 +23,19 @@ if __name__ == '__main__':
     sock.send(name_player.encode())
     clientthread = Clientthread(sock)
     clientthread.start()
-    window = pygame.display.set_mode((window_dimension, window_dimension))
+    window = pygame.display.set_mode((window_dimension+ colonne, window_dimension))
     background = pygame.image.load(background_homepage).convert()
     window.blit(background, (0, 0))
     pygame.display.flip()
 
     while True:
-        window = pygame.display.set_mode((window_dimension, window_dimension))
+        window = pygame.display.set_mode((window_dimension + colonne, window_dimension))
         background = pygame.image.load(background_homepage).convert()
         window.blit(background, (0, 0))
 
         #on gère les messages reçus
         message_hist = clientthread.message_hist
-        pygame_simple.blit_text(window, message_hist, (200, 500))
+        pygame_simple.blit_text(window, message_hist, (200, 560))
 
         #on affiche le choix des actions
         if clientthread.action != {}:
@@ -50,6 +51,7 @@ if __name__ == '__main__':
         #     print(clientthread.board_state)
         if clientthread.board_state != {}:
             pygame_simple.blit_images_on_board(window,clientthread.board_state)
+            pygame_simple.blit_infos_in_column(window,clientthread.board_state)
         # except :
         #     print("pas de dico là")
         # #on met à jour la fenêtre

@@ -84,7 +84,7 @@ def blit_images_on_board(surface,dict_board_state):
     :param dict_board_state:
     :return:
     """
-    for position in list(dict_board_state.keys())[1:]:
+    for position in list(dict_board_state.keys())[2:-int(dict_board_state["nb_players"])]:
         #on colle le groupe de maison approprié
 
         nb_houses = dict_board_state[position]["nb_houses"]
@@ -97,3 +97,15 @@ def blit_images_on_board(surface,dict_board_state):
             for i in range(len(dict_board_state[position]["players"])):
                 image_piece = dict_board_state[position]["pieces"][i]
                 blit_piece(surface, int(position), image_piece,2*(i+1),2*(i+1)+1)
+
+def blit_infos_in_column(surface,dict_board_state):
+    x, y = 800, 100
+    for player in list(dict_board_state.keys())[42:]:
+        word_height = 15
+        L=dict_board_state[player]["assets"]+["Argent : "+str(dict_board_state[player]["money"])]
+        font = pygame.font.Font(None, 14)
+        for line in L:
+            to_blit = font.render(line, 11, (200, 200, 200))
+            surface.blit(to_blit, (x, y))
+            y += word_height  # Start on new row.
+        y+=100

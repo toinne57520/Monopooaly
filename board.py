@@ -225,8 +225,11 @@ class Board :
     def serialize_board(self):
         dictionnaire = {}
         dictionnaire["__class__"] = "Board"
+        dictionnaire["nb_players"] = len(self.players)
         for element in self.square_list:
             dictionnaire[str(element.position)] = self.serialize_square(element)
+        for player in self.players:
+            dictionnaire[player.name]={"assets": [player.assets[i].name for i in range(len(player.assets))],"money":player.money}
         return dictionnaire
 
     def serialize_square(self, square):
