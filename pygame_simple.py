@@ -102,10 +102,15 @@ def blit_infos_in_column(surface,dict_board_state):
     x, y = 800, 100
     for player in list(dict_board_state.keys())[42:]:
         word_height = 15
-        L=dict_board_state[player]["assets"]+["Argent : "+str(dict_board_state[player]["money"])]
+        L=[player]+["Possessions"] +dict_board_state[player]["assets"]\
+          +["Argent"]+["Argent : "+str(dict_board_state[player]["money"])]
+        image_piece = dict_board_state[player]["piece"]
+        pion = pygame.image.load('images/' + image_piece + '.png').convert_alpha()
+        surface.blit(pion, (x, y-40))
         font = pygame.font.Font(None, 14)
+
         for line in L:
             to_blit = font.render(line, 11, (200, 200, 200))
             surface.blit(to_blit, (x, y))
             y += word_height  # Start on new row.
-        y+=100
+        y+=100 #affichage du joueur suivant décalé
