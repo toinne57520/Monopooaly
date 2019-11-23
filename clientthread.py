@@ -82,6 +82,9 @@ class Clientthread(Thread):
                     if message_received == "message":
                         self.deal_with_message()
 
+                    if message_received == "break":
+                        break
+
             if turn_status:
                 self.message_hist.append("C'est à vous de jouer")
                 message_received = 0

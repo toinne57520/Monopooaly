@@ -254,14 +254,14 @@ if __name__ == '__main__':
 
             if action == "Gérer défaite joueur":
                 board.remove_loser(player_active)
-                if len(board.players) > 1:
-                    action = False
-                else:
+                if len(board.players) == 1:
                     action = "Gérer fin de partie"
 
             if action == "Gérer fin de partie":
                 board.players[0].send_message("Félicitations! Vous êtes le grand gagnant du Monopooaly!!")
+                board.players[0].send_break()
                 party = False
+                action = False
 
         starting_player += 1
 

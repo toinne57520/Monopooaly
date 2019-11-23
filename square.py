@@ -64,16 +64,10 @@ class Land(Square):
         return dict
 
 
-    # #def __repr__(self,player):
-    #     if self.status :
-    #         print(f"Cette case est {self.name}, détenue par le joueur {self.owner.name}. Il y a {self.nb_houses} maisons contruites."
-    #                    f"Le loyer actuel est de {self.rent[self.nb_houses]} €")
-    #     else :
-    #         print(f"Cette case est libre ! C'est {self.name} de la couleur {self.color}. "
-    #                 f"Elle coûte {self.value} €.")#voir plus tard pour le cout des maisons
-
     def str(self,player):
-        if self.status :
+        if self.status and self.owner == player:
+            player.send_message(f"Oufff ! Cette case est {self.name} est c'est chez vous !")
+        elif self.status :
             player.send_message (f"Cette case est {self.name}, détenue par le joueur {self.owner.name}. Il y a {self.nb_houses} maisons contruites."
                        f"Le loyer actuel est de {self.rent[self.nb_houses]} €")
         else :
