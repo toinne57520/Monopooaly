@@ -117,12 +117,13 @@ if __name__ == '__main__':
         pass
 
     starting_player = 0
-    for square in board.square_list[1:4]:
+    for square in board.square_list[0:1]:
+        board.players[starting_player].money = 0
         if type(square) == Land:
             square.owner = board.players[starting_player]
             board.players[starting_player].assets.append(square)
             square.status = True
-            board.players[starting_player].money = 0
+
 
     for square in board.square_list[4:15]:
         if type(square) == Land:
@@ -213,7 +214,7 @@ if __name__ == '__main__':
                     action = player_active.choose_actions(possible_actions)
                     player_active.in_dept = True
                 else:
-                    action == "Gérer défaite joueur"
+                    action = "Gérer défaite joueur"
 
             if action == "Hypothéquer":
                 print(action)
@@ -256,7 +257,7 @@ if __name__ == '__main__':
                 if len(board.players) > 1:
                     action = False
                 else:
-                    action == "Gérer fin de partie"
+                    action = "Gérer fin de partie"
 
             if action == "Gérer fin de partie":
                 board.players[0].send_message("Félicitations! Vous êtes le grand gagnant du Monopooaly!!")

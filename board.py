@@ -51,6 +51,7 @@ class Board :
             asset.mortgage = False
         self.remove_player(player)
         player.send_message(f"Vous n'avez plus les moyens de payer vos dettes.. Vous avez perdu! Retentez votre chance une prochaine fois..")
+        player.send_break()
 
     def build_starting_dict(self,player):
 

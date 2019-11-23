@@ -53,6 +53,11 @@ class Player :
         self.sock.send("message".encode())
         sleep(0.5)
         self.sock.send(message.encode())
+
+    def send_break(self):
+        sleep(0.5)
+        self.sock.send("break".encode())
+        sleep(0.5)
         return ()
 
 
