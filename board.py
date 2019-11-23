@@ -64,11 +64,11 @@ class Board :
                 i+=1
                 early_action[int(i)] = 'Construire une maison'
 
-            elif self.get_morgageable_assets(player)[0]:
+            if self.get_morgageable_assets(player)[0]:
                 i += 1
                 early_action[int(i)] = 'Hypothéquer'
 
-            elif self.get_inactive_assets(player)[0]:
+            if self.get_inactive_assets(player)[0]:
                 i += 1
                 early_action[int(i)] = 'Déshypothéquer'
 
@@ -131,17 +131,17 @@ class Board :
     def get_morgageable_assets(self, player):
         mortgageable_assets = {}
         i = 0
-        affichage = []
         for element in player.assets:
+            print(self.get_built_lands(player)[2])
             if not element.mortgage and element.nb_houses == 0 and element.color not in [self.get_built_lands(player)[2][i][3] for i in range(len(self.get_built_lands(player)[2]))]:
-                print(affichage)
                 mortgageable_assets[int(i)] = element.name + " - " + str(element.value/2) + "€"
-                affichage.append(str(element.name) + " pour une valeur de " + str(element.value / 2) + "€.")
+                #affichage.append(str(element.name) + " pour une valeur de " + str(element.value / 2) + "€.")
                 i += 1
-        if affichage ==[]:
+        if mortgageable_assets == {}:
             return False, False
         else:
             #player.send_message(f"Les terrains que vous pouvez hypothéquer sont {affichage}")
+            mortgageable_assets[int(i)] = "Ne pas hypothéquer"
             return True, mortgageable_assets
 
     def get_dict_funds(self, player):

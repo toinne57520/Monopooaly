@@ -122,8 +122,9 @@ if __name__ == '__main__':
             square.owner = board.players[starting_player]
             board.players[starting_player].assets.append(square)
             square.status = True
+            board.players[starting_player].money = 0
 
-    for square in board.square_list[4:11]:
+    for square in board.square_list[4:15]:
         if type(square) == Land:
             square.owner = board.players[starting_player + 1]
             board.players[starting_player + 1].assets.append(square)
@@ -217,8 +218,8 @@ if __name__ == '__main__':
                 print(action)
                 name_land_to_mortgage = player_active.choose_actions(board.get_morgageable_assets(player_active)[1])
                 print(name_land_to_mortgage)
-                if name_land_to_mortgage :
-                    player_active.send_message(board.get_square_from_name(name_land_to_mortgage).to_mortgage())
+                if name_land_to_mortgage != "Ne pas hypothéquer":
+                        player_active.send_message(board.get_square_from_name(name_land_to_mortgage).to_mortgage())
 
             if action == "Acheter le terrain":
                 print("on rentre dans action: acheter terrain")
