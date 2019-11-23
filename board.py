@@ -57,7 +57,6 @@ class Board :
         if player.in_dept :
             player.in_dept = False
             early_action = player.choose_actions(self.square_list[player.position].get_actions(player))
-            print("on gère la dette du joueur")
         else :
             early_action = {0: 'Lancer les dés'}
             i = 0
