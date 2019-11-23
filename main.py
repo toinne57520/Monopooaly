@@ -117,6 +117,7 @@ if __name__ == '__main__':
         pass
 
     starting_player = 0
+    """
     for square in board.square_list[0:1]:
         board.players[starting_player].money = 0
         if type(square) == Land:
@@ -124,12 +125,12 @@ if __name__ == '__main__':
             board.players[starting_player].assets.append(square)
             square.status = True
 
-
     for square in board.square_list[4:15]:
         if type(square) == Land:
             square.owner = board.players[starting_player + 1]
             board.players[starting_player + 1].assets.append(square)
             square.status = True
+    """
 
     party = True
 
