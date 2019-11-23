@@ -169,6 +169,7 @@ class Board :
             return False, False
         else :
             #player.send_message(f"Les terrains que vous pouvez déshypothéquer sont {affichage}")
+            inactive_assets[int(i)] = "Ne pas déshypothéquer"
             return True, inactive_assets, affichage
 
     def get_building_lands(self, player):
@@ -191,6 +192,7 @@ class Board :
             # on affiche les terrains constructibles, leur couleur et leur prix de construction
             # affichage à améliorer
             #player.send_message(f"Vous pouvez construire sur (et chaque maison coûte) {building_lands_color_price}")
+            building_lands[int(i)] = "Ne pas construire"
             return True, building_lands
         except AssertionError:
             return False, False
