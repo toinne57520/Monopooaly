@@ -15,6 +15,7 @@ class Clientthread(Thread):
         self.message_hist = ["Bienvenue","Vous etes sur la case départ et vous possedez 200€"]
         self.board_state = {}
         self.choice= -1
+        self.turn_status = False
 
 
     def deal_with_instruction(self):
@@ -68,9 +69,9 @@ class Clientthread(Thread):
             buf = bytes()
             while len(buf) < 1:
                 buf += self.sock.recv(1)
-            turn_status = struct.unpack('?', buf[:1])[0]
+            self.turn_status = struct.unpack('?', buf[:1])[0]
 
-            if not turn_status:
+            if not self.turn_status:
                 self.message_hist.append("Ce n'est pas à vous de jouer")
                 message_received = 0
                 while message_received != "stop":
@@ -85,7 +86,7 @@ class Clientthread(Thread):
                     if message_received == "break":
                         break
 
-            if turn_status:
+            if self.turn_status:
                 self.message_hist.append("C'est à vous de jouer")
                 message_received = 0
                 while message_received != "stop":
