@@ -99,18 +99,30 @@ def blit_images_on_board(surface,dict_board_state):
                 blit_piece(surface, int(position), image_piece,2*(i+1),2*(i+1)+1)
 
 def blit_infos_in_column(surface,dict_board_state):
-    x, y = 800, 100
+    x, y = 900, 100
+    coord = []
     for player in list(dict_board_state.keys())[42:]:
-        word_height = 15
+        word_height = 16
         L=[player]+["Possessions"] +dict_board_state[player]["assets"]\
           +["Argent"]+["Argent : "+str(dict_board_state[player]["money"])]
         image_piece = dict_board_state[player]["piece"]
         pion = pygame.image.load('images/' + image_piece + '.png').convert_alpha()
         surface.blit(pion, (x, y-40))
-        font = pygame.font.Font(None, 14)
-
+        font = pygame.font.Font(None, 16)
+        coord.append([player,x-30,y])
         for line in L:
-            to_blit = font.render(line, 11, (200, 200, 200))
+            to_blit = font.render(line, 11, (10, 10, 10))
             surface.blit(to_blit, (x, y))
             y += word_height  # Start on new row.
         y+=100 #affichage du joueur suivant décalé
+    return coord
+
+def blit_dice(surface,x,y):
+    """
+    affiche des dés à côté du nom du joueur dont c'est le tour
+    :param surface:
+    :param status:
+    :return:
+    """
+    dice = pygame.image.load('images/dice.png').convert_alpha()
+    surface.blit(dice,(x,y))
