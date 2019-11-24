@@ -30,6 +30,7 @@ if __name__ == '__main__':
 
     while True:
         window = pygame.display.set_mode((window_dimension + colonne, window_dimension))
+        window.fill((245, 255, 248))
         background = pygame.image.load(background_homepage).convert()
         window.blit(background, (0, 0))
 
@@ -51,7 +52,15 @@ if __name__ == '__main__':
         #     print(clientthread.board_state)
         if clientthread.board_state != {}:
             pygame_simple.blit_images_on_board(window,clientthread.board_state)
-            pygame_simple.blit_infos_in_column(window,clientthread.board_state)
+            coord = pygame_simple.blit_infos_in_column(window,clientthread.board_state)
+            for player in coord:
+                if player[0]==name_player and clientthread.turn_status==True:
+                    x = player[1]
+                    y = player[2]
+                    pygame_simple.blit_dice(window,x,y)
+
+            #status = clientthread.turn_status
+            #name_player
         # except :
         #     print("pas de dico là")
         # #on met à jour la fenêtre
