@@ -15,9 +15,9 @@ class Square:
     #def __repr__(self,player):
         #player.send_message("Vous êtes tombés sur la case départ")
 
-    #def str(self,player):
-        #player.send_message("Vous êtes tombés sur la case départ")
-        #return
+    def str(self,player):
+        player.send_message("Vous êtes tombés sur la case départ")
+        return
 
     def get_actions(self,player):
         dict = { 0: "Terminer mon tour"}
