@@ -117,7 +117,7 @@ if __name__ == '__main__':
         pass
 
     starting_player = 0
-"""
+    """
     for square in board.square_list[0:1]:
         p1 = board.players[starting_player]
         p1.money = 0
