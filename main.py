@@ -83,7 +83,7 @@ def standard_turn(player):
     player.throw_dice()
 
 early_action = { 0 : 'Lancer les dés' , 1 : 'Construire une maison', 2 : 'Hypothéquer', 3 : 'Déshypothéquer'}
-end_action = {0 : 'Terminer mon tour', 1 : 'Sauvegarder la partie'}
+end_action = {0 : 'Terminer mon tour'}
 
 
 if __name__ == '__main__':
@@ -117,19 +117,29 @@ if __name__ == '__main__':
         pass
 
     starting_player = 0
-    """
+"""
     for square in board.square_list[0:1]:
-        board.players[starting_player].money = 0
+        p1 = board.players[starting_player]
+        p1.money = 0
+        #p1.position = 23
+        #board.square_list[0].present_player.remove(p1)
+        #board.square_list[23].present_player.append(p1)
         if type(square) == Land:
-            square.owner = board.players[starting_player]
-            board.players[starting_player].assets.append(square)
+            square.owner = p1
+            p1.assets.append(square)
             square.status = True
 
+
     for square in board.square_list[4:15]:
+        p2 = board.players[starting_player + 1]
+        #p2.position = 23
+        #board.square_list[0].present_player.remove(p2)
+        #board.square_list[23].present_player.append(p2)
         if type(square) == Land:
-            square.owner = board.players[starting_player + 1]
-            board.players[starting_player + 1].assets.append(square)
+            square.owner = p2
+            p2.assets.append(square)
             square.status = True
+            
     """
 
     party = True
@@ -162,6 +172,8 @@ if __name__ == '__main__':
                 print(name_land_to_clear_mortgage)
                 if name_land_to_clear_mortgage != "Ne pas déshypothéquer":
                     player_active.send_message(board.get_square_from_name(name_land_to_clear_mortgage).to_clear_mortgage())
+                    player_active.send_board()
+                    player_inactive.send_board()
 
 
             if action == "Tirer une carte chance":
@@ -223,16 +235,23 @@ if __name__ == '__main__':
                 print(name_land_to_mortgage)
                 if name_land_to_mortgage != "Ne pas hypothéquer":
                         player_active.send_message(board.get_square_from_name(name_land_to_mortgage).to_mortgage())
+                        player_active.send_board()
+                        player_inactive.send_board()
 
             if action == "Acheter le terrain":
                 print("on rentre dans action: acheter terrain")
                 board.square_list[player_active.position].buy_land(player_active)
                 action = player_active.choose_actions(end_action)
+                player_active.send_board()
+                player_inactive.send_board()
 
             if action == "Aller en prison":
                 print(action)
-                board.square_list[player_active.position].go_to_jail(player_active)
+                board.square_list[player_active.position].go_to_jail(player_active, board)
+                player_active.send_board()
+                player_inactive.send_board()
                 action = player_active.choose_actions(end_action)
+
 
 
             if action == "Vendre une maison":

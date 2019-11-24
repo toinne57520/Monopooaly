@@ -263,9 +263,9 @@ class Go_Jail(Square):
         dict = {0: "Aller en prison"}
         return dict
 
-    def go_to_jail(self, player):
+    def go_to_jail(self, player, board):
         player.in_jail = 3
-        player.position = 11
+        board.change_position(player, 20)
 
 
 
