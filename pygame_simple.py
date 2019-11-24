@@ -75,8 +75,15 @@ def blit_houses(surface,position, houses):
     :param position:
     :return:
     """
-    maison = pygame.image.load('images/'+houses+'.png').convert_alpha()
-    surface.blit(maison, (coordonnees[position][0], coordonnees[position][1]))
+    #les rangées horizontales
+    if (position <= 10) or (position >= 20 and position <= 30):
+        maison = pygame.image.load('images/'+houses+'.png').convert_alpha()
+        surface.blit(maison, (coordonnees[position][0], coordonnees[position][1]))
+
+    #les rangées verticales
+    if (position >= 10 and position <= 20) or (position > 30):
+        maison = pygame.image.load('images/'+houses+'_v.png').convert_alpha()
+        surface.blit(maison, (coordonnees[position][0], coordonnees[position][1]))
 
 def blit_images_on_board(surface,dict_board_state):
     """
@@ -109,7 +116,7 @@ def blit_infos_in_column(surface,dict_board_state):
         pion = pygame.image.load('images/' + image_piece + '.png').convert_alpha()
         surface.blit(pion, (x, y-40))
         font = pygame.font.Font(None, 16)
-        coord.append([player,x-30,y])
+        coord.append([player,x-40,y])
         for line in L:
             to_blit = font.render(line, 11, (10, 10, 10))
             surface.blit(to_blit, (x, y))
