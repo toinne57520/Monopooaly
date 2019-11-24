@@ -125,7 +125,7 @@ class Board :
     def get_nb_assets_of_a_color(self, player, color): #les passer en statique, hors classe? Bizarre parce que méthode de board sans faire appel à board
         i = 0
         for asset in player.assets:
-            if asset.color == color:
+            if asset.color == color and asset.mortgage:
                 i += 1
         return i
 
