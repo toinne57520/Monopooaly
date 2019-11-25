@@ -9,7 +9,7 @@ class Player :
 
     def __init__(self,name,board,sock):
         self.name = name
-        self.money = 200
+        self.money = 1500
         self.position = 0
         self.assets = []
         self.board = board #le plateau sur lequel le joueur joue
