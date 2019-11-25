@@ -188,12 +188,15 @@ if __name__ == '__main__':
     party = True
 
     while party:
-        player_active = board.players[(starting_player + 1) % len(board.players)]
-        player_inactive = board.players[(starting_player % len(board.players))]
-        player_inactive.sock.send(struct.pack("?", False))
+        print(board.players)
+        player_active = board.players[starting_player % len(board.players)]
+        player_inactive = board.players.copy()
+        player_inactive.remove(player_active)
         player_active.sock.send(struct.pack("?", True))
         player_active.send_board()
-        player_inactive.send_board()
+        for players in player_inactive :
+            players.sock.send(struct.pack("?", False))
+            players.send_board()
 
         action = True
         while action!= False :
@@ -204,7 +207,8 @@ if __name__ == '__main__':
                 board.change_position(player_active,advance)
                 board.square_list[player_active.position].str(player_active)
                 player_active.send_board()
-                player_inactive.send_board()
+                for players in player_inactive :
+                    players.send_board()
                 action = player_active.choose_actions(board.square_list[player_active.position].get_actions(player_active))
                 print(action)
 
@@ -216,7 +220,8 @@ if __name__ == '__main__':
                 if name_land_to_clear_mortgage != "Ne pas déshypothéquer":
                     player_active.send_message(board.get_square_from_name(name_land_to_clear_mortgage).to_clear_mortgage())
                     player_active.send_board()
-                    player_inactive.send_board()
+                    for players in player_inactive:
+                        players.send_board()
 
 
             if action == "Tirer une carte chance":
@@ -225,7 +230,8 @@ if __name__ == '__main__':
                 if action =="new_pos":
                     action = player_active.choose_actions(board.square_list[player_active.position].get_actions(player_active))
                     player_active.send_board()
-                    player_inactive.send_board()
+                    for players in player_inactive:
+                        players.send_board()
                 if action == "same_pos":
                     action = player_active.choose_actions(end_action)
 
@@ -238,7 +244,8 @@ if __name__ == '__main__':
                         nbr_houses_to_build = player_active.choose_actions(square.get_dict_houses_to_build())
                         player_active.send_message(square.to_build(int(nbr_houses_to_build[0])))
                         player_active.send_board()
-                        player_inactive.send_board()
+                        for players in player_inactive:
+                            players.send_board()
                 else :
                     player_active.send_message("Vous n'avez pas de terrain constructible")
 
@@ -279,20 +286,23 @@ if __name__ == '__main__':
                 if name_land_to_mortgage != "Ne pas hypothéquer":
                         player_active.send_message(board.get_square_from_name(name_land_to_mortgage).to_mortgage())
                         player_active.send_board()
-                        player_inactive.send_board()
+                        for players in player_inactive:
+                            players.send_board()
 
             if action == "Acheter le terrain":
                 print("on rentre dans action: acheter terrain")
                 board.square_list[player_active.position].buy_land(player_active)
                 action = player_active.choose_actions(end_action)
                 player_active.send_board()
-                player_inactive.send_board()
+                for players in player_inactive:
+                    players.send_board()
 
             if action == "Aller en prison":
                 print(action)
                 board.square_list[player_active.position].go_to_jail(player_active, board)
                 player_active.send_board()
-                player_inactive.send_board()
+                for players in player_inactive:
+                    players.send_board()
                 action = player_active.choose_actions(end_action)
 
 
@@ -305,13 +315,15 @@ if __name__ == '__main__':
                 nbr_houses_to_sell = player_active.choose_actions(square.get_dict_houses_to_sell())
                 player_active.send_message(square.to_sell(int(nbr_houses_to_sell[0])))
                 player_active.send_board()
-                player_inactive.send_board()
+                for players in player_inactive:
+                    players.send_board()
 
             if action == "Terminer mon tour":
                 print(action)
                 sleep(0.5)
                 player_active.sock.send("stop".encode())
-                player_inactive.sock.send("stop".encode())
+                for players in player_inactive:
+                    players.sock.send("stop".encode())
                 sleep(0.5)
                 action = False
 

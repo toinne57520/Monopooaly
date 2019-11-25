@@ -72,7 +72,7 @@ class Clientthread(Thread):
             self.turn_status = struct.unpack('?', buf[:1])[0]
 
             if not self.turn_status:
-                #self.message_hist.append("Ce n'est pas à vous de jouer")
+                self.message_hist.append("Ce n'est pas à vous de jouer")
                 message_received = 0
                 while message_received != "stop":
                     message_received = self.sock.recv(1024).decode()
