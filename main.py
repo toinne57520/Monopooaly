@@ -218,9 +218,11 @@ if __name__ == '__main__':
                 name_land_to_clear_mortgage = player_active.choose_actions(board.get_inactive_assets(player_active)[1])
                 print(name_land_to_clear_mortgage)
                 if name_land_to_clear_mortgage != "Ne pas déshypothéquer":
-                    player_active.send_message(board.get_square_from_name(name_land_to_clear_mortgage).to_clear_mortgage())
+                    message = board.get_square_from_name(name_land_to_clear_mortgage).to_clear_mortgage()
+                    player_active.send_message(message)
                     player_active.send_board()
                     for players in player_inactive:
+                        players.send_message(message)
                         players.send_board()
 
 
@@ -284,9 +286,11 @@ if __name__ == '__main__':
                 name_land_to_mortgage = player_active.choose_actions(board.get_morgageable_assets(player_active)[1])
                 print(name_land_to_mortgage)
                 if name_land_to_mortgage != "Ne pas hypothéquer":
-                        player_active.send_message(board.get_square_from_name(name_land_to_mortgage).to_mortgage())
+                        message = board.get_square_from_name(name_land_to_mortgage).to_mortgage()
+                        player_active.send_message(message)
                         player_active.send_board()
                         for players in player_inactive:
+                            players.send_message(message)
                             players.send_board()
 
             if action == "Acheter le terrain":
