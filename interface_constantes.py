@@ -18,6 +18,16 @@ title = 'MonoPOOAly'
 background_homepage = 'images/fond_rempli.png'
 background_play = 'images/fond_rempli.png'
 
+#corespondance des couleurs du plateau
+colors_rgb = {"marron" : (148, 71, 43),
+              "bleu ciel" : (186, 227, 253),
+              "violet" : (218, 44, 139),
+              "orange" : (247, 142, 0),
+              "rouge" : (218, 5, 15),
+              "jaune" : (253, 237, 0),
+              "vert" : (27, 167, 72),
+              "bleu fonce" : (0, 104, 180),
+              "trainstation": (10,10,10)}
 
 # on veut une liste pour chaque case i avec
 # [x_maison, y_maison, x_pion1, y_pion1, x_pion2, y_pion2, x_pion3, y_pion3, x_pion4, y_pion4]

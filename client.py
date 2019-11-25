@@ -11,7 +11,7 @@ pygame.init()
 if __name__ == '__main__':
     # connexion au server
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    host = '138.195.240.110'
+    host = '0.0.0.0'
     port = 8080
     sock.connect((host,port))
     print("En attente des autres joueurs")
@@ -60,6 +60,7 @@ if __name__ == '__main__':
                     x = player[1]
                     y = player[2]
                     pygame_simple.blit_dice(window,x,y)
+
 
             #status = clientthread.turn_status
             #name_player
