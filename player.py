@@ -29,10 +29,10 @@ class Player :
         data_string = json.dumps(dict).encode()
         print(data_string)
         self.sock.send(data_string)
-        data_loaded = int(self.sock.recv(1024).decode())
+        data_loaded = int(self.sock.recv(4048).decode())
         while data_loaded not in [x for x in list(dict.keys())]:
             self.sock.send("again".encode())
-            data_loaded = int(self.sock.recv(1024).decode())
+            data_loaded = int(self.sock.recv(4048).decode())
 
         self.sock.send("ok".encode())
         print("on est dans choose actions ",dict[data_loaded])

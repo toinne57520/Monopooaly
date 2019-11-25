@@ -59,7 +59,7 @@ class Clientthread(Thread):
         return
 
     def deal_with_message(self):
-        message = self.sock.recv(1024).decode()
+        message = self.sock.recv(4048).decode()
         self.message_hist.append(message)
         return
 
@@ -75,7 +75,7 @@ class Clientthread(Thread):
                 self.message_hist.append("Ce n'est pas à vous de jouer")
                 message_received = 0
                 while message_received != "stop":
-                    message_received = self.sock.recv(1024).decode()
+                    message_received = self.sock.recv(4048).decode()
 
                     if message_received == "board":
                         self.deal_with_board()
@@ -91,7 +91,7 @@ class Clientthread(Thread):
                 message_received = 0
                 while message_received != "stop":
 
-                    message_received = self.sock.recv(1024).decode()
+                    message_received = self.sock.recv(4048).decode()
 
                     if message_received == "action":
                         self.deal_with_instruction()
