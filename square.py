@@ -149,7 +149,7 @@ class Land(Square):
     def to_sell(self, nb_houses_to_sell):
         try:
             nb_max = self.nb_houses
-            assert( nb_houses_to_sell < nb_max) #on ne peut pas vendre plus de maisons qu'on en a déjà sur le terrain
+            assert( nb_houses_to_sell <= nb_max) #on ne peut pas vendre plus de maisons qu'on en a déjà sur le terrain
             self.nb_houses -= nb_houses_to_sell  # destruction de la maison
             self.owner.money += self.construction_price/2 * nb_houses_to_sell  # on vend pour la moitié du prix de construction
             return(f"Terrible, le joueur {self.owner.name} n'a désormais plus que {self.nb_houses} maisons sur {self.name}.")
