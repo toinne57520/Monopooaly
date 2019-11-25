@@ -11,7 +11,7 @@ import struct
 import random
 #
 
-#game = Board('data.json')
+#game = Board('Nouvelle_partie.json')
 #joueur = Player('Antoine',game) #rajouter exception pour que les deux joueurs n'aient pas la meme position
 #joueur.throw_dice()
 
@@ -150,10 +150,10 @@ if __name__ == '__main__':
         player = Player(player_name,board,client)
         player.piece = "piece_" + str(server.client_list.index(client) + 1)
 
-    if board_simplified == 'data_milieu.json':
+    if board_simplified == 'Partie_en_cours.json':
         board = mid_game_launch(board)
 
-    elif board_simplified == 'data_milieu.json':
+    elif board_simplified == 'Partie_en_cours.json':
         print('option2')
 
     if True : #gérer le sauvegarde et le chargement des parties
