@@ -12,7 +12,9 @@ class Server(Thread):
             raise TypeError("Le port doit etre un entier")
 
         self.__sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.__sock.bind(('localhost', port))
+        host = '0.0.0.0'
+        port = 8080
+        self.__sock.bind((host, port))
         self.__continuer = True
         self.board = board
         self.client_list = []

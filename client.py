@@ -11,7 +11,9 @@ pygame.init()
 if __name__ == '__main__':
     # connexion au server
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.connect(("localhost", 11100))
+    host = '0.0.0.0'
+    port = 8080
+    sock.connect((host,port))
     print("En attente des autres joueurs")
     # Welcome message
     welcome_message = sock.recv(1024).decode()
