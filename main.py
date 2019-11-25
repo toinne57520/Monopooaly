@@ -8,6 +8,7 @@ import socket
 from server import Server
 from time import sleep
 import struct
+import random
 #
 
 #game = Board('data.json')
@@ -40,10 +41,11 @@ def launch_game():
 
 
 def new_game():
-    board = Board(board_choice())
-    return board
-
-
+    chosen_board = board_choice()
+    chosen_board_simplified = chosen_board.split("/")[-1]
+    board = Board(chosen_board)
+    print(chosen_board_simplified)
+    return board, chosen_board_simplified
 
 def board_choice():
     path = os.path.join(os.getcwd(), "Boards/*.json")
@@ -67,7 +69,7 @@ def board_choice():
         new_game()
 
 
-def player_choice():
+"""def player_choice():
     try:
         nb_players = input("Combien de joueurs participent à la partie??")
         assert (1 <= int(nb_players) <= 4)
@@ -76,7 +78,8 @@ def player_choice():
 
     except:
         print("Le nombre de joueurs doit être un entier entre 1 et 4")
-        player_choice()
+        player_choice()"""
+
 
 def standard_turn(player):
     #ajout des fonctions possibles pour un joueur
@@ -85,9 +88,43 @@ def standard_turn(player):
 early_action = { 0 : 'Lancer les dés' , 1 : 'Construire une maison', 2 : 'Hypothéquer', 3 : 'Déshypothéquer'}
 end_action = {0 : 'Terminer mon tour'}
 
+def mid_game_launch(board):
+    print("on est dans mid game")
+    list_player_1 = [1, 3, 8, 15, 16, 18, 19, 23, 37]  # joueur 1 a violet, orange
+    list_houses_1 = [1, 3, 16, 18, 19]
+    list_player_2 = [5, 6, 11, 13, 14, 25, 29, 31, 32, 34]  # joueur 2 a violet clair, vert
+    list_houses_2 = [11, 13, 14, 31, 32, 34]
+    board.players[0].money = 630
+    board.players[1].money = 450
+
+    for i in list_player_1:
+        square = board.square_list[i]
+        square.owner = board.players[0]
+        board.players[0].assets.append(square)
+        square.status = True
+
+    for i in list_player_2:
+        square = board.square_list[i]
+        square.owner = board.players[1]
+        board.players[1].assets.append(square)
+        square.status = True
+
+    for i in list_houses_1:
+        board.square_list[i].nb_houses += random.randint(0, 5)
+
+    for i in list_houses_2:
+        board.square_list[i].nb_houses += random.randint(0, 5)
+
+    board.change_position(board.players[0], int(random.randint(0, 40)))
+    board.change_position(board.players[1], int(random.randint(0, 40)))
+
+    return board
+
 
 if __name__ == '__main__':
-    board = new_game()
+    boards = new_game()
+    board = boards[0]
+    board_simplified = boards[1]
     print("On lance la partie!")
     players_turn = 0
 
@@ -112,6 +149,12 @@ if __name__ == '__main__':
         player_name = client.recv(1024).decode()
         player = Player(player_name,board,client)
         player.piece = "piece_" + str(server.client_list.index(client) + 1)
+
+    if board_simplified == 'data_milieu.json':
+        board = mid_game_launch(board)
+
+    elif board_simplified == 'data_milieu.json':
+        print('option2')
 
     if True : #gérer le sauvegarde et le chargement des parties
         pass
