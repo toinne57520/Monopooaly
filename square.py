@@ -66,7 +66,7 @@ class Land(Square):
 
     def str(self,player):
         if self.status and self.owner == player:
-            player.send_message(f"Oufff ! Cette case est {self.name} est c'est chez vous !")
+            player.send_message(f"Oufff ! Cette case est {self.name} et c'est chez vous !")
         elif self.status and self.color != "trainstation":
             player.send_message (f"Cette case est {self.name}, détenue par le joueur {self.owner.name}.")
             player.send_message(f"Il y a {self.nb_houses} maisons contruites."
@@ -74,8 +74,7 @@ class Land(Square):
 
         elif self.status and self.color == "trainstation":
             player.send_message(f"Cette case est {self.name}, détenue par le joueur {self.owner.name}.")
-            player.send_message(f"Il y a {self.nb_houses} maisons contruites."
-                                f"Le loyer actuel est de {self.rent[player.board.get_nb_assets_of_a_color(player,'trainstation')]} €")
+            player.send_message(f"Le loyer actuel est de {self.rent[player.board.get_nb_assets_of_a_color(player,'trainstation')]} €")
 
         else :
             player.send_message (f"Cette case est libre ! C'est {self.name} de la couleur {self.color}. "
