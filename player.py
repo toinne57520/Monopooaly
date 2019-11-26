@@ -27,7 +27,6 @@ class Player :
         self.sock.send("action".encode())
         sleep(0.5)
         data_string = json.dumps(dict).encode()
-        print(data_string)
         self.sock.send(data_string)
         data_loaded = int(self.sock.recv(4048).decode())
         while data_loaded not in [x for x in list(dict.keys())]:
@@ -35,7 +34,6 @@ class Player :
             data_loaded = int(self.sock.recv(4048).decode())
 
         self.sock.send("ok".encode())
-        print("on est dans choose actions ",dict[data_loaded])
         return(dict[data_loaded])
 
     def send_board(self):
