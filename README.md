@@ -7,7 +7,7 @@ Vous pouvez jouer en local de 2 à 4 joueurs. Si vous souhaitez connaître les r
 
 ####1. Comment installer le jeu ?
 
-- Cloner notre repository git
+- Se placer dans le dossier de notre projet
 
 - Exécuter la commande ci-dessous dans votre terminal
          
@@ -21,9 +21,11 @@ Vous pouvez jouer en local de 2 à 4 joueurs. Si vous souhaitez connaître les r
 un début de partie, une partie plus avancée et une partie proche de la fin. Taper le numéro correspondant à votre souhait.
 Indiquer également le nombre de participants.
 
+NB: Pour les scénarios "Partie en cours" et "Fin de partie", nous avons affecté des terrains et des propriétés par défaut et ces modes de jeu ne sont donc disponibles que pour deux joueurs. Il est en revanche possible de jouer jusque 4 joueurs, dans le scénario "Début de partie".
+
         python main.py
 
-- La deuxième étape : (fichier client.py) : Lancer dans la console autant de fichiers client.py qu'il y a de joueurs.
+- La deuxième étape : (fichier client.py) : Lancer dans des terminaux différents autant de fichiers client.py qu'il y a de joueurs.
     Une fois les clients lancés, renseigner le nom de chaque joueur.
 
         python client.py
