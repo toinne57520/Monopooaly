@@ -131,7 +131,9 @@ def blit_infos_in_column(surface,dict_board_state):
         #Afficher les possessions d'une certaine couleur
         for asset in dict_board_state[player]["assets"]:
             color = asset[1]
-            to_blit2 = font.render(asset[0], 11,colors_rgb[color])
+            if asset[2]==True:
+                color="grey"
+            to_blit2 = font.render(asset[0], 11, colors_rgb[color])
             surface.blit(to_blit2, (x, y))
             y += word_height
         y+=100 #affichage du joueur suivant décalé
