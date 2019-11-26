@@ -2,29 +2,38 @@
 
 Bienvenue sur le tutoriel du MonoPOOAly !
 
-Vous pouvez jouer en local de 2 à 4 joueurs. Si vous souhaitez connaître les règles du Monopoly, n'hésitez pas à consulter le fichier pdf : regles.pdf
-
-1) Comment jouer ?
-
-Le jeu se lance depuis la console.
-
-La première étape : (fichier main.py)
-
-    Lancer le fichier main.py et suivre les instructions sur la console.
-
-La deuxième étape : (fichier client.py)
-
-    Lancer dans la console autant de fichiers client.py qu'il y a de joueurs.
-    Une fois les clients lancés, renseigner le nom de chaque joueur et suivre les indications à l'écran.
+Vous pouvez jouer en local de 2 à 4 joueurs. Si vous souhaitez connaître les règles du Monopoly, c'est par [ici](http://www.regledujeu.fr/monopoly/).
 
 
+####1. Comment installer le jeu ?
 
+- Cloner notre repository git
 
-  2) Quelles sont les notions abordées en cours présentes dans notre projet ?
+- Exécuter la commande ci-dessous dans votre terminal
+         
+        pip install -r requirements.txt   
+   
+####2. Comment jouer ?
+
+- Le jeu se lance depuis la console.
+
+- La première étape : (fichier main.py) : exécuter la commande suivante dans le terminal. Vous avez accès à plusieurs scénarios :
+un début de partie, une partie plus avancée et une partie proche de la fin. Taper le numéro correspondant à votre souhait.
+Indiquer également le nombre de participants.
+
+        python main.py
+
+- La deuxième étape : (fichier client.py) : Lancer dans la console autant de fichiers client.py qu'il y a de joueurs.
+    Une fois les clients lancés, renseigner le nom de chaque joueur.
+
+        python client.py
+
+- Des fenêtres Pygame (une par joueur) s'ouvrent et le jeu peut commencer. Vous pouvez jouer directement sur ces fenêtres sans retourner dans votre terminal. 
+
+####3. Quelles sont les notions abordées en cours présentes dans notre projet ?
 
 - Classes et hérédités
 
-    
 
 - Architecture client / serveur
 
@@ -35,7 +44,8 @@ La deuxième étape : (fichier client.py)
 - Multithreading
 
 
-On vous souhaite de bonnes parties endiablées sur notre jeu !
+
+Nous vous souhaitons des parties endiablées sur notre jeu !
 
 L'équipe MonoPOOAly
 Hortense, Rémi et Antoine
