@@ -244,9 +244,11 @@ if __name__ == '__main__':
                     if name_land_to_build != "Ne pas construire":
                         square = board.get_square_from_name(name_land_to_build)
                         nbr_houses_to_build = player_active.choose_actions(square.get_dict_houses_to_build())
-                        player_active.send_message(square.to_build(int(nbr_houses_to_build[0])))
+                        message = square.to_build(int(nbr_houses_to_build[0]))
+                        player_active.send_message(message)
                         player_active.send_board()
                         for players in player_inactive:
+                            players.send_message(message)
                             players.send_board()
                 else :
                     player_active.send_message("Vous n'avez pas de terrain constructible")
@@ -254,7 +256,7 @@ if __name__ == '__main__':
 
             if action == "Payer la taxe":
                 print("on rentre dans action: payer la taxe")
-                missing_funds = board.square_list[player_active.position].pay_taxes(player_active)
+                missing_funds = board.square_list[player_active.position].pay_taxes(player_active, player_inactive)
                 if missing_funds == 0:
                     action = player_active.choose_actions(end_action)
                 else:
@@ -295,7 +297,7 @@ if __name__ == '__main__':
 
             if action == "Acheter le terrain":
                 print("on rentre dans action: acheter terrain")
-                board.square_list[player_active.position].buy_land(player_active)
+                message = board.square_list[player_active.position].buy_land(player_active, board)
                 action = player_active.choose_actions(end_action)
                 player_active.send_board()
                 for players in player_inactive:
@@ -317,7 +319,8 @@ if __name__ == '__main__':
                 print(name_land_to_sell)
                 square = board.get_square_from_name(name_land_to_sell)
                 nbr_houses_to_sell = player_active.choose_actions(square.get_dict_houses_to_sell())
-                player_active.send_message(square.to_sell(int(nbr_houses_to_sell[0])))
+                for players in board.players:
+                    players.send_message(square.to_sell(int(nbr_houses_to_sell[0])))
                 player_active.send_board()
                 for players in player_inactive:
                     players.send_board()

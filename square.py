@@ -76,13 +76,14 @@ class Land(Square):
                     f"Elle coûte {self.value} €.")#voir plus tard pour le cout des maisons
         return
 
-    def buy_land(self, player):
+    def buy_land(self, player, board):
         if player.money >= self.value:
             player.money -= self.value
             self.owner = player
             self.status = True
             player.assets.append(self)
-            player.send_message(f"Le joueur {player.name} est maintenant propriétaire de {self.name}")
+            for players in board.players:
+                players.send_message(f"Le joueur {player.name} est maintenant propriétaire de {self.name}")
         else:
             player.send_message(f"Le joueur {player.name} n'a pas assez d'argent pour devenir propriétaire")
 
@@ -100,7 +101,8 @@ class Land(Square):
         if player.money >= rent:
             player.money -= rent
             self.owner.money+=rent
-            player.send_message(f"Le joueur {player.name} vient de payer {rent} € à {self.owner.name}")
+            for players in board.players:
+                players.send_message(f"Le joueur {player.name} vient de payer {rent} € à {self.owner.name}")
             return 0
         else:
             #print("autre")
@@ -139,9 +141,9 @@ class Land(Square):
             if self.owner.money >= self.construction_price* nb_houses_to_build:
                 self.nb_houses += nb_houses_to_build #on construit
                 self.owner.money -= self.construction_price* nb_houses_to_build #on fait payer la construction
-                return(f"Bravo, le joueur {self.owner.name} a désormais {self.nb_houses} maisons sur {self.name}.")
+                return(f"Le joueur {self.owner.name} a désormais {self.nb_houses} maisons sur {self.name}.")
             else:
-                return (f"Désolé, le joueur {self.owner.name} n'a pas assez d'argent pour construire ces maisons.")
+                return (f"Le joueur {self.owner.name} n'a pas assez d'argent pour construire ces maisons.")
 
         except AssertionError:
             return(f"Impossible de construire autant de maisons : max {nb_max} maisons")
@@ -152,7 +154,7 @@ class Land(Square):
             assert( nb_houses_to_sell <= nb_max) #on ne peut pas vendre plus de maisons qu'on en a déjà sur le terrain
             self.nb_houses -= nb_houses_to_sell  # destruction de la maison
             self.owner.money += self.construction_price/2 * nb_houses_to_sell  # on vend pour la moitié du prix de construction
-            return(f"Terrible, le joueur {self.owner.name} n'a désormais plus que {self.nb_houses} maisons sur {self.name}.")
+            return(f"Le joueur {self.owner.name} n'a désormais plus que {self.nb_houses} maisons sur {self.name}.")
 
         except AssertionError:
             return("Impossible de vendre plus de maisons que celles déjà construites")
@@ -222,10 +224,12 @@ class Tax(Square):
         dict = { 0: "Payer la taxe"}
         return dict
 
-    def pay_taxes(self,player):
+    def pay_taxes(self,player, player_inactive):
         if player.money >= self.amount:
             player.money -= self.amount
             player.send_message(f"Le joueur {player.name} vient de payer {self.amount} € à la banque ... Il lui reste {player.money}€")
+            for players in player_inactive:
+                players.send_message(f"Le joueur {player.name} vient de payer {self.amount} € à la banque ... Il lui reste {player.money}€")
             return 0
         else:
             missing_funds = self.amount - player.money
@@ -257,8 +261,8 @@ class Go_Jail(Square):
         Square.__init__(self, name, position)
 
     def str(self, player):
-            player.send_message(f"Pris en flagrant délit, vous filez en prison")
-            return
+        player.send_message(f"Pris en flagrant délit, vous filez en prison")
+        return
 
     def get_actions(self, player):
         dict = {0: "Aller en prison"}
