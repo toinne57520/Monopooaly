@@ -74,7 +74,7 @@ class Land(Square):
 
         elif self.status and self.color == "trainstation":
             player.send_message(f"Cette case est {self.name}, détenue par le joueur {self.owner.name}.")
-            player.send_message(f"Le loyer actuel est de {self.rent[player.board.get_nb_assets_of_a_color(player,'trainstation')]} €")
+            #player.send_message(f"Le loyer actuel est de {self.rent[board.get_nb_assets_of_a_color(self.owner, 'trainstation')]} €")
 
         else :
             player.send_message (f"Cette case est libre ! C'est {self.name} de la couleur {self.color}. "
@@ -276,6 +276,8 @@ class Go_Jail(Square):
     def go_to_jail(self, player, board):
         player.in_jail = 3
         board.change_position(player, 20)
+        player.money -= 200
+        player.send_message("Ce n'était qu'illusion, vous perdez immédiatement c'est 200€")
 
 
 
