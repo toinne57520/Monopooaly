@@ -331,8 +331,8 @@ if __name__ == '__main__':
                 print(name_land_to_sell)
                 square = board.get_square_from_name(name_land_to_sell)
                 nbr_houses_to_sell = player_active.choose_actions(square.get_dict_houses_to_sell())
+                message = square.to_sell(int(nbr_houses_to_sell[0]))
                 for players in board.players:
-                    message = square.to_sell(int(nbr_houses_to_sell[0]))
                     players.send_message(message)
                 player_active.send_board()
                 for players in player_inactive:
