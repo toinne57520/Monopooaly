@@ -235,7 +235,7 @@ class Board :
         for element in self.square_list:
             dictionnaire[str(element.position)] = self.serialize_square(element)
         for player in self.players:
-            dictionnaire[player.name]={"assets": [[player.assets[i].name,player.assets[i].color] for i in range(len(player.assets))],
+            dictionnaire[player.name]={"assets": [[player.assets[i].name,player.assets[i].color,player.assets[i].mortgage] for i in range(len(player.assets))],
                                        "money":player.money,
                                        "piece":player.piece}
         return dictionnaire
