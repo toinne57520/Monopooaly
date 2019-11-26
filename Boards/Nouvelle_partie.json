@@ -138,7 +138,7 @@
       "type" : "Luck"
     },
     {
-      "name": "Boulevard Saint-Michel",
+      "name": "Boulevard Saint Michel",
       "position" : 18,
       "type" : "Land",
       "value" : 180,
@@ -184,7 +184,7 @@
       "construction_price": 150
     },
     {
-      "name": "Avenue Henri-Martin",
+      "name": "Avenue Henri Martin",
       "position" : 24,
       "type" : "Land",
       "value" : 240,
@@ -202,7 +202,7 @@
       "construction_price": 0
     },
     {
-      "name": "Faubourg Saint-Honoré",
+      "name": "Faubourg Saint Honoré",
       "position" : 26,
       "type" : "Land",
       "value" : 260,
@@ -271,7 +271,7 @@
       "construction_price": 200
     },
     {
-      "name": " Gare Saint-Lazare",
+      "name": " Gare Saint Lazare",
       "position" : 35,
       "type" : "Land",
       "value" : 200,
