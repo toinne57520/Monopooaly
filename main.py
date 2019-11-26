@@ -120,6 +120,35 @@ def mid_game_launch(board):
 
     return board
 
+def end_game_launch(board):
+    print("on est dans end game")
+    list_player_1 = [1, 3, 8, 15, 16, 18, 19, 23,31, 32, 34, 37]  # joueur 1 a violet, orange et vert
+    list_houses_1 = [1, 3, 16, 18, 19, 31, 32, 34]
+    list_player_2 = [11, 13, 14]  # joueur 2 a violet clair
+    list_houses_2 = [11, 13, 14]
+    board.players[0].money = 630
+    board.players[1].money = 100
+    for i in list_player_1:
+        square = board.square_list[i]
+        square.owner = board.players[0]
+        board.players[0].assets.append(square)
+        square.status = True
+
+    for i in list_player_2:
+        square = board.square_list[i]
+        square.owner = board.players[1]
+        board.players[1].assets.append(square)
+        square.status = True
+
+    for i in list_houses_1:
+        board.square_list[i].nb_houses += random.randint(0, 5)
+
+    for i in list_houses_2:
+        board.square_list[i].nb_houses += random.randint(0, 5)
+
+    board.change_position(board.players[0], int(random.randint(0, 40)))
+    board.change_position(board.players[1], int(random.randint(0, 40)))
+    return board
 
 if __name__ == '__main__':
     boards = new_game()
@@ -153,8 +182,8 @@ if __name__ == '__main__':
     if board_simplified == 'Partie_en_cours.json':
         board = mid_game_launch(board)
 
-    elif board_simplified == 'Partie_en_cours.json':
-        print('option2')
+    elif board_simplified == 'Fin_de_partie.json':
+        board = end_game_launch(board)
 
     if True : #gérer le sauvegarde et le chargement des parties
         pass
@@ -188,7 +217,6 @@ if __name__ == '__main__':
     party = True
 
     while party:
-        print(board.players)
         player_active = board.players[starting_player % len(board.players)]
         player_inactive = board.players.copy()
         player_inactive.remove(player_active)
