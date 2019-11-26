@@ -161,13 +161,25 @@ if __name__ == '__main__':
     server = Server(11100,board)
     server.start()
 
-    print("A combien allez vous jouer ?")
-    numberplayer = input("> ")
-    while numberplayer[0] not in ['2','3','4'] :
-        print("Vous devez indiquer un nombre de joueurs entre 2 et 4")
-        numberplayer = input("> ")
+    if board_simplified == 'Partie_en_cours.json':
+        numberplayer = "2"
+        print("La partie en cours est uniquement simulée pour 2 joueurs")
+        print("Vous pouvez à présent lancer " + numberplayer + " clients")
 
-    print("Vous pouvez à présent lancer " + numberplayer + " clients" )
+
+    elif board_simplified == 'Fin_de_partie.json':
+        numberplayer = "2"
+        print("La fin de partie est uniquement simulée pour 2 joueurs")
+        print("Vous pouvez à présent lancer " + numberplayer + " clients")
+
+    else:
+        print("A combien allez vous jouer ?")
+        numberplayer = input("> ")
+        while numberplayer[0] not in ['2','3','4'] :
+            print("Vous devez indiquer un nombre de joueurs entre 2 et 4")
+            numberplayer = input("> ")
+
+        print("Vous pouvez à présent lancer " + numberplayer + " clients" )
 
 
     while len(server.client_list) < int(numberplayer[0]):
@@ -185,35 +197,7 @@ if __name__ == '__main__':
     elif board_simplified == 'Fin_de_partie.json':
         board = end_game_launch(board)
 
-    if True : #gérer le sauvegarde et le chargement des parties
-        pass
-
     starting_player = 0
-    """
-    for square in board.square_list[0:1]:
-        p1 = board.players[starting_player]
-        p1.money = 0
-        #p1.position = 23
-        #board.square_list[0].present_player.remove(p1)
-        #board.square_list[23].present_player.append(p1)
-        if type(square) == Land:
-            square.owner = p1
-            p1.assets.append(square)
-            square.status = True
-
-
-    for square in board.square_list[4:15]:
-        p2 = board.players[starting_player + 1]
-        #p2.position = 23
-        #board.square_list[0].present_player.remove(p2)
-        #board.square_list[23].present_player.append(p2)
-        if type(square) == Land:
-            square.owner = p2
-            p2.assets.append(square)
-            square.status = True
-            
-    """
-
     party = True
 
     while party:
