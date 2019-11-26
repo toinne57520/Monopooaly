@@ -133,7 +133,6 @@ class Board :
         mortgageable_assets = {}
         i = 0
         for element in player.assets:
-            print(self.get_built_lands(player)[2])
             if not element.mortgage and element.nb_houses == 0 and element.color not in [self.get_built_lands(player)[2][i][3] for i in range(len(self.get_built_lands(player)[2]))]:
                 mortgageable_assets[int(i)] = element.name + " - " + str(element.value/2) + "€"
                 #affichage.append(str(element.name) + " pour une valeur de " + str(element.value / 2) + "€.")
